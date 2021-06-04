@@ -28,12 +28,11 @@ func (r *UserResource) lookupByID(id string) *ent.User {
 	}).Get(BASEURL + "/users/" + id)
 	fmt.Println(resp)
 	user := new(ent.User)
-	if err!=nil{
-		data, _ := json.Marshal(resp)
-		_ = json.Unmarshal(data, &user)
+	if err == nil {
+		var objMap map[string]json.RawMessage
+		_ = json.Unmarshal(resp.Body(), &objMap)
+		_ = json.Unmarshal(objMap["data"], &user)
 		return user
 	}
-
 	return nil
 }
-
