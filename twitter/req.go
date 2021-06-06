@@ -10,11 +10,25 @@ import (
 	functions for http requests
 */
 
+// Resp response structure for twitter data
 type Resp struct {
 	Data     json.RawMessage `json:"data,omitempty"`
 	Includes json.RawMessage `json:"includes,omitempty"`
 	Meta     json.RawMessage `json:"meta,omitempty"`
 	Errors   json.RawMessage `json:"errors,omitempty"`
+}
+
+func DoRequest(cli *resty.Client, method, path string, queryParam map[string]string, jsonParam map[string]string) (*Resp, *APIError) {
+	resp, err := cli.R().SetQueryParams(queryParam).SetBody(jsonParam).Execute(method, path)
+	if err != nil{
+		apiError := APIError{Title: "HTTP Error", Detail: err.Error()}
+		return nil, &apiError
+	}
+	data, apiError := ParseDataResponse(resp)
+	if data != nil {
+		return data, nil
+	}
+	return nil, apiError
 }
 
 func ParseDataResponse(response *resty.Response) (*Resp, *APIError) {

@@ -2,18 +2,23 @@ package twitter
 
 import (
 	"encoding/json"
-	"fmt"
+	"github.com/fatih/structs"
 	"github.com/go-resty/resty/v2"
 	ent "go-twitter/twitter/entities"
 )
 
 /*
 	Users API
-
 */
 
 type UserResource struct {
 	cli *resty.Client
+}
+
+type UserParams struct {
+	Expansions string `json:"expansions,omitempty"`
+	TweetFields string `json:"tweet.fields,omitempty"`
+	UserFields string `json:"user.fields,omitempty"`
 }
 
 func newUserResource(cli *resty.Client) *UserResource {
@@ -22,20 +27,13 @@ func newUserResource(cli *resty.Client) *UserResource {
 	}
 }
 
-func (r *UserResource) lookupByID(id string) (*ent.User, *APIError) {
-	resp, err := r.cli.R().SetQueryParams(map[string]string{
-		"user.fields": "description",
-	}).Get(BASEURL + "/users/" + id)
-	fmt.Println(resp)
-	if err == nil {
-		data, err := ParseDataResponse(resp)
-		if data != nil {
-			user := new(ent.User)
-			_ = json.Unmarshal(data.Data, &user)
-			return user, nil
-		}
+func (r *UserResource) lookupByID(id string, params UserParams) (*ent.User, *APIError) {
+	path := BASEURL + "/users/" + id
+	data, err := DoRequest(r.cli, resty.MethodGet, path, structs.Map(&params), nil)
+	if err != nil{
 		return nil, err
 	}
-	apiError := APIError{Title: "HTTP Error", Detail: err.Error()}
-	return nil, &apiError
+	user := new(ent.User)
+	_ = json.Unmarshal(data.Data, &user)
+	return user, nil
 }
