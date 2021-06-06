@@ -22,17 +22,20 @@ func newUserResource(cli *resty.Client) *UserResource {
 	}
 }
 
-func (r *UserResource) lookupByID(id string) *ent.User {
+func (r *UserResource) lookupByID(id string) (*ent.User, *APIError) {
 	resp, err := r.cli.R().SetQueryParams(map[string]string{
 		"user.fields": "description",
 	}).Get(BASEURL + "/users/" + id)
 	fmt.Println(resp)
-	user := new(ent.User)
 	if err == nil {
-		var objMap map[string]json.RawMessage
-		_ = json.Unmarshal(resp.Body(), &objMap)
-		_ = json.Unmarshal(objMap["data"], &user)
-		return user
+		data, err := ParseDataResponse(resp)
+		if data != nil {
+			user := new(ent.User)
+			_ = json.Unmarshal(data.Data, &user)
+			return user, nil
+		}
+		return nil, err
 	}
-	return nil
+	apiError := APIError{Title: "HTTP Error", Detail: err.Error()}
+	return nil, &apiError
 }
