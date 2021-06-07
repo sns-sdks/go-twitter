@@ -3,6 +3,7 @@ package twitter
 import (
 	"encoding/json"
 	"github.com/go-resty/resty/v2"
+	goquery "github.com/google/go-querystring/query"
 	"net/http"
 )
 
@@ -18,9 +19,29 @@ type Resp struct {
 	Errors   json.RawMessage `json:"errors,omitempty"`
 }
 
-func DoRequest(cli *resty.Client, method, path string, queryParam map[string]string, jsonParam map[string]string) (*Resp, *APIError) {
-	resp, err := cli.R().SetQueryParams(queryParam).SetBody(jsonParam).Execute(method, path)
-	if err != nil{
+func DoRequest(cli *resty.Client, method, path string, queryParams interface{}, jsonParams interface{}) (*Resp, *APIError) {
+	req := cli.R()
+
+	// parse struct params
+	if queryParams != nil {
+		v, err := goquery.Values(queryParams)
+		if err != nil {
+			apiError := APIError{Title: "Query param Error", Detail: err.Error()}
+			return nil, &apiError
+		}
+		req.SetQueryParamsFromValues(v)
+	}
+	if jsonParams != nil {
+		v, err := goquery.Values(jsonParams)
+		if err != nil {
+			apiError := APIError{Title: "Form param Error", Detail: err.Error()}
+			return nil, &apiError
+		}
+		req.SetFormDataFromValues(v)
+	}
+
+	resp, err := req.Execute(method, path)
+	if err != nil {
 		apiError := APIError{Title: "HTTP Error", Detail: err.Error()}
 		return nil, &apiError
 	}
