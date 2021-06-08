@@ -1,16 +1,25 @@
 package twitter
 
 import (
+	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 func TestUsers(t *testing.T) {
-	a := assert.New(t)
+	uid := "2244994945"
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+	httpmock.RegisterResponder(
+		"GET",
+		BASEURL + "/users/"+uid,
+		httpmock.NewStringResponder(
+			200,
+			`{"data":{"id":"2244994945","name":"Twitter Dev","username":"TwitterDev"}}`,
+		),
+	)
+
 	cli := NewBearerClient("")
-	r, err := cli.Users.lookupByID("124124125412", UserParams{})
-	a.Nil(r)
-	if err != nil {
-		a.Equal(err.Status, 401)
-	}
+	user, _ := cli.Users.lookupByID("2244994945", UserParams{})
+	assert.Equal(t, user.ID, uid)
 }
