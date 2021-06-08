@@ -1,18 +1,17 @@
-package integration
+package twitter
 
 import (
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/suite"
-	gt "go-twitter/twitter"
 )
 
 type BCSuite struct {
 	suite.Suite
-	Tw *gt.Client
+	Tw *Client
 }
 
 func (bc *BCSuite) SetupSuite() {
-	bc.Tw = gt.NewBearerClient("")
+	bc.Tw = NewBearerClient("")
 }
 
 func (bc *BCSuite) SetupTest() {

@@ -14,12 +14,6 @@ type UserResource struct {
 	Cli *resty.Client
 }
 
-type U struct {
-	E  string
-	T  string `json:"t"`
-	Us string `json:"us"`
-}
-
 type UserParams struct {
 	Expansions  string `json:"expansions,omitempty"`
 	TweetFields string `json:"tweet.fields,omitempty"`
