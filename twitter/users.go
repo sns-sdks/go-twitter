@@ -11,7 +11,7 @@ import (
 */
 
 type UserResource struct {
-	cli *resty.Client
+	Cli *resty.Client
 }
 
 type U struct {
@@ -28,13 +28,13 @@ type UserParams struct {
 
 func newUserResource(cli *resty.Client) *UserResource {
 	return &UserResource{
-		cli: cli,
+		Cli: cli,
 	}
 }
 
-func (r *UserResource) lookupByID(id string, params UserParams) (*ent.User, *APIError) {
+func (r *UserResource) LookupByID(id string, params UserParams) (*ent.User, *APIError) {
 	path := BASEURL + "/users/" + id
-	data, err := DoRequest(r.cli, resty.MethodGet, path, params, nil)
+	data, err := DoRequest(r.Cli, resty.MethodGet, path, params, nil)
 	if err != nil {
 		return nil, err
 	}
