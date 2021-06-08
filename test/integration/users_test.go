@@ -2,17 +2,14 @@ package integration
 
 import (
 	"github.com/jarcoal/httpmock"
-	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/suite"
 	"go-twitter/twitter"
 	"testing"
 )
 
-func TestUsers(t *testing.T) {
+func (bc *BCSuite) TestUserByID() {
 	uid := "2244994945"
-	tw := twitter.NewBearerClient("")
 
-	httpmock.ActivateNonDefault(tw.Cli.GetClient())
-	defer httpmock.DeactivateAndReset()
 	httpmock.RegisterResponder(
 		"GET",
 		twitter.BASEURL+"/users/"+uid,
@@ -22,6 +19,11 @@ func TestUsers(t *testing.T) {
 		),
 	)
 
-	user, _ := tw.Users.LookupByID("2244994945", twitter.UserParams{})
-	assert.Equal(t, *user.ID, uid)
+	user, _ := bc.Tw.Users.LookupByID("2244994945", twitter.UserParams{})
+	bc.Equal(*user.ID, uid)
+	bc.Equal(*user.PublicMetrics.FollowerCount, 10)
+}
+
+func TestBCSuite(t *testing.T) {
+	suite.Run(t, new(BCSuite))
 }
