@@ -15,9 +15,10 @@ type UserResource struct {
 }
 
 type UserParams struct {
-	Expansions  string `json:"expansions,omitempty"`
-	TweetFields string `json:"tweet.fields,omitempty"`
-	UserFields  string `json:"user.fields,omitempty"`
+	IDs         string `url:"ids,omitempty"`
+	Expansions  string `url:"expansions,omitempty"`
+	TweetFields string `url:"tweet.fields,omitempty"`
+	UserFields  string `url:"user.fields,omitempty"`
 }
 
 func newUserResource(cli *resty.Client) *UserResource {
@@ -39,4 +40,20 @@ func (r *UserResource) LookupByID(id string, params UserParams) (*ent.User, *API
 		return nil, &apiError
 	}
 	return user, nil
+}
+
+func (r *UserResource) LookupByIDs(params UserParams) ([]*ent.User, *APIError) {
+	path := BASEURL + "/users"
+	data, err := DoRequest(r.Cli, resty.MethodGet, path, params, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	users := new([]*ent.User)
+	jErr := json.Unmarshal(data.Data, &users)
+	if jErr != nil {
+		apiError := APIError{Title: "Json Error", Detail: jErr.Error()}
+		return nil, &apiError
+	}
+	return *users, nil
 }
