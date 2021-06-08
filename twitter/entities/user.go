@@ -4,26 +4,26 @@ package entities
 // https://developer.twitter.com/en/docs/twitter-api/data-dictionary/object-model/user
 
 type PublicMetrics struct {
-	FollowerCount  int64 `json:"follower_count"`
-	FollowingCount int64 `json:"following_count"`
-	TweetCount     int   `json:"tweet_count"`
-	ListCount      int   `json:"list_count"`
+	FollowerCount  *int `json:"follower_count,omitempty"`
+	FollowingCount *int `json:"following_count,omitempty"`
+	TweetCount     *int `json:"tweet_count,omitempty"`
+	ListCount      *int `json:"list_count,omitempty"`
 }
 
 // User represent a Twitter user.
 type User struct {
-	ID              int64         `json:"id"`
-	Name            string        `json:"name"`
-	Username        string        `json:"username"`
-	CreatedAt       string        `json:"created_at"`
-	Description     string        `json:"description"`
-	Location        string        `json:"location"`
-	PinnedTweetID   string        `json:"pinned_tweet_id"`
-	ProfileImageUrl string        `json:"profile_image_url"`
-	Protected       string        `json:"protected"`
-	URL             string        `json:"url"`
-	Verified        bool          `json:"verified"`
-	Entities        UserEntities  `json:"entities"`
-	PublicMetrics   PublicMetrics `json:"public_metrics"`
-	WithHeld        WithHeld      `json:"withheld"`
+	ID              *string        `json:"id,omitempty"`
+	Name            *string        `json:"name,omitempty"`
+	Username        *string        `json:"username,omitempty"`
+	CreatedAt       *string        `json:"created_at,omitempty"`
+	Description     *string        `json:"description,omitempty"`
+	Location        *string        `json:"location,omitempty"`
+	PinnedTweetID   *string        `json:"pinned_tweet_id,omitempty"`
+	ProfileImageUrl *string        `json:"profile_image_url,omitempty"`
+	Protected       *string        `json:"protected,omitempty"`
+	URL             *string        `json:"url,omitempty,omitempty"`
+	Verified        *bool          `json:"verified,omitempty"`
+	Entities        *UserEntities  `json:"entities,omitempty"`
+	PublicMetrics   *PublicMetrics `json:"public_metrics,omitempty"`
+	WithHeld        *WithHeld      `json:"withheld,omitempty"`
 }
