@@ -23,11 +23,11 @@ type UserParams struct {
 }
 
 type FollowParams struct {
-	MaxResults string `url:"max_results,omitempty"`
+	MaxResults      string `url:"max_results,omitempty"`
 	PaginationToken string `url:"pagination_token,omitempty"`
-	Expansions  string `url:"expansions,omitempty"`
-	TweetFields string `url:"tweet.fields,omitempty"`
-	UserFields  string `url:"user.fields,omitempty"`
+	Expansions      string `url:"expansions,omitempty"`
+	TweetFields     string `url:"tweet.fields,omitempty"`
+	UserFields      string `url:"user.fields,omitempty"`
 }
 
 func newUserResource(cli *resty.Client) *UserResource {
@@ -112,7 +112,7 @@ func (r *UserResource) GetFollowing(id string, params FollowParams) ([]*ent.User
 	return *users, nil
 }
 
-func (r *UserResource) GetFollowers(id string, params FollowParams) ([]*ent.User, *APIError)  {
+func (r *UserResource) GetFollowers(id string, params FollowParams) ([]*ent.User, *APIError) {
 	path := BASEURL + "/users/" + id + "/followers"
 	data, err := DoRequest(r.Cli, resty.MethodGet, path, params, nil)
 	if err != nil {
@@ -126,5 +126,3 @@ func (r *UserResource) GetFollowers(id string, params FollowParams) ([]*ent.User
 	}
 	return *users, nil
 }
-
-
