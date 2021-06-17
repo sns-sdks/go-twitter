@@ -1,21 +1,21 @@
 package entities
 
 type WithHeld struct {
-	Scope        string   `json:"scope"`
-	CountryCodes []string `json:"country_codes"`
+	Scope        *string   `json:"scope"`
+	CountryCodes []*string `json:"country_codes"`
 }
 
 type Includes struct {
-	Users []User `json:"users,omitempty"`
+	Users []*User `json:"users,omitempty"`
 }
 
 type Error struct {
-	Detail       string `json:"detail"`
-	Title        string `json:"title"`
-	ResourceType string `json:"resource_type,omitempty"`
-	Parameter    string `json:"parameter,omitempty"`
-	Value        string `json:"value,omitempty"`
-	Type         string `json:"type,omitempty"`
+	Detail       *string `json:"detail"`
+	Title        *string `json:"title"`
+	ResourceType *string `json:"resource_type,omitempty"`
+	Parameter    *string `json:"parameter,omitempty"`
+	Value        *string `json:"value,omitempty"`
+	Type         *string `json:"type,omitempty"`
 }
 
 type BaseData struct {

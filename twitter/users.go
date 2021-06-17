@@ -1,7 +1,6 @@
 package twitter
 
 import (
-	"encoding/json"
 	"github.com/go-resty/resty/v2"
 	ent "go-twitter/twitter/entities"
 )
@@ -10,9 +9,7 @@ import (
 	Users API
 */
 
-type UserResource struct {
-	Cli *resty.Client
-}
+type UserResource Resource
 
 type UserParams struct {
 	IDs         string `url:"ids,omitempty"`
@@ -30,99 +27,72 @@ type FollowParams struct {
 	UserFields      string `url:"user.fields,omitempty"`
 }
 
-func newUserResource(cli *resty.Client) *UserResource {
+func newUserResource(cli *Client) *UserResource {
 	return &UserResource{
 		Cli: cli,
 	}
 }
 
-func (r *UserResource) LookupByID(id string, params UserParams) (*ent.User, *APIError) {
+func (r *UserResource) LookupByID(id string, params UserParams) (*ent.UserResp, *APIError) {
 	path := BASEURL + "/users/" + id
-	data, err := DoRequest(r.Cli, resty.MethodGet, path, params, nil)
+	resp := new(ent.UserResp)
+	err := r.Cli.Do(resty.MethodGet, path, params, nil, resp)
 	if err != nil {
 		return nil, err
 	}
-	user := new(ent.User)
-	jErr := json.Unmarshal(data.Data, &user)
-	if jErr != nil {
-		apiError := APIError{Title: "Json Error", Detail: jErr.Error()}
-		return nil, &apiError
-	}
-	return user, nil
+	return resp, nil
 }
 
-func (r *UserResource) LookupByIDs(params UserParams) ([]*ent.User, *APIError) {
+func (r *UserResource) LookupByIDs(params UserParams) (*ent.UsersResp, *APIError) {
 	path := BASEURL + "/users"
-	data, err := DoRequest(r.Cli, resty.MethodGet, path, params, nil)
+	resp := new(ent.UsersResp)
+	err := r.Cli.Do(resty.MethodGet, path, params, nil, resp)
 	if err != nil {
 		return nil, err
 	}
-
-	users := new([]*ent.User)
-	jErr := json.Unmarshal(data.Data, &users)
-	if jErr != nil {
-		apiError := APIError{Title: "Json Error", Detail: jErr.Error()}
-		return nil, &apiError
-	}
-	return *users, nil
+	return resp, nil
 }
 
-func (r *UserResource) LookupByUsername(username string, params UserParams) (*ent.User, *APIError) {
+func (r *UserResource) LookupByUsername(username string, params UserParams) (*ent.UserResp, *APIError) {
 	path := BASEURL + "/users/by/username/" + username
-	data, err := DoRequest(r.Cli, resty.MethodGet, path, params, nil)
+
+	resp := new(ent.UserResp)
+	err := r.Cli.Do(resty.MethodGet, path, params, nil, resp)
 	if err != nil {
 		return nil, err
 	}
-	user := new(ent.User)
-	jErr := json.Unmarshal(data.Data, &user)
-	if jErr != nil {
-		apiError := APIError{Title: "Json Error", Detail: jErr.Error()}
-		return nil, &apiError
-	}
-	return user, nil
+	return resp, nil
 }
 
-func (r *UserResource) LookupByUsernames(params UserParams) ([]*ent.User, *APIError) {
+func (r *UserResource) LookupByUsernames(params UserParams) (*ent.UsersResp, *APIError) {
 	path := BASEURL + "/users/by"
-	data, err := DoRequest(r.Cli, resty.MethodGet, path, params, nil)
+
+	resp := new(ent.UsersResp)
+	err := r.Cli.Do(resty.MethodGet, path, params, nil, resp)
 	if err != nil {
 		return nil, err
 	}
-	users := new([]*ent.User)
-	jErr := json.Unmarshal(data.Data, &users)
-	if jErr != nil {
-		apiError := APIError{Title: "Json Error", Detail: jErr.Error()}
-		return nil, &apiError
-	}
-	return *users, nil
+	return resp, nil
 }
 
-func (r *UserResource) GetFollowing(id string, params FollowParams) ([]*ent.User, *APIError) {
+func (r *UserResource) GetFollowing(id string, params FollowParams) (*ent.UsersResp, *APIError) {
 	path := BASEURL + "/users/" + id + "/following"
-	data, err := DoRequest(r.Cli, resty.MethodGet, path, params, nil)
+
+	resp := new(ent.UsersResp)
+	err := r.Cli.Do(resty.MethodGet, path, params, nil, resp)
 	if err != nil {
 		return nil, err
 	}
-	users := new([]*ent.User)
-	jErr := json.Unmarshal(data.Data, &users)
-	if jErr != nil {
-		apiError := APIError{Title: "Json Error", Detail: jErr.Error()}
-		return nil, &apiError
-	}
-	return *users, nil
+	return resp, nil
 }
 
-func (r *UserResource) GetFollowers(id string, params FollowParams) ([]*ent.User, *APIError) {
+func (r *UserResource) GetFollowers(id string, params FollowParams) (*ent.UsersResp, *APIError) {
 	path := BASEURL + "/users/" + id + "/followers"
-	data, err := DoRequest(r.Cli, resty.MethodGet, path, params, nil)
+
+	resp := new(ent.UsersResp)
+	err := r.Cli.Do(resty.MethodGet, path, params, nil, resp)
 	if err != nil {
 		return nil, err
 	}
-	users := new([]*ent.User)
-	jErr := json.Unmarshal(data.Data, &users)
-	if jErr != nil {
-		apiError := APIError{Title: "Json Error", Detail: jErr.Error()}
-		return nil, &apiError
-	}
-	return *users, nil
+	return resp, nil
 }
