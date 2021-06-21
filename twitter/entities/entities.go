@@ -1,6 +1,22 @@
 package entities
 
 // Entities are JSON objects that provide additional information about hashtags, urls, user mentions, and cashtags associated with the description.
+type Entities struct {
+	Urls     []*EntityUrl     `json:"urls"`
+	HashTags []*EntityHashTag `json:"Hashtags"`
+	Mentions []*EntityMention `json:"mentions"`
+	CashTags []*EntityCashTag `json:"cashtags"`
+}
+
+type UserEntities struct {
+	URL         *Entities `json:"url"`
+	Description *Entities `json:"description"`
+}
+
+type TwitterEntities struct {
+	*Entities
+	Annotations []*EntityAnnotation `json:"annotations"`
+}
 
 type Image struct {
 	URL    *string `json:"url"`
@@ -45,21 +61,4 @@ type EntityAnnotation struct {
 	Probability    *float64 `json:"probability"`
 	Type           *string  `json:"type"`
 	NormalizedText *string  `json:"normalized_text"`
-}
-
-type Entities struct {
-	Urls     []*EntityUrl     `json:"urls"`
-	HashTags []*EntityHashTag `json:"Hashtags"`
-	Mentions []*EntityMention `json:"mentions"`
-	CashTags []*EntityCashTag `json:"cashtags"`
-}
-
-type UserEntities struct {
-	URL         *Entities `json:"url"`
-	Description *Entities `json:"description"`
-}
-
-type TwitterEntities struct {
-	*Entities
-	Annotations []*EntityAnnotation `json:"annotations"`
 }
