@@ -10,12 +10,16 @@ type Client struct {
 	Users *UserResource
 }
 
+type Resource struct {
+	Cli *Client
+}
+
 func NewBearerClient(bearerToken string) *Client {
 	rCli := resty.New()
 	rCli.SetAuthToken(bearerToken)
 
-	return &Client{
-		Cli:   rCli,
-		Users: newUserResource(rCli),
-	}
+	c := &Client{Cli: rCli}
+	c.Users = newUserResource(c)
+
+	return c
 }
