@@ -3,8 +3,8 @@ package twitter
 import "github.com/go-resty/resty/v2"
 
 const (
-	BASEURL  = "https://api.twitter.com/2"
-	HTTP_GET = resty.MethodGet
+	Baseurl = "https://api.twitter.com/2"
+	HttpGet = resty.MethodGet
 )
 
 type Client struct {

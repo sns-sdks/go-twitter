@@ -2,11 +2,11 @@ package twitter
 
 import "github.com/jarcoal/httpmock"
 
-func (bc *BCSuite) TestTweetByID() {
+func (bc *BCSuite) TestTweetsByID() {
 	tid := "1067094924124872705"
 
 	httpmock.RegisterResponder(
-		HTTP_GET, BASEURL+"/tweets/"+tid,
+		HttpGet, Baseurl+"/tweets/"+tid,
 		httpmock.NewStringResponder(
 			200,
 			`{"data":{"id":"1067094924124872705","text":"Just getting started with Twitter APIs? Find out what you need in order to build an app. Watch this video! https://t.co/Hg8nkfoizN"}}`,
@@ -15,4 +15,18 @@ func (bc *BCSuite) TestTweetByID() {
 
 	resp, _ := bc.Tw.Tweets.LookupByID(tid, TweetParams{})
 	bc.Equal(*resp.Data.ID, tid)
+}
+
+func (bc *BCSuite) TestTweetsByIDs() {
+	params := TweetParams{IDs: "1261326399320715264,1278347468690915330"}
+
+	httpmock.RegisterResponder(
+		HttpGet, Baseurl+"/tweets",
+		httpmock.NewStringResponder(
+			200,
+			`{"data":[{"id":"1261326399320715264","text":"Tune in to the @MongoDB @Twitch stream featuring our very own @suhemparack to learn about Twitter Developer Labs - starting now! https://t.co/fAWpYi3o5O"},{"id":"1278347468690915330","text":"Good news and bad news: nn2020 is half over"}]}`),
+	)
+
+	resp, _ := bc.Tw.Tweets.LookupByIDs(params)
+	bc.Equal(len(resp.Data), 2)
 }

@@ -23,10 +23,21 @@ type TweetParams struct {
 }
 
 func (r *TweetResource) LookupByID(id string, params TweetParams) (*ent.TweetResp, *APIError) {
-	path := BASEURL + "/tweets/" + id
+	path := Baseurl + "/tweets/" + id
 
 	resp := new(ent.TweetResp)
-	err := r.Cli.Do(HTTP_GET, path, params, nil, resp)
+	err := r.Cli.DoGet(path, params, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (r *TweetResource) LookupByIDs(params TweetParams) (*ent.TweetsResp, *APIError) {
+	path := Baseurl + "/tweets"
+
+	resp := new(ent.TweetsResp)
+	err := r.Cli.DoGet(path, params, resp)
 	if err != nil {
 		return nil, err
 	}
