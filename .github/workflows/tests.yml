@@ -19,11 +19,10 @@ jobs:
     runs-on: ${{ matrix.platform }}
 
     steps:
+      - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
         with:
           go-version: ${{ matrix.go-version }}
-
-      - uses: actions/checkout@v2
 
       - name: Cache go modules
       - uses: actions/cache@v2
@@ -41,6 +40,3 @@ jobs:
       - name: Upload coverage to Codecov
         if: ${{ matrix.update-coverage }}
         uses: codecov/codecov-action@v1
-
-
-
