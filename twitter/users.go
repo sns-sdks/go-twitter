@@ -14,17 +14,17 @@ type UserResource Resource
 type UserParams struct {
 	IDs         string `url:"ids,omitempty"`
 	Usernames   string `url:"usernames,omitempty"`
+	UserFields  string `url:"user.fields,omitempty"`
 	Expansions  string `url:"expansions,omitempty"`
 	TweetFields string `url:"tweet.fields,omitempty"`
-	UserFields  string `url:"user.fields,omitempty"`
 }
 
 type FollowParams struct {
 	MaxResults      string `url:"max_results,omitempty"`
 	PaginationToken string `url:"pagination_token,omitempty"`
+	UserFields      string `url:"user.fields,omitempty"`
 	Expansions      string `url:"expansions,omitempty"`
 	TweetFields     string `url:"tweet.fields,omitempty"`
-	UserFields      string `url:"user.fields,omitempty"`
 }
 
 func newUserResource(cli *Client) *UserResource {

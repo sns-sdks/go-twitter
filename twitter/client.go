@@ -2,12 +2,16 @@ package twitter
 
 import "github.com/go-resty/resty/v2"
 
-const BASEURL = "https://api.twitter.com/2"
+const (
+	BASEURL  = "https://api.twitter.com/2"
+	HTTP_GET = resty.MethodGet
+)
 
 type Client struct {
 	Cli *resty.Client
 	// API Resource
-	Users *UserResource
+	Users  *UserResource
+	Tweets *TweetResource
 }
 
 type Resource struct {
@@ -20,6 +24,7 @@ func NewBearerClient(bearerToken string) *Client {
 
 	c := &Client{Cli: rCli}
 	c.Users = newUserResource(c)
+	c.Tweets = newTweetResource(c)
 
 	return c
 }
