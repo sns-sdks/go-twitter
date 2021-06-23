@@ -28,3 +28,13 @@ type UsersResp struct {
 	Data []*User `json:"data,omitempty"`
 	*BaseData
 }
+
+type TweetResp struct {
+	Data *Tweet `json:"data,omitempty"`
+	*BaseData
+}
+
+type TweetsResp struct {
+	Data []*Tweet `json:"data,omitempty"`
+	*BaseData
+}

@@ -10,14 +10,26 @@ import (
 /*
 	functions for http requests
 */
-
-//// Resp response structure for twitter data
-//type Resp struct {
-//	Data     json.RawMessage `json:"data,omitempty"`
-//	Includes json.RawMessage `json:"includes,omitempty"`
-//	Meta     json.RawMessage `json:"meta,omitempty"`
-//	Errors   json.RawMessage `json:"errors,omitempty"`
-//}
+func ParseDataResponse(response *resty.Response, d interface{}) *APIError {
+	var err error
+	if response.StatusCode() == http.StatusOK {
+		switch d := d.(type) {
+		case nil:
+		default:
+			err = json.Unmarshal(response.Body(), d)
+		}
+		if err != nil {
+			return &APIError{Title: "Json Unmarshal data", Detail: err.Error()}
+		}
+		return nil
+	}
+	apiErr := new(APIError)
+	err = json.Unmarshal(response.Body(), &apiErr)
+	if err != nil {
+		return &APIError{Title: "Json Unmarshal error", Detail: err.Error()}
+	}
+	return apiErr
+}
 
 func (r *Client) Do(method, path string, queryParams interface{}, jsonParams interface{}, d interface{}) *APIError {
 	req := r.Cli.R()
@@ -49,23 +61,6 @@ func (r *Client) Do(method, path string, queryParams interface{}, jsonParams int
 	return apiError
 }
 
-func ParseDataResponse(response *resty.Response, d interface{}) *APIError {
-	var err error
-	if response.StatusCode() == http.StatusOK {
-		switch d := d.(type) {
-		case nil:
-		default:
-			err = json.Unmarshal(response.Body(), d)
-		}
-		if err != nil {
-			return &APIError{Title: "Json Unmarshal data", Detail: err.Error()}
-		}
-		return nil
-	}
-	apiErr := new(APIError)
-	err = json.Unmarshal(response.Body(), &apiErr)
-	if err != nil {
-		return &APIError{Title: "Json Unmarshal error", Detail: err.Error()}
-	}
-	return apiErr
+func (r *Client) DoGet(path string, queryParams interface{}, d interface{}) *APIError {
+	return r.Do(HttpGet, path, queryParams, nil, d)
 }

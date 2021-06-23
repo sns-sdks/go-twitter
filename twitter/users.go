@@ -1,7 +1,6 @@
 package twitter
 
 import (
-	"github.com/go-resty/resty/v2"
 	ent "go-twitter/twitter/entities"
 )
 
@@ -14,17 +13,17 @@ type UserResource Resource
 type UserParams struct {
 	IDs         string `url:"ids,omitempty"`
 	Usernames   string `url:"usernames,omitempty"`
+	UserFields  string `url:"user.fields,omitempty"`
 	Expansions  string `url:"expansions,omitempty"`
 	TweetFields string `url:"tweet.fields,omitempty"`
-	UserFields  string `url:"user.fields,omitempty"`
 }
 
 type FollowParams struct {
 	MaxResults      string `url:"max_results,omitempty"`
 	PaginationToken string `url:"pagination_token,omitempty"`
+	UserFields      string `url:"user.fields,omitempty"`
 	Expansions      string `url:"expansions,omitempty"`
 	TweetFields     string `url:"tweet.fields,omitempty"`
-	UserFields      string `url:"user.fields,omitempty"`
 }
 
 func newUserResource(cli *Client) *UserResource {
@@ -34,9 +33,9 @@ func newUserResource(cli *Client) *UserResource {
 }
 
 func (r *UserResource) LookupByID(id string, params UserParams) (*ent.UserResp, *APIError) {
-	path := BASEURL + "/users/" + id
+	path := Baseurl + "/users/" + id
 	resp := new(ent.UserResp)
-	err := r.Cli.Do(resty.MethodGet, path, params, nil, resp)
+	err := r.Cli.DoGet(path, params, resp)
 	if err != nil {
 		return nil, err
 	}
@@ -44,9 +43,9 @@ func (r *UserResource) LookupByID(id string, params UserParams) (*ent.UserResp, 
 }
 
 func (r *UserResource) LookupByIDs(params UserParams) (*ent.UsersResp, *APIError) {
-	path := BASEURL + "/users"
+	path := Baseurl + "/users"
 	resp := new(ent.UsersResp)
-	err := r.Cli.Do(resty.MethodGet, path, params, nil, resp)
+	err := r.Cli.DoGet(path, params, resp)
 	if err != nil {
 		return nil, err
 	}
@@ -54,10 +53,10 @@ func (r *UserResource) LookupByIDs(params UserParams) (*ent.UsersResp, *APIError
 }
 
 func (r *UserResource) LookupByUsername(username string, params UserParams) (*ent.UserResp, *APIError) {
-	path := BASEURL + "/users/by/username/" + username
+	path := Baseurl + "/users/by/username/" + username
 
 	resp := new(ent.UserResp)
-	err := r.Cli.Do(resty.MethodGet, path, params, nil, resp)
+	err := r.Cli.DoGet(path, params, resp)
 	if err != nil {
 		return nil, err
 	}
@@ -65,10 +64,10 @@ func (r *UserResource) LookupByUsername(username string, params UserParams) (*en
 }
 
 func (r *UserResource) LookupByUsernames(params UserParams) (*ent.UsersResp, *APIError) {
-	path := BASEURL + "/users/by"
+	path := Baseurl + "/users/by"
 
 	resp := new(ent.UsersResp)
-	err := r.Cli.Do(resty.MethodGet, path, params, nil, resp)
+	err := r.Cli.DoGet(path, params, resp)
 	if err != nil {
 		return nil, err
 	}
@@ -76,10 +75,10 @@ func (r *UserResource) LookupByUsernames(params UserParams) (*ent.UsersResp, *AP
 }
 
 func (r *UserResource) GetFollowing(id string, params FollowParams) (*ent.UsersResp, *APIError) {
-	path := BASEURL + "/users/" + id + "/following"
+	path := Baseurl + "/users/" + id + "/following"
 
 	resp := new(ent.UsersResp)
-	err := r.Cli.Do(resty.MethodGet, path, params, nil, resp)
+	err := r.Cli.DoGet(path, params, resp)
 	if err != nil {
 		return nil, err
 	}
@@ -87,10 +86,10 @@ func (r *UserResource) GetFollowing(id string, params FollowParams) (*ent.UsersR
 }
 
 func (r *UserResource) GetFollowers(id string, params FollowParams) (*ent.UsersResp, *APIError) {
-	path := BASEURL + "/users/" + id + "/followers"
+	path := Baseurl + "/users/" + id + "/followers"
 
 	resp := new(ent.UsersResp)
-	err := r.Cli.Do(resty.MethodGet, path, params, nil, resp)
+	err := r.Cli.DoGet(path, params, resp)
 	if err != nil {
 		return nil, err
 	}
