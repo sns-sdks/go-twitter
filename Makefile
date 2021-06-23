@@ -9,5 +9,7 @@ tests:
 
 tests-cov:
 	go test -v -race -coverprofile coverage.out -covermode atomic ./...
+
+tests-html: tests-cov
 	go tool cover -html=coverage.out
 
