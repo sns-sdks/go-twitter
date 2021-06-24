@@ -47,6 +47,16 @@ type MentionParams struct {
 	*TweetCommonParams
 }
 
+type LikingUserPrams struct {
+	TweetCommonParams
+}
+
+type LikedTweetParams struct {
+	MaxResults      int    `url:"max_results,omitempty"`
+	PaginationToken string `url:"pagination_token,omitempty"`
+	*TweetCommonParams
+}
+
 func (r *TweetResource) LookupByID(id string, params TweetParams) (*ent.TweetResp, *APIError) {
 	path := Baseurl + "/tweets/" + id
 
@@ -82,6 +92,28 @@ func (r *TweetResource) GetTimelines(id string, params TimelineParams) (*ent.Twe
 
 func (r *TweetResource) GetMentions(id string, params MentionParams) (*ent.TweetsResp, *APIError) {
 	path := Baseurl + "/users/" + id + "/mentions"
+
+	resp := new(ent.TweetsResp)
+	err := r.Cli.DoGet(path, params, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (r *TweetResource) GetLikingUsers(id string, params LikingUserPrams) (*ent.UsersResp, *APIError) {
+	path := Baseurl + "/tweets/" + id + "/liking_users"
+
+	resp := new(ent.UsersResp)
+	err := r.Cli.DoGet(path, params, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (r *TweetResource) GetLikedTweets(id string, params LikedTweetParams) (*ent.TweetsResp, *APIError) {
+	path := Baseurl + "/users/" + id + "/liked_tweets"
 
 	resp := new(ent.TweetsResp)
 	err := r.Cli.DoGet(path, params, resp)
