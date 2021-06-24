@@ -48,4 +48,6 @@ jobs:
         if: ${{ matrix.update-coverage }}
         uses: codecov/codecov-action@v1
         with:
-          files: ./coverage.out
+          file: ./coverage.out
+          name: codecov-umbrella
+
