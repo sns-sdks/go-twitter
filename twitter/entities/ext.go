@@ -38,3 +38,14 @@ type TweetsResp struct {
 	Data []*Tweet `json:"data,omitempty"`
 	*BaseData
 }
+
+type TweetsCounts struct {
+	End        *string `json:"end,omitempty"`
+	Start      *string `json:"start,omitempty"`
+	TweetCount *int    `json:"tweet_count,omitempty"`
+}
+
+type TweetsCountsResp struct {
+	Data []*TweetsCounts `json:"data,omitempty"`
+	*BaseData
+}
