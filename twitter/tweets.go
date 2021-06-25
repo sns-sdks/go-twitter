@@ -12,18 +12,18 @@ func newTweetResource(cli *Client) *TweetResource {
 	return &TweetResource{Cli: cli}
 }
 
-type TweetCommonParams struct {
-	TweetFields string `url:"tweet.fields,omitempty"`
-	Expansions  string `url:"expansions,omitempty"`
-	MediaFields string `url:"media.fields,omitempty"`
-	PlaceFields string `url:"place.fields,omitempty"`
-	PollFields  string `url:"poll.fields,omitempty"`
-	UserFields  string `url:"user.fields,omitempty"`
+type Fields struct {
+	Tweet      string `url:"tweet.fields,omitempty"`
+	Expansions string `url:"expansions,omitempty"`
+	Media      string `url:"media.fields,omitempty"`
+	Place      string `url:"place.fields,omitempty"`
+	Poll       string `url:"poll.fields,omitempty"`
+	User       string `url:"user.fields,omitempty"`
 }
 
 type TweetParams struct {
 	IDs string `url:"ids,omitempty"`
-	*TweetCommonParams
+	Fields
 }
 
 type TimelineParams struct {
@@ -34,7 +34,7 @@ type TimelineParams struct {
 	UntilID         string `url:"until_id,omitempty"`
 	StartTime       string `url:"start_time,omitempty"`
 	EndTime         string `url:"end_time,omitempty"`
-	*TweetCommonParams
+	Fields
 }
 
 type MentionParams struct {
@@ -44,17 +44,28 @@ type MentionParams struct {
 	UntilID         string `url:"until_id,omitempty"`
 	StartTime       string `url:"start_time,omitempty"`
 	EndTime         string `url:"end_time,omitempty"`
-	*TweetCommonParams
+	Fields
 }
 
 type LikingUserPrams struct {
-	TweetCommonParams
+	Fields
 }
 
 type LikedTweetParams struct {
 	MaxResults      int    `url:"max_results,omitempty"`
 	PaginationToken string `url:"pagination_token,omitempty"`
-	*TweetCommonParams
+	Fields
+}
+
+type SearchTweetsParams struct {
+	Query      string `url:"query"`
+	StartTime  string `url:"start_time,omitempty"`
+	EndTime    string `url:"end_time,omitempty"`
+	SinceID    string `url:"since_id,omitempty"`
+	UntilID    string `url:"until_id,omitempty"`
+	MaxResults int    `url:"max_results,omitempty"`
+	NextToken  string `url:"next_token,omitempty"`
+	Fields
 }
 
 func (r *TweetResource) LookupByID(id string, params TweetParams) (*ent.TweetResp, *APIError) {
@@ -114,6 +125,28 @@ func (r *TweetResource) GetLikingUsers(id string, params LikingUserPrams) (*ent.
 
 func (r *TweetResource) GetLikedTweets(id string, params LikedTweetParams) (*ent.TweetsResp, *APIError) {
 	path := Baseurl + "/users/" + id + "/liked_tweets"
+
+	resp := new(ent.TweetsResp)
+	err := r.Cli.DoGet(path, params, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (r *TweetResource) SearchRecent(params SearchTweetsParams) (*ent.TweetsResp, *APIError) {
+	path := Baseurl + "/tweets/search/recent"
+
+	resp := new(ent.TweetsResp)
+	err := r.Cli.DoGet(path, params, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (r *TweetResource) SearchAll(params SearchTweetsParams) (*ent.TweetsResp, *APIError) {
+	path := Baseurl + "/tweets/search/all"
 
 	resp := new(ent.TweetsResp)
 	err := r.Cli.DoGet(path, params, resp)
