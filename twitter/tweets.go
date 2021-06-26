@@ -68,6 +68,15 @@ type SearchTweetsParams struct {
 	Fields
 }
 
+type TweetsCountsParams struct {
+	Query       string `url:"query"`
+	Granularity string `url:"granularity,omitempty"`
+	StartTime   string `url:"start_time,omitempty"`
+	EndTime     string `url:"end_time,omitempty"`
+	SinceID     string `url:"since_id,omitempty"`
+	UntilID     string `url:"until_id,omitempty"`
+}
+
 func (r *TweetResource) LookupByID(id string, params TweetParams) (*ent.TweetResp, *APIError) {
 	path := Baseurl + "/tweets/" + id
 
@@ -149,6 +158,28 @@ func (r *TweetResource) SearchAll(params SearchTweetsParams) (*ent.TweetsResp, *
 	path := Baseurl + "/tweets/search/all"
 
 	resp := new(ent.TweetsResp)
+	err := r.Cli.DoGet(path, params, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (r *TweetResource) CountsRecent(params TweetsCountsParams) (*ent.TweetsCountsResp, *APIError) {
+	path := Baseurl + "/tweets/counts/recent"
+
+	resp := new(ent.TweetsCountsResp)
+	err := r.Cli.DoGet(path, params, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (r *TweetResource) CountsALL(params TweetsCountsParams) (*ent.TweetsCountsResp, *APIError) {
+	path := Baseurl + "/tweets/counts/all"
+
+	resp := new(ent.TweetsCountsResp)
 	err := r.Cli.DoGet(path, params, resp)
 	if err != nil {
 		return nil, err
