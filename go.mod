@@ -1,4 +1,4 @@
-module go-twitter
+module github.com/sns-sdks/go-twitter
 
 go 1.16
 
