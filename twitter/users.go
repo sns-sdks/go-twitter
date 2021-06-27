@@ -2,7 +2,6 @@ package twitter
 
 import ent "github.com/sns-sdks/go-twitter/twitter/entities"
 
-
 /*
 	Users API
 */
