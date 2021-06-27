@@ -1,6 +1,6 @@
 package twitter
 
-import ent "go-twitter/twitter/entities"
+import ent "github.com/sns-sdks/go-twitter/twitter/entities"
 
 /*
 	Tweets include api for tweets
