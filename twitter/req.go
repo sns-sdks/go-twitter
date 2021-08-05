@@ -7,6 +7,79 @@ import (
 	"net/http"
 )
 
+// Meta is Response Data for request.
+type Meta struct {
+	ResultCount     *int         `json:"result_count,omitempty"`
+	PreviousToken   *string      `json:"previous_token,omitempty"`
+	NextToken       *string      `json:"next_token,omitempty"`
+	OldestID        *string      `json:"oldest_id,omitempty"`
+	NewestID        *string      `json:"newest_id,omitempty"`
+	Sent            *string      `json:"sent,omitempty"`
+	Summary         *MetaSummary `json:"summary,omitempty"`
+	TotalTweetCount *int         `json:"total_tweet_count,omitempty"`
+}
+
+type MetaSummary struct {
+	Created    *int `json:"created,omitempty"`
+	NotCreated *int `json:"not_created,omitempty"`
+	Valid      *int `json:"valid,omitempty"`
+	Invalid    *int `json:"invalid,omitempty"`
+	Deleted    *int `json:"deleted,omitempty"`
+	NotDeleted *int `json:"not_deleted,omitempty"`
+}
+
+// Includes represents the expansions objects for main request thread.
+type Includes struct {
+	Users []*User `json:"users,omitempty"`
+}
+
+// Error represents the common error response
+type Error struct {
+	Detail       *string `json:"detail"`
+	Title        *string `json:"title"`
+	ResourceType *string `json:"resource_type,omitempty"`
+	Parameter    *string `json:"parameter,omitempty"`
+	Value        *string `json:"value,omitempty"`
+	Type         *string `json:"type,omitempty"`
+}
+
+type BaseData struct {
+	Includes *Includes `json:"includes,omitempty"`
+	Meta     *Meta     `json:"meta,omitempty"`
+	Error    []*Error  `json:"error,omitempty"`
+}
+
+type UserResp struct {
+	Data *User `json:"data,omitempty"`
+	*BaseData
+}
+
+type UsersResp struct {
+	Data []*User `json:"data,omitempty"`
+	*BaseData
+}
+
+type TweetResp struct {
+	Data *Tweet `json:"data,omitempty"`
+	*BaseData
+}
+
+type TweetsResp struct {
+	Data []*Tweet `json:"data,omitempty"`
+	*BaseData
+}
+
+type TweetsCounts struct {
+	End        *string `json:"end,omitempty"`
+	Start      *string `json:"start,omitempty"`
+	TweetCount *int    `json:"tweet_count,omitempty"`
+}
+
+type TweetsCountsResp struct {
+	Data []*TweetsCounts `json:"data,omitempty"`
+	*BaseData
+}
+
 /*
 	functions for http requests
 */

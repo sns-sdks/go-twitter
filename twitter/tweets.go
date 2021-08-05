@@ -1,7 +1,5 @@
 package twitter
 
-import ent "github.com/sns-sdks/go-twitter/twitter/entities"
-
 /*
 	Tweets include api for tweets
 */
@@ -12,7 +10,105 @@ func newTweetResource(cli *Client) *TweetResource {
 	return &TweetResource{Cli: cli}
 }
 
-type Fields struct {
+// Tweet are the basic building block of all things Twitter
+// Refer: https://developer.twitter.com/en/docs/twitter-api/data-dictionary/object-model/tweet
+type Tweet struct {
+	ID                 *string             `json:"id,omitempty"`
+	Text               *string             `json:"text,omitempty"`
+	Attachments        *Attachments        `json:"attachments,omitempty"`
+	AuthorID           *string             `json:"author_id,omitempty"`
+	ContextAnnotations *ContextAnnotation  `json:"context_annotations,omitempty"`
+	ConversationID     *string             `json:"conversation_id,omitempty"`
+	CreatedAt          *string             `json:"created_at,omitempty"`
+	Entities           *TweetEntities      `json:"entities,omitempty"`
+	Geo                *TweetGeo           `json:"geo,omitempty"`
+	InReplyToUserID    *string             `json:"in_reply_to_user_id,omitempty"`
+	Lang               *string             `json:"lang,omitempty"`
+	NonPublicMetrics   *NonPublicMetrics   `json:"non_public_metrics,omitempty"`
+	OrganicMetrics     *OrganicMetrics     `json:"organic_metrics,omitempty"`
+	PossiblySensitive  *bool               `json:"possibly_sensitive,omitempty"`
+	PromotedMetrics    *PromotedMetrics    `json:"promoted_metrics,omitempty"`
+	PublicMetrics      *TweetPublicMetrics `json:"public_metrics,omitempty"`
+	ReferencedTweets   []*ReferencedTweet  `json:"referenced_tweets,omitempty"`
+	ReplySettings      *string             `json:"reply_settings,omitempty"`
+	Source             *string             `json:"source,omitempty"`
+	Withheld           *TweetWithheld      `json:"withheld,omitempty"`
+}
+
+type Attachments struct {
+	PollIDs   []*string `json:"poll_ids,omitempty"`
+	MediaKeys []*string `json:"media_keys,omitempty"`
+}
+
+type ContextAnnotationDomain struct {
+	ID          *string `json:"id,omitempty"`
+	Name        *string `json:"name,omitempty"`
+	Description *string `json:"description,omitempty"`
+}
+
+type ContextAnnotationEntity struct {
+	ID   *string `json:"id,omitempty"`
+	Name *string `json:"name,omitempty"`
+}
+
+type ContextAnnotation struct {
+	Domain *ContextAnnotationDomain `json:"domain,omitempty"`
+	Entity *ContextAnnotationEntity `json:"entity,omitempty"`
+}
+
+type Coordinates struct {
+	Type        *string    `json:"type,omitempty"`
+	Coordinates []*float64 `json:"coordinates,omitempty"`
+}
+
+type TweetGeo struct {
+	Coordinates *Coordinates `json:"coordinates,omitempty"`
+	PlaceID     *string      `json:"place_id,omitempty"`
+}
+
+type NonPublicMetrics struct {
+	ImpressionCount   *int `json:"impression_count,omitempty"`
+	URLLinkClicks     *int `json:"url_link_clicks,omitempty"`
+	UserProfileClicks *int `json:"user_profile_clicks,omitempty"`
+}
+
+type OrganicMetrics struct {
+	LikeCount    *int `json:"like_count,omitempty"`
+	ReplyCount   *int `json:"reply_count,omitempty"`
+	RetweetCount *int `json:"retweet_count,omitempty"`
+}
+
+type PromotedMetrics struct {
+	ImpressionCount   *int `json:"impression_count,omitempty"`
+	LikeCount         *int `json:"like_count,omitempty"`
+	ReplyCount        *int `json:"reply_count,omitempty"`
+	RetweetCount      *int `json:"retweet_count,omitempty"`
+	URLLinkClicks     *int `json:"url_link_clicks,omitempty"`
+	UserProfileClicks *int `json:"user_profile_clicks,omitempty"`
+}
+
+type TweetPublicMetrics struct {
+	RetweetCount *int `json:"retweet_count,omitempty"`
+	ReplyCount   *int `json:"reply_count,omitempty"`
+	LikeCount    *int `json:"like_count,omitempty"`
+	QuoteCount   *int `json:"quote_count,omitempty"`
+}
+
+type TweetWithheld struct {
+	Copyright    *bool     `json:"copyright,omitempty"`
+	CountryCodes []*string `json:"country_codes,omitempty"`
+}
+
+type ReferencedTweet struct {
+	Type *string `json:"type,omitempty"`
+	ID   *string `json:"id,omitempty"`
+}
+
+func (t Tweet) String() string {
+	return Stringify(t)
+}
+
+type TweetOpts struct {
 	Tweet      string `url:"tweet.fields,omitempty"`
 	Expansions string `url:"expansions,omitempty"`
 	Media      string `url:"media.fields,omitempty"`
@@ -21,166 +117,28 @@ type Fields struct {
 	User       string `url:"user.fields,omitempty"`
 }
 
-type TweetParams struct {
-	IDs string `url:"ids,omitempty"`
-	Fields
-}
-
-type TimelineParams struct {
-	Exclude         string `url:"exclude,omitempty"`
-	MaxResults      int    `url:"max_results,omitempty"`
-	PaginationToken string `url:"pagination_token,omitempty"`
-	SinceID         string `url:"since_id,omitempty"`
-	UntilID         string `url:"until_id,omitempty"`
-	StartTime       string `url:"start_time,omitempty"`
-	EndTime         string `url:"end_time,omitempty"`
-	Fields
-}
-
-type MentionParams struct {
-	MaxResults      int    `url:"max_results,omitempty"`
-	PaginationToken string `url:"pagination_token,omitempty"`
-	SinceID         string `url:"since_id,omitempty"`
-	UntilID         string `url:"until_id,omitempty"`
-	StartTime       string `url:"start_time,omitempty"`
-	EndTime         string `url:"end_time,omitempty"`
-	Fields
-}
-
-type LikingUserPrams struct {
-	Fields
-}
-
-type LikedTweetParams struct {
-	MaxResults      int    `url:"max_results,omitempty"`
-	PaginationToken string `url:"pagination_token,omitempty"`
-	Fields
-}
-
-type SearchTweetsParams struct {
-	Query      string `url:"query"`
-	StartTime  string `url:"start_time,omitempty"`
-	EndTime    string `url:"end_time,omitempty"`
-	SinceID    string `url:"since_id,omitempty"`
-	UntilID    string `url:"until_id,omitempty"`
-	MaxResults int    `url:"max_results,omitempty"`
-	NextToken  string `url:"next_token,omitempty"`
-	Fields
-}
-
-type TweetsCountsParams struct {
-	Query       string `url:"query"`
-	Granularity string `url:"granularity,omitempty"`
-	StartTime   string `url:"start_time,omitempty"`
-	EndTime     string `url:"end_time,omitempty"`
-	SinceID     string `url:"since_id,omitempty"`
-	UntilID     string `url:"until_id,omitempty"`
-}
-
-func (r *TweetResource) LookupByID(id string, params TweetParams) (*ent.TweetResp, *APIError) {
+func (r *TweetResource) LookupByID(id string, args TweetOpts) (*TweetResp, *APIError) {
 	path := Baseurl + "/tweets/" + id
 
-	resp := new(ent.TweetResp)
-	err := r.Cli.DoGet(path, params, resp)
+	resp := new(TweetResp)
+	err := r.Cli.DoGet(path, args, resp)
 	if err != nil {
 		return nil, err
 	}
 	return resp, nil
 }
 
-func (r *TweetResource) LookupByIDs(params TweetParams) (*ent.TweetsResp, *APIError) {
+type tweetOptsByIDs struct {
+	IDs string `url:"ids,omitempty"`
+	TweetOpts
+}
+
+func (r *TweetResource) LookupByIDs(ids string, args TweetOpts) (*TweetsResp, *APIError) {
 	path := Baseurl + "/tweets"
 
-	resp := new(ent.TweetsResp)
-	err := r.Cli.DoGet(path, params, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (r *TweetResource) GetTimelines(id string, params TimelineParams) (*ent.TweetsResp, *APIError) {
-	path := Baseurl + "/users/" + id + "/tweets"
-
-	resp := new(ent.TweetsResp)
-	err := r.Cli.DoGet(path, params, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (r *TweetResource) GetMentions(id string, params MentionParams) (*ent.TweetsResp, *APIError) {
-	path := Baseurl + "/users/" + id + "/mentions"
-
-	resp := new(ent.TweetsResp)
-	err := r.Cli.DoGet(path, params, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (r *TweetResource) GetLikingUsers(id string, params LikingUserPrams) (*ent.UsersResp, *APIError) {
-	path := Baseurl + "/tweets/" + id + "/liking_users"
-
-	resp := new(ent.UsersResp)
-	err := r.Cli.DoGet(path, params, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (r *TweetResource) GetLikedTweets(id string, params LikedTweetParams) (*ent.TweetsResp, *APIError) {
-	path := Baseurl + "/users/" + id + "/liked_tweets"
-
-	resp := new(ent.TweetsResp)
-	err := r.Cli.DoGet(path, params, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (r *TweetResource) SearchRecent(params SearchTweetsParams) (*ent.TweetsResp, *APIError) {
-	path := Baseurl + "/tweets/search/recent"
-
-	resp := new(ent.TweetsResp)
-	err := r.Cli.DoGet(path, params, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (r *TweetResource) SearchAll(params SearchTweetsParams) (*ent.TweetsResp, *APIError) {
-	path := Baseurl + "/tweets/search/all"
-
-	resp := new(ent.TweetsResp)
-	err := r.Cli.DoGet(path, params, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (r *TweetResource) CountsRecent(params TweetsCountsParams) (*ent.TweetsCountsResp, *APIError) {
-	path := Baseurl + "/tweets/counts/recent"
-
-	resp := new(ent.TweetsCountsResp)
-	err := r.Cli.DoGet(path, params, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (r *TweetResource) CountsALL(params TweetsCountsParams) (*ent.TweetsCountsResp, *APIError) {
-	path := Baseurl + "/tweets/counts/all"
-
-	resp := new(ent.TweetsCountsResp)
-	err := r.Cli.DoGet(path, params, resp)
+	newArgs := tweetOptsByIDs{ids, args}
+	resp := new(TweetsResp)
+	err := r.Cli.DoGet(path, newArgs, resp)
 	if err != nil {
 		return nil, err
 	}

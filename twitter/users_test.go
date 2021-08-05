@@ -18,7 +18,7 @@ func (bc *BCSuite) TestUserByID() {
 		),
 	)
 
-	resp, _ := bc.Tw.Users.LookupByID(uid, UserParams{})
+	resp, _ := bc.Tw.Users.LookupByID(uid, UserOpts{})
 	bc.Equal(*resp.Data.ID, uid)
 	bc.Equal(*resp.Data.PublicMetrics.FollowerCount, 10)
 }
@@ -35,7 +35,7 @@ func (bc *BCSuite) TestUsersByIDs() {
 		),
 	)
 
-	resp, _ := bc.Tw.Users.LookupByIDs(UserParams{IDs: ids})
+	resp, _ := bc.Tw.Users.LookupByIDs(ids, UserOpts{})
 	bc.Equal(*resp.Data[0].ID, "2244994945")
 	bc.Equal(len(resp.Data), 2)
 }
@@ -51,7 +51,7 @@ func (bc *BCSuite) TestUserByUsername() {
 			`{"data":{"id":"2244994945","name":"Twitter Dev","username":"TwitterDev"}}`,
 		),
 	)
-	resp, _ := bc.Tw.Users.LookupByUsername(username, UserParams{})
+	resp, _ := bc.Tw.Users.LookupByUsername(username, UserOpts{})
 	bc.Equal(*resp.Data.Username, username)
 }
 
@@ -67,7 +67,7 @@ func (bc *BCSuite) TestUsersByUsernames() {
 		),
 	)
 
-	resp, _ := bc.Tw.Users.LookupByUsernames(UserParams{Usernames: usernames})
+	resp, _ := bc.Tw.Users.LookupByUsernames(usernames, UserOpts{})
 	bc.Equal(len(resp.Data), 2)
 	bc.Equal(*resp.Data[0].Username, "TwitterDev")
 }

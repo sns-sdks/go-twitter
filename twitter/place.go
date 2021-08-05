@@ -1,4 +1,4 @@
-package entities
+package twitter
 
 // Place tagged in a Tweet is not a primary object on any endpoint, but can be found and expanded in the Tweet resource.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/data-dictionary/object-model/place

@@ -1,4 +1,4 @@
-package entities
+package twitter
 
 // Entities are JSON objects that provide additional information about hashtags, urls, user mentions, and cashtags associated with the description.
 type Entities struct {
@@ -13,7 +13,7 @@ type UserEntities struct {
 	Description *Entities `json:"description"`
 }
 
-type TwitterEntities struct {
+type TweetEntities struct {
 	*Entities
 	Annotations []*EntityAnnotation `json:"annotations"`
 }

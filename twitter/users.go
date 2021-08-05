@@ -1,28 +1,10 @@
 package twitter
 
-import ent "github.com/sns-sdks/go-twitter/twitter/entities"
-
 /*
 	Users API
 */
 
 type UserResource Resource
-
-type UserParams struct {
-	IDs         string `url:"ids,omitempty"`
-	Usernames   string `url:"usernames,omitempty"`
-	UserFields  string `url:"user.fields,omitempty"`
-	Expansions  string `url:"expansions,omitempty"`
-	TweetFields string `url:"tweet.fields,omitempty"`
-}
-
-type FollowParams struct {
-	MaxResults      string `url:"max_results,omitempty"`
-	PaginationToken string `url:"pagination_token,omitempty"`
-	UserFields      string `url:"user.fields,omitempty"`
-	Expansions      string `url:"expansions,omitempty"`
-	TweetFields     string `url:"tweet.fields,omitempty"`
-}
 
 func newUserResource(cli *Client) *UserResource {
 	return &UserResource{
@@ -30,64 +12,96 @@ func newUserResource(cli *Client) *UserResource {
 	}
 }
 
-func (r *UserResource) LookupByID(id string, params UserParams) (*ent.UserResp, *APIError) {
+// User represent a Twitter user.
+// Refer: https://developer.twitter.com/en/docs/twitter-api/data-dictionary/object-model/user
+type User struct {
+	ID              *string            `json:"id,omitempty"`
+	Name            *string            `json:"name,omitempty"`
+	Username        *string            `json:"username,omitempty"`
+	CreatedAt       *string            `json:"created_at,omitempty"`
+	Description     *string            `json:"description,omitempty"`
+	Location        *string            `json:"location,omitempty"`
+	PinnedTweetID   *string            `json:"pinned_tweet_id,omitempty"`
+	ProfileImageUrl *string            `json:"profile_image_url,omitempty"`
+	Protected       *string            `json:"protected,omitempty"`
+	URL             *string            `json:"url,omitempty,omitempty"`
+	Verified        *bool              `json:"verified,omitempty"`
+	Entities        *UserEntities      `json:"entities,omitempty"`
+	PublicMetrics   *UserPublicMetrics `json:"public_metrics,omitempty"`
+	Withheld        *UserWithheld      `json:"withheld,omitempty"`
+}
+
+type UserPublicMetrics struct {
+	FollowerCount  *int `json:"follower_count,omitempty"`
+	FollowingCount *int `json:"following_count,omitempty"`
+	TweetCount     *int `json:"tweet_count,omitempty"`
+	ListCount      *int `json:"list_count,omitempty"`
+}
+
+type UserWithheld struct {
+	Scope        *string   `json:"scope,omitempty"`
+	CountryCodes []*string `json:"country_codes,omitempty"`
+}
+
+func (u User) String() string {
+	return Stringify(u)
+}
+
+type UserOpts struct {
+	UserFields  string `url:"user.fields,omitempty"`
+	Expansions  string `url:"expansions,omitempty"`
+	TweetFields string `url:"tweet.fields,omitempty"`
+}
+
+func (r *UserResource) LookupByID(id string, args UserOpts) (*UserResp, *APIError) {
 	path := Baseurl + "/users/" + id
-	resp := new(ent.UserResp)
-	err := r.Cli.DoGet(path, params, resp)
+	resp := new(UserResp)
+	err := r.Cli.DoGet(path, args, resp)
 	if err != nil {
 		return nil, err
 	}
 	return resp, nil
 }
 
-func (r *UserResource) LookupByIDs(params UserParams) (*ent.UsersResp, *APIError) {
+type userOptsByIDs struct {
+	IDs string `url:"ids"`
+	UserOpts
+}
+
+func (r *UserResource) LookupByIDs(ids string, args UserOpts) (*UsersResp, *APIError) {
 	path := Baseurl + "/users"
-	resp := new(ent.UsersResp)
-	err := r.Cli.DoGet(path, params, resp)
+	newArgs := userOptsByIDs{ids, args}
+
+	resp := new(UsersResp)
+	err := r.Cli.DoGet(path, newArgs, resp)
 	if err != nil {
 		return nil, err
 	}
 	return resp, nil
 }
 
-func (r *UserResource) LookupByUsername(username string, params UserParams) (*ent.UserResp, *APIError) {
+func (r *UserResource) LookupByUsername(username string, args UserOpts) (*UserResp, *APIError) {
 	path := Baseurl + "/users/by/username/" + username
 
-	resp := new(ent.UserResp)
-	err := r.Cli.DoGet(path, params, resp)
+	resp := new(UserResp)
+	err := r.Cli.DoGet(path, args, resp)
 	if err != nil {
 		return nil, err
 	}
 	return resp, nil
 }
 
-func (r *UserResource) LookupByUsernames(params UserParams) (*ent.UsersResp, *APIError) {
+type userOptsByUsernames struct {
+	Usernames string `url:"usernames"`
+	UserOpts
+}
+
+func (r *UserResource) LookupByUsernames(usernames string, args UserOpts) (*UsersResp, *APIError) {
 	path := Baseurl + "/users/by"
+	newArgs := userOptsByUsernames{usernames, args}
 
-	resp := new(ent.UsersResp)
-	err := r.Cli.DoGet(path, params, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (r *UserResource) GetFollowing(id string, params FollowParams) (*ent.UsersResp, *APIError) {
-	path := Baseurl + "/users/" + id + "/following"
-
-	resp := new(ent.UsersResp)
-	err := r.Cli.DoGet(path, params, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (r *UserResource) GetFollowers(id string, params FollowParams) (*ent.UsersResp, *APIError) {
-	path := Baseurl + "/users/" + id + "/followers"
-
-	resp := new(ent.UsersResp)
-	err := r.Cli.DoGet(path, params, resp)
+	resp := new(UsersResp)
+	err := r.Cli.DoGet(path, newArgs, resp)
 	if err != nil {
 		return nil, err
 	}

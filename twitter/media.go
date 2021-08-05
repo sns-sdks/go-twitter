@@ -1,4 +1,4 @@
-package entities
+package twitter
 
 // Media refers to any image, GIF, or video attached to a Tweet. The media object is not a primary object on any endpoint, but can be found and expanded in the Tweet object.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/data-dictionary/object-model/media
