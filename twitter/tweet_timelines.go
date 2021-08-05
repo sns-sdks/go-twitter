@@ -1,6 +1,6 @@
 package twitter
 
-// TimelinesOpts specifies the parameter for get timelines
+// TimelinesOpts specifies the parameters for get timelines
 type TimelinesOpts struct {
 	Exclude         string `url:"exclude,omitempty"`
 	MaxResults      int    `url:"max_results,omitempty"`
@@ -25,7 +25,7 @@ func (r *TweetResource) GetTimelines(id string, args TimelinesOpts) (*TweetsResp
 	return resp, nil
 }
 
-// MentionsOpts specifies the parameter for get mentions
+// MentionsOpts specifies the parameters for get mentions
 type MentionsOpts struct {
 	MaxResults      int    `url:"max_results,omitempty"`
 	PaginationToken string `url:"pagination_token,omitempty"`
