@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-// Meta is Response Data for request.
+// Meta represents the Response meta data for request.
 type Meta struct {
 	ResultCount     *int         `json:"result_count,omitempty"`
 	PreviousToken   *string      `json:"previous_token,omitempty"`
@@ -19,6 +19,7 @@ type Meta struct {
 	TotalTweetCount *int         `json:"total_tweet_count,omitempty"`
 }
 
+// MetaSummary represents the Response meta summary data for request.
 type MetaSummary struct {
 	Created    *int `json:"created,omitempty"`
 	NotCreated *int `json:"not_created,omitempty"`
@@ -30,7 +31,11 @@ type MetaSummary struct {
 
 // Includes represents the expansions objects for main request thread.
 type Includes struct {
-	Users []*User `json:"users,omitempty"`
+	Users  []*User  `json:"users,omitempty"`
+	Tweets []*Tweet `json:"tweets,omitempty"`
+	Media  []*Media `json:"media,omitempty"`
+	Places []*Place `json:"places,omitempty"`
+	Polls  []*Poll  `json:"polls,omitempty"`
 }
 
 // Error represents the common error response
@@ -43,38 +48,38 @@ type Error struct {
 	Type         *string `json:"type,omitempty"`
 }
 
+// BaseData Additional response data for a request.
 type BaseData struct {
 	Includes *Includes `json:"includes,omitempty"`
 	Meta     *Meta     `json:"meta,omitempty"`
 	Error    []*Error  `json:"error,omitempty"`
 }
 
+// UserResp data struct represents the single user response
 type UserResp struct {
 	Data *User `json:"data,omitempty"`
 	*BaseData
 }
 
+// UsersResp data struct represents list users response
 type UsersResp struct {
 	Data []*User `json:"data,omitempty"`
 	*BaseData
 }
 
+// TweetResp data struct represents the single tweet response
 type TweetResp struct {
 	Data *Tweet `json:"data,omitempty"`
 	*BaseData
 }
 
+// TweetsResp data struct represents list tweets response
 type TweetsResp struct {
 	Data []*Tweet `json:"data,omitempty"`
 	*BaseData
 }
 
-type TweetsCounts struct {
-	End        *string `json:"end,omitempty"`
-	Start      *string `json:"start,omitempty"`
-	TweetCount *int    `json:"tweet_count,omitempty"`
-}
-
+// TweetsCountsResp data struct represents tweet counts response
 type TweetsCountsResp struct {
 	Data []*TweetsCounts `json:"data,omitempty"`
 	*BaseData
