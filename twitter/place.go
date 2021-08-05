@@ -18,3 +18,7 @@ type PlaceGeo struct {
 	BBox       []*float64        `json:"bbox,omitempty"`
 	Properties map[string]string `json:"properties,omitempty"`
 }
+
+func (p Place) String() string {
+	return Stringify(p)
+}

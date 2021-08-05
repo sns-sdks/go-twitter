@@ -44,3 +44,7 @@ type MediaPromotedMetrics struct {
 type MediaPublicMetrics struct {
 	ViewCount *int `json:"view_count,omitempty"`
 }
+
+func (m Media) String() string {
+	return Stringify(m)
+}

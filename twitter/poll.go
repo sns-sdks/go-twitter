@@ -15,3 +15,7 @@ type PollOption struct {
 	Label    *string `json:"label,omitempty"`
 	Votes    *int    `json:"votes,omitempty"`
 }
+
+func (p Poll) String() string {
+	return Stringify(p)
+}

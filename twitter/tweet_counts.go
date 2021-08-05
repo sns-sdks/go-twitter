@@ -12,7 +12,7 @@ func (t TweetsCounts) String() string {
 	return Stringify(t)
 }
 
-// TweetCountsOpts specifies the parameter for get tweet counts.
+// TweetCountsOpts specifies the parameters for get tweet counts.
 type TweetCountsOpts struct {
 	Query       string `url:"query"`
 	Granularity string `url:"granularity,omitempty"`

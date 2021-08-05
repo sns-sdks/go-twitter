@@ -17,3 +17,7 @@ type APIError struct {
 func (e APIError) Error() string {
 	return fmt.Sprintf("Errors: %s %s", e.Title, e.Detail)
 }
+
+func (e APIError) String() string {
+	return Stringify(e)
+}

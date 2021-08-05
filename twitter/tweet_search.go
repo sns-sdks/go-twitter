@@ -1,6 +1,6 @@
 package twitter
 
-// TweetSearchOpts specifies the parameter for search tweets
+// TweetSearchOpts specifies the parameters for search tweets
 type TweetSearchOpts struct {
 	Query      string `url:"query"`
 	StartTime  string `url:"start_time,omitempty"`

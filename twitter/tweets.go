@@ -108,6 +108,7 @@ func (t Tweet) String() string {
 	return Stringify(t)
 }
 
+// TweetOpts specifies the parameters for get tweet
 type TweetOpts struct {
 	Tweet      string `url:"tweet.fields,omitempty"`
 	Expansions string `url:"expansions,omitempty"`
@@ -117,6 +118,8 @@ type TweetOpts struct {
 	User       string `url:"user.fields,omitempty"`
 }
 
+// LookupByID Returns a variety of information about a single Tweet specified by the requested ID.
+// Refer: https://developer.twitter.com/en/docs/twitter-api/tweets/lookup/api-reference/get-tweets-id
 func (r *TweetResource) LookupByID(id string, args TweetOpts) (*TweetResp, *APIError) {
 	path := Baseurl + "/tweets/" + id
 
@@ -128,11 +131,14 @@ func (r *TweetResource) LookupByID(id string, args TweetOpts) (*TweetResp, *APIE
 	return resp, nil
 }
 
+// tweetOptsByIDs specifies the parameters for tweets by ids
 type tweetOptsByIDs struct {
 	IDs string `url:"ids,omitempty"`
 	TweetOpts
 }
 
+// LookupByIDs Returns a variety of information about the Tweet specified by the requested ID or list of IDs.
+// Refer: https://developer.twitter.com/en/docs/twitter-api/tweets/lookup/api-reference/get-tweets
 func (r *TweetResource) LookupByIDs(ids string, args TweetOpts) (*TweetsResp, *APIError) {
 	path := Baseurl + "/tweets"
 
