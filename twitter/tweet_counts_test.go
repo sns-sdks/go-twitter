@@ -6,6 +6,16 @@ func (bc *BCSuite) TestCountsRecent() {
 	httpmock.RegisterResponder(
 		HttpGet, Baseurl+"/tweets/counts/recent",
 		httpmock.NewStringResponder(
+			401,
+			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
+		),
+	)
+	_, err := bc.Tw.Tweets.CountsRecent(TweetCountsOpts{})
+	bc.IsType(&APIError{}, err)
+
+	httpmock.RegisterResponder(
+		HttpGet, Baseurl+"/tweets/counts/recent",
+		httpmock.NewStringResponder(
 			200,
 			`{"data":[{"end":"2021-06-02T23:00:00.000Z","start":"2021-06-02T22:00:00.000Z","tweet_count":3506},{"end":"2021-06-03T00:00:00.000Z","start":"2021-06-02T23:00:00.000Z","tweet_count":2544}],"meta":{"total_tweet_count":744364}}`,
 		),
@@ -18,6 +28,17 @@ func (bc *BCSuite) TestCountsRecent() {
 }
 
 func (bc *BCSuite) TestCountsAll() {
+
+	httpmock.RegisterResponder(
+		HttpGet, Baseurl+"/tweets/counts/all",
+		httpmock.NewStringResponder(
+			401,
+			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
+		),
+	)
+	_, err := bc.Tw.Tweets.CountsALL(TweetCountsOpts{})
+	bc.IsType(&APIError{}, err)
+
 	httpmock.RegisterResponder(
 		HttpGet, Baseurl+"/tweets/counts/all",
 		httpmock.NewStringResponder(

@@ -10,8 +10,17 @@ func (bc *BCSuite) TestUserByID() {
 	uid := "2244994945"
 
 	httpmock.RegisterResponder(
-		HttpGet,
-		Baseurl+"/users/"+uid,
+		HttpGet, Baseurl+"/users/"+uid,
+		httpmock.NewStringResponder(
+			401,
+			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
+		),
+	)
+	_, err := bc.Tw.Users.LookupByID(uid, UserOpts{})
+	bc.IsType(&APIError{}, err)
+
+	httpmock.RegisterResponder(
+		HttpGet, Baseurl+"/users/"+uid,
 		httpmock.NewStringResponder(
 			200,
 			`{"data":{"id":"2244994945","name":"Twitter Dev","username":"TwitterDev","public_metrics":{"follower_count": 10}}}`,
@@ -27,8 +36,17 @@ func (bc *BCSuite) TestUsersByIDs() {
 	ids := "2244994945,783214"
 
 	httpmock.RegisterResponder(
-		HttpGet,
-		Baseurl+"/users",
+		HttpGet, Baseurl+"/users",
+		httpmock.NewStringResponder(
+			401,
+			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
+		),
+	)
+	_, err := bc.Tw.Users.LookupByIDs(ids, UserOpts{})
+	bc.IsType(&APIError{}, err)
+
+	httpmock.RegisterResponder(
+		HttpGet, Baseurl+"/users",
 		httpmock.NewStringResponder(
 			200,
 			`{"data":[{"id":"2244994945","username":"TwitterDev","name":"Twitter Dev"},{"id":"783214","username":"Twitter","name":"Twitter"}]}`,
@@ -44,8 +62,17 @@ func (bc *BCSuite) TestUserByUsername() {
 	username := "TwitterDev"
 
 	httpmock.RegisterResponder(
-		HttpGet,
-		Baseurl+"/users/by/username/"+username,
+		HttpGet, Baseurl+"/users/by/username/"+username,
+		httpmock.NewStringResponder(
+			401,
+			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
+		),
+	)
+	_, err := bc.Tw.Users.LookupByUsername(username, UserOpts{})
+	bc.IsType(&APIError{}, err)
+
+	httpmock.RegisterResponder(
+		HttpGet, Baseurl+"/users/by/username/"+username,
 		httpmock.NewStringResponder(
 			200,
 			`{"data":{"id":"2244994945","name":"Twitter Dev","username":"TwitterDev"}}`,
@@ -59,8 +86,17 @@ func (bc *BCSuite) TestUsersByUsernames() {
 	usernames := "TwitterDev,Twitter"
 
 	httpmock.RegisterResponder(
-		HttpGet,
-		Baseurl+"/users/by",
+		HttpGet, Baseurl+"/users/by",
+		httpmock.NewStringResponder(
+			401,
+			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
+		),
+	)
+	_, err := bc.Tw.Users.LookupByUsernames(usernames, UserOpts{})
+	bc.IsType(&APIError{}, err)
+
+	httpmock.RegisterResponder(
+		HttpGet, Baseurl+"/users/by",
 		httpmock.NewStringResponder(
 			200,
 			`{"data":[{"id":"2244994945","username":"TwitterDev","name":"Twitter Dev"},{"id":"783214","username":"Twitter","name":"Twitter"}]}`,

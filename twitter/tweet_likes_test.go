@@ -8,6 +8,16 @@ func (bc *BCSuite) TestLikingUsers() {
 	httpmock.RegisterResponder(
 		HttpGet, Baseurl+"/tweets/"+tid+"/liking_users",
 		httpmock.NewStringResponder(
+			401,
+			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
+		),
+	)
+	_, err := bc.Tw.Tweets.GetLikingUsers(tid, UserOpts{})
+	bc.IsType(&APIError{}, err)
+
+	httpmock.RegisterResponder(
+		HttpGet, Baseurl+"/tweets/"+tid+"/liking_users",
+		httpmock.NewStringResponder(
 			200,
 			`{"data":[{"id":"1065249714214457345","name":"Spaces","username":"TwitterSpaces"},{"id":"783214","name":"Twitter","username":"Twitter"},{"id":"1526228120","name":"Twitter Data","username":"TwitterData"},{"id":"2244994945","name":"Twitter Dev","username":"TwitterDev"},{"id":"6253282","name":"Twitter API","username":"TwitterAPI"}]}`,
 		),
@@ -19,6 +29,16 @@ func (bc *BCSuite) TestLikingUsers() {
 
 func (bc *BCSuite) TestLikedTweets() {
 	uid := "2244994945"
+
+	httpmock.RegisterResponder(
+		HttpGet, Baseurl+"/users/"+uid+"/liked_tweets",
+		httpmock.NewStringResponder(
+			401,
+			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
+		),
+	)
+	_, err := bc.Tw.Tweets.GetLikedTweets(uid, LikedTweetsOpts{})
+	bc.IsType(&APIError{}, err)
 
 	httpmock.RegisterResponder(
 		HttpGet, Baseurl+"/users/"+uid+"/liked_tweets",

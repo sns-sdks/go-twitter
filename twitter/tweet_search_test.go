@@ -3,6 +3,17 @@ package twitter
 import "github.com/jarcoal/httpmock"
 
 func (bc *BCSuite) TestSearchRecentTweets() {
+
+	httpmock.RegisterResponder(
+		HttpGet, Baseurl+"/tweets/search/recent",
+		httpmock.NewStringResponder(
+			401,
+			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
+		),
+	)
+	_, err := bc.Tw.Tweets.SearchRecent(TweetSearchOpts{})
+	bc.IsType(&APIError{}, err)
+
 	httpmock.RegisterResponder(
 		HttpGet, Baseurl+"/tweets/search/recent",
 		httpmock.NewStringResponder(
@@ -17,6 +28,17 @@ func (bc *BCSuite) TestSearchRecentTweets() {
 }
 
 func (bc *BCSuite) TestSearchAllTweets() {
+
+	httpmock.RegisterResponder(
+		HttpGet, Baseurl+"/tweets/search/all",
+		httpmock.NewStringResponder(
+			401,
+			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
+		),
+	)
+	_, err := bc.Tw.Tweets.SearchAll(TweetSearchOpts{})
+	bc.IsType(&APIError{}, err)
+
 	httpmock.RegisterResponder(
 		HttpGet, Baseurl+"/tweets/search/all",
 		httpmock.NewStringResponder(

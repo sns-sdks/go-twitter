@@ -26,7 +26,12 @@ func TestParseDataResponse(t *testing.T) {
 func TestDo(t *testing.T) {
 	cli := NewBearerClient("")
 
-	cli.Cli.R().SetFile("", "")
 	err := cli.Do("DELETE", "", "", "", "")
+	assert.IsType(t, &APIError{}, err)
+
+	err = cli.Do("DELETE", "", nil, "", "")
+	assert.IsType(t, &APIError{}, err)
+
+	err = cli.Do("GET", "https://127.0.0.1:1234", nil, nil, "")
 	assert.IsType(t, &APIError{}, err)
 }
