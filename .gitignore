@@ -19,3 +19,5 @@ vendor/
 .idea/
 .vscode/
 
+# Add file to test
+run_twitter.go

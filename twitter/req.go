@@ -61,10 +61,18 @@ type UserResp struct {
 	*BaseData
 }
 
+func (u UserResp) String() string {
+	return Stringify(u)
+}
+
 // UsersResp data struct represents list users response
 type UsersResp struct {
 	Data []*User `json:"data,omitempty"`
 	*BaseData
+}
+
+func (u UsersResp) String() string {
+	return Stringify(u)
 }
 
 // TweetResp data struct represents the single tweet response
@@ -73,16 +81,28 @@ type TweetResp struct {
 	*BaseData
 }
 
+func (t TweetResp) String() string {
+	return Stringify(t)
+}
+
 // TweetsResp data struct represents list tweets response
 type TweetsResp struct {
 	Data []*Tweet `json:"data,omitempty"`
 	*BaseData
 }
 
+func (t TweetsResp) String() string {
+	return Stringify(t)
+}
+
 // TweetsCountsResp data struct represents tweet counts response
 type TweetsCountsResp struct {
 	Data []*TweetsCounts `json:"data,omitempty"`
 	*BaseData
+}
+
+func (t TweetsCountsResp) String() string {
+	return Stringify(t)
 }
 
 /*
