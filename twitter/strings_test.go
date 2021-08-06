@@ -45,15 +45,6 @@ func TestStringify(t *testing.T) {
 		{nilPointer, `<nil>`},
 		{User{ID: String("123456"), Verified: Bool(true)}, `twitter.User{ID:"123456", Verified:true}`},
 		{Tweet{ID: String("123456789"), PublicMetrics: &TweetPublicMetrics{LikeCount: Int(10213)}}, `twitter.Tweet{ID:"123456789", PublicMetrics:twitter.TweetPublicMetrics{LikeCount:10213}}`},
-		{Media{Type: String("video")}, `twitter.Media{Type:"video"}`},
-		{Place{ID: String("123")}, `twitter.Place{ID:"123"}`},
-		{Poll{ID: String("123")}, `twitter.Poll{ID:"123"}`},
-		{APIError{Title: "error"}, `twitter.APIError{ClientID:"", RequiredEnrollment:"", RegistrationUrl:"", Title:"error", Detail:"", Reason:"", Type:"", Status:0}`},
-		{UserResp{Data: &User{ID: String("123456")}}, `twitter.UserResp{Data:twitter.User{ID:"123456"}}`},
-		{UsersResp{Data: []*User{{ID: String("123456")}}}, `twitter.UsersResp{Data:[twitter.User{ID:"123456"}]}`},
-		{TweetResp{Data: &Tweet{ID: String("123")}}, `twitter.TweetResp{Data:twitter.Tweet{ID:"123"}}`},
-		{TweetsResp{Data: []*Tweet{{ID: String("123")}}}, `twitter.TweetsResp{Data:[twitter.Tweet{ID:"123"}]}`},
-		{TweetsCountsResp{Data: []*TweetsCounts{{TweetCount: Int(1)}}}, `twitter.TweetsCountsResp{Data:[twitter.TweetsCounts{TweetCount:1}]}`},
 	}
 
 	for i, tt := range tests {
@@ -76,6 +67,15 @@ func TestString(t *testing.T) {
 	}{
 		{User{ID: String("1")}, `twitter.User{ID:"1"}`},
 		{Tweet{ID: String("1234")}, `twitter.Tweet{ID:"1234"}`},
+		{Media{Type: String("video")}, `twitter.Media{Type:"video"}`},
+		{Place{ID: String("123")}, `twitter.Place{ID:"123"}`},
+		{Poll{ID: String("123")}, `twitter.Poll{ID:"123"}`},
+		{APIError{Title: "error"}, `twitter.APIError{ClientID:"", RequiredEnrollment:"", RegistrationUrl:"", Title:"error", Detail:"", Reason:"", Type:"", Status:0}`},
+		{UserResp{Data: &User{ID: String("123456")}}, `twitter.UserResp{Data:twitter.User{ID:"123456"}}`},
+		{UsersResp{Data: []*User{{ID: String("123456")}}}, `twitter.UsersResp{Data:[twitter.User{ID:"123456"}]}`},
+		{TweetResp{Data: &Tweet{ID: String("123")}}, `twitter.TweetResp{Data:twitter.Tweet{ID:"123"}}`},
+		{TweetsResp{Data: []*Tweet{{ID: String("123")}}}, `twitter.TweetsResp{Data:[twitter.Tweet{ID:"123"}]}`},
+		{TweetsCountsResp{Data: []*TweetsCounts{{TweetCount: Int(1)}}}, `twitter.TweetsCountsResp{Data:[twitter.TweetsCounts{TweetCount:1}]}`},
 	}
 
 	for i, tt := range tests {
