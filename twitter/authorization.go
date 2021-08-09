@@ -33,27 +33,31 @@ func (app AuthorizationAPP) String() string {
 	return Stringify(app)
 }
 
-// GetAuthorizationURL Get authorization url for user
-func (app *AuthorizationAPP) GetAuthorizationURL() (string, error) {
+// NewAuthorizationAPP Return app for authorization
+func NewAuthorizationAPP(app AuthorizationAPP) *AuthorizationAPP {
 	app.Config = &oauth1.Config{
 		ConsumerKey:    app.ConsumerKey,
 		ConsumerSecret: app.ConsumerSecret,
 		CallbackURL:    app.CallbackURL,
 		Endpoint:       AuthorizeEndpoint,
 	}
+	return &app
+}
 
+// GetAuthorizationURL Get authorization url for user
+func (app *AuthorizationAPP) GetAuthorizationURL() (string, string, error) {
 	reqToken, reqSecret, err := app.Config.RequestToken()
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
 
 	app.RequestSecret = reqSecret
 
 	authorizationURL, err := app.Config.AuthorizationURL(reqToken)
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
-	return authorizationURL.String(), err
+	return authorizationURL.String(), reqSecret, err
 }
 
 // GenerateAccessToken Generate user access token for the app
