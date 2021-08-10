@@ -32,6 +32,58 @@ func (uc *UCSuite) TestGetUserGetBlocking() {
 	uc.Equal(*resp.Includes.Tweets[0].ID, "1389270063807598594")
 }
 
+func (uc *UCSuite) TestBlockingCreate() {
+	uid := "123456789"
+	targetID := "2244994945"
+
+	httpmock.RegisterResponder(
+		HttpPost, Baseurl+"/users/"+uid+"/blocking",
+		httpmock.NewStringResponder(
+			401,
+			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
+		),
+	)
+	_, err := uc.Tw.Users.BlockingCreate(uid, targetID)
+	uc.IsType(&APIError{}, err)
+
+	httpmock.RegisterResponder(
+		HttpPost, Baseurl+"/users/"+uid+"/blocking",
+		httpmock.NewStringResponder(
+			200,
+			`{"data":{"blocking":true}}`,
+		),
+	)
+
+	resp, _ := uc.Tw.Users.BlockingCreate(uid, targetID)
+	uc.Equal(*resp.Data.Blocking, true)
+}
+
+func (uc *UCSuite) TestBlockingDestroy() {
+	uid := "123456789"
+	targetID := "2244994945"
+
+	httpmock.RegisterResponder(
+		HttpDelete, Baseurl+"/users/"+uid+"/blocking/"+targetID,
+		httpmock.NewStringResponder(
+			401,
+			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
+		),
+	)
+	_, err := uc.Tw.Users.BlockingDestroy(uid, targetID)
+	uc.IsType(&APIError{}, err)
+
+	httpmock.RegisterResponder(
+		HttpDelete, Baseurl+"/users/"+uid+"/blocking/"+targetID,
+		httpmock.NewStringResponder(
+			200,
+			`{"data":{"blocking":false}}`,
+		),
+	)
+
+	resp, _ := uc.Tw.Users.BlockingDestroy(uid, targetID)
+	uc.Equal(*resp.Data.Blocking, false)
+}
+
 func TestUCSuite(t *testing.T) {
 	suite.Run(t, new(UCSuite))
 }
