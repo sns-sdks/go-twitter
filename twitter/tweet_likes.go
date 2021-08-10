@@ -32,3 +32,53 @@ func (r *TweetResource) GetLikedTweets(id string, args LikedTweetsOpts) (*Tweets
 	}
 	return resp, nil
 }
+
+// likeTweetOpts specifies the parameters for like tweet
+type likeTweetOpts struct {
+	TweetID string `json:"tweet_id"`
+}
+
+// LikedStatus represents the status for like tweet
+type LikedStatus struct {
+	Liked *bool `json:"liked,omitempty"`
+}
+
+func (s LikedStatus) String() string {
+	return Stringify(s)
+}
+
+// LikedResp represents the response for like tweet
+type LikedResp struct {
+	Data *LikedStatus `json:"data,omitempty"`
+}
+
+func (r LikedResp) String() string {
+	return Stringify(r)
+}
+
+// LikeCreate Allows an authenticated user ID to Like the target Tweet.
+// Refer: https://developer.twitter.com/en/docs/twitter-api/tweets/likes/api-reference/post-users-id-likes
+func (r *TweetResource) LikeCreate(id, tweetID string) (*LikedResp, *APIError) {
+	path := Baseurl + "/users/" + id + "/likes"
+	postArgs := likeTweetOpts{TweetID: tweetID}
+
+	resp := new(LikedResp)
+	err := r.Cli.DoPost(path, postArgs, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+// LikeDestroy Allows a user or authenticated user ID to unlike a Tweet.
+// Refer: https://developer.twitter.com/en/docs/twitter-api/tweets/likes/api-reference/delete-users-id-likes-tweet_id
+func (r *TweetResource) LikeDestroy(id, tweetID string) (*LikedResp, *APIError) {
+	path := Baseurl + "/users/" + id + "/likes/" + tweetID
+
+	resp := new(LikedResp)
+	err := r.Cli.DoDelete(path, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
