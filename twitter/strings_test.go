@@ -76,6 +76,7 @@ func TestString(t *testing.T) {
 		{MutingStatus{Muting: Bool(true)}, `twitter.MutingStatus{Muting:true}`},
 		{LikedStatus{Liked: Bool(true)}, `twitter.LikedStatus{Liked:true}`},
 		{RetweetedStatus{Retweeted: Bool(true)}, `twitter.RetweetedStatus{Retweeted:true}`},
+		{HiddenStatus{Hidden: Bool(true)}, `twitter.HiddenStatus{Hidden:true}`},
 		{APIError{Title: "error"}, `twitter.APIError{ClientID:"", RequiredEnrollment:"", RegistrationUrl:"", Title:"error", Detail:"", Reason:"", Type:"", Status:0}`},
 		{AuthorizationAPP{ConsumerKey: "123", ConsumerSecret: ""}, `twitter.AuthorizationAPP{ConsumerKey:"123", ConsumerSecret:"", CallbackURL:"", AccessTokenKey:"", AccessTokenSecret:"", RequestSecret:""}`},
 		{UserResp{Data: &User{ID: String("123456")}}, `twitter.UserResp{Data:twitter.User{ID:"123456"}}`},
@@ -88,6 +89,7 @@ func TestString(t *testing.T) {
 		{MutingResp{Data: &MutingStatus{Muting: Bool(false)}}, `twitter.MutingResp{Data:twitter.MutingStatus{Muting:false}}`},
 		{LikedResp{Data: &LikedStatus{Liked: Bool(false)}}, `twitter.LikedResp{Data:twitter.LikedStatus{Liked:false}}`},
 		{RetweetedResp{Data: &RetweetedStatus{Retweeted: Bool(false)}}, `twitter.RetweetedResp{Data:twitter.RetweetedStatus{Retweeted:false}}`},
+		{HiddenResp{Data: &HiddenStatus{Hidden: Bool(false)}}, `twitter.HiddenResp{Data:twitter.HiddenStatus{Hidden:false}}`},
 	}
 
 	for i, tt := range tests {
