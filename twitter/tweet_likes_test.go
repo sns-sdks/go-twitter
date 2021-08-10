@@ -50,3 +50,55 @@ func (bc *BCSuite) TestLikedTweets() {
 	resp, _ := bc.Tw.Tweets.GetLikedTweets(uid, LikedTweetsOpts{})
 	bc.Equal(len(resp.Data), 5)
 }
+
+func (uc *UCSuite) TestCreateLike() {
+	uid := "123456789"
+	tweetID := "1228393702244134912"
+
+	httpmock.RegisterResponder(
+		HttpPost, Baseurl+"/users/"+uid+"/likes",
+		httpmock.NewStringResponder(
+			401,
+			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
+		),
+	)
+	_, err := uc.Tw.Tweets.LikeCreate(uid, tweetID)
+	uc.IsType(&APIError{}, err)
+
+	httpmock.RegisterResponder(
+		HttpPost, Baseurl+"/users/"+uid+"/likes",
+		httpmock.NewStringResponder(
+			200,
+			`{"data":{"muting":true}}`,
+		),
+	)
+
+	resp, _ := uc.Tw.Tweets.LikeCreate(uid, tweetID)
+	uc.Equal(*resp.Data.Liked, true)
+}
+
+func (uc *UCSuite) TestDestroyLike() {
+	uid := "123456789"
+	tweetID := "1228393702244134912"
+
+	httpmock.RegisterResponder(
+		HttpDelete, Baseurl+"/users/"+uid+"/likes/"+tweetID,
+		httpmock.NewStringResponder(
+			401,
+			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
+		),
+	)
+	_, err := uc.Tw.Tweets.LikeDestroy(uid, tweetID)
+	uc.IsType(&APIError{}, err)
+
+	httpmock.RegisterResponder(
+		HttpDelete, Baseurl+"/users/"+uid+"/likes/"+tweetID,
+		httpmock.NewStringResponder(
+			200,
+			`{"data":{"muting":false}}`,
+		),
+	)
+
+	resp, _ := uc.Tw.Tweets.LikeDestroy(uid, tweetID)
+	uc.Equal(*resp.Data.Liked, false)
+}
