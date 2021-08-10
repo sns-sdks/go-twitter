@@ -42,8 +42,8 @@ type followingOpts struct {
 
 // FollowingStatus represents status for following
 type FollowingStatus struct {
-	Following     bool `json:"following,omitempty"`
-	PendingFollow bool `json:"pending_follow,omitempty"`
+	Following     *bool `json:"following,omitempty"`
+	PendingFollow *bool `json:"pending_follow,omitempty"`
 }
 
 func (f FollowingStatus) String() string {

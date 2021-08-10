@@ -71,6 +71,7 @@ func TestString(t *testing.T) {
 		{Place{ID: String("123")}, `twitter.Place{ID:"123"}`},
 		{Poll{ID: String("123")}, `twitter.Poll{ID:"123"}`},
 		{TweetsCounts{TweetCount: Int(1)}, `twitter.TweetsCounts{TweetCount:1}`},
+		{FollowingStatus{Following: Bool(true)}, `twitter.FollowingStatus{Following:true}`},
 		{APIError{Title: "error"}, `twitter.APIError{ClientID:"", RequiredEnrollment:"", RegistrationUrl:"", Title:"error", Detail:"", Reason:"", Type:"", Status:0}`},
 		{AuthorizationAPP{ConsumerKey: "123", ConsumerSecret: ""}, `twitter.AuthorizationAPP{ConsumerKey:"123", ConsumerSecret:"", CallbackURL:"", AccessTokenKey:"", AccessTokenSecret:"", RequestSecret:""}`},
 		{UserResp{Data: &User{ID: String("123456")}}, `twitter.UserResp{Data:twitter.User{ID:"123456"}}`},
@@ -78,6 +79,7 @@ func TestString(t *testing.T) {
 		{TweetResp{Data: &Tweet{ID: String("123")}}, `twitter.TweetResp{Data:twitter.Tweet{ID:"123"}}`},
 		{TweetsResp{Data: []*Tweet{{ID: String("123")}}}, `twitter.TweetsResp{Data:[twitter.Tweet{ID:"123"}]}`},
 		{TweetsCountsResp{Data: []*TweetsCounts{{TweetCount: Int(1)}}}, `twitter.TweetsCountsResp{Data:[twitter.TweetsCounts{TweetCount:1}]}`},
+		{FollowingResp{Data: &FollowingStatus{Following: Bool(true)}}, `twitter.FollowingResp{Data:twitter.FollowingStatus{Following:true}}`},
 	}
 
 	for i, tt := range tests {

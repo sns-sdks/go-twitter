@@ -77,7 +77,7 @@ func (uc *UCSuite) TestCreateFollowing() {
 	)
 
 	resp, _ := uc.Tw.Users.FollowingCreate(uid, targetID)
-	uc.Equal(resp.Data.Following, true)
+	uc.Equal(*resp.Data.Following, true)
 }
 
 func (uc *UCSuite) TestDestroyFollowing() {
@@ -103,5 +103,5 @@ func (uc *UCSuite) TestDestroyFollowing() {
 	)
 
 	resp, _ := uc.Tw.Users.FollowingDestroy(uid, targetID)
-	uc.Equal(resp.Data.Following, false)
+	uc.Equal(*resp.Data.Following, false)
 }
