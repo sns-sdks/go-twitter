@@ -1,7 +1,7 @@
 .PHONY: all
-all: fmt tests tests-cov
+all: lint tests tests-cov
 
-fmt:
+lint:
 	@test -z $$(go fmt ./...)
 
 tests:

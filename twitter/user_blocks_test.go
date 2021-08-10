@@ -1,8 +1,12 @@
 package twitter
 
-import "github.com/jarcoal/httpmock"
+import (
+	"github.com/jarcoal/httpmock"
+	"github.com/stretchr/testify/suite"
+	"testing"
+)
 
-func (bc *BCSuite) TestGetUserGetBlocking() {
+func (uc *UCSuite) TestGetUserGetBlocking() {
 	uid := "2244994945"
 
 	httpmock.RegisterResponder(
@@ -12,8 +16,8 @@ func (bc *BCSuite) TestGetUserGetBlocking() {
 			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
 		),
 	)
-	_, err := bc.Tw.Users.GetBlocking(uid, UserBlockingOpts{})
-	bc.IsType(&APIError{}, err)
+	_, err := uc.Tw.Users.GetBlocking(uid, UserBlockingOpts{})
+	uc.IsType(&APIError{}, err)
 
 	httpmock.RegisterResponder(
 		HttpGet, Baseurl+"/users/"+uid+"/blocking",
@@ -23,7 +27,11 @@ func (bc *BCSuite) TestGetUserGetBlocking() {
 		),
 	)
 
-	resp, _ := bc.Tw.Users.GetBlocking(uid, UserBlockingOpts{})
-	bc.Equal(len(resp.Data), 5)
-	bc.Equal(*resp.Includes.Tweets[0].ID, "1389270063807598594")
+	resp, _ := uc.Tw.Users.GetBlocking(uid, UserBlockingOpts{})
+	uc.Equal(len(resp.Data), 5)
+	uc.Equal(*resp.Includes.Tweets[0].ID, "1389270063807598594")
+}
+
+func TestUCSuite(t *testing.T) {
+	suite.Run(t, new(UCSuite))
 }
