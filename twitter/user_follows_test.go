@@ -2,7 +2,7 @@ package twitter
 
 import "github.com/jarcoal/httpmock"
 
-func (bc BCSuite) TestGetUserFollowers() {
+func (bc *BCSuite) TestGetUserFollowers() {
 	uid := "2244994945"
 
 	httpmock.RegisterResponder(
@@ -28,7 +28,7 @@ func (bc BCSuite) TestGetUserFollowers() {
 	bc.Equal(*resp.Data[0].ID, "1356836061637468161")
 }
 
-func (bc BCSuite) TestGetUserFollowing() {
+func (bc *BCSuite) TestGetUserFollowing() {
 	uid := "2244994945"
 
 	httpmock.RegisterResponder(
@@ -52,4 +52,56 @@ func (bc BCSuite) TestGetUserFollowing() {
 	resp, _ := bc.Tw.Users.GetFollowing(uid, FollowsOpts{})
 	bc.Equal(len(resp.Data), 5)
 	bc.Equal(*resp.Data[0].ID, "1062359582")
+}
+
+func (uc *UCSuite) TestCreateFollowing() {
+	uid := "123456789"
+	targetID := "2244994945"
+
+	httpmock.RegisterResponder(
+		HttpPost, Baseurl+"/users/"+uid+"/following",
+		httpmock.NewStringResponder(
+			401,
+			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
+		),
+	)
+	_, err := uc.Tw.Users.FollowingCreate(uid, targetID)
+	uc.IsType(&APIError{}, err)
+
+	httpmock.RegisterResponder(
+		HttpPost, Baseurl+"/users/"+uid+"/following",
+		httpmock.NewStringResponder(
+			200,
+			`{"data":{"following":true,"pending_follow":false}}`,
+		),
+	)
+
+	resp, _ := uc.Tw.Users.FollowingCreate(uid, targetID)
+	uc.Equal(*resp.Data.Following, true)
+}
+
+func (uc *UCSuite) TestDestroyFollowing() {
+	uid := "123456789"
+	targetID := "2244994945"
+
+	httpmock.RegisterResponder(
+		HttpDelete, Baseurl+"/users/"+uid+"/following/"+targetID,
+		httpmock.NewStringResponder(
+			401,
+			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
+		),
+	)
+	_, err := uc.Tw.Users.FollowingDestroy(uid, targetID)
+	uc.IsType(&APIError{}, err)
+
+	httpmock.RegisterResponder(
+		HttpDelete, Baseurl+"/users/"+uid+"/following/"+targetID,
+		httpmock.NewStringResponder(
+			200,
+			`{"data":{"following":false,"pending_follow":false}}`,
+		),
+	)
+
+	resp, _ := uc.Tw.Users.FollowingDestroy(uid, targetID)
+	uc.Equal(*resp.Data.Following, false)
 }

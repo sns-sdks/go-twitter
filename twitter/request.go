@@ -142,12 +142,8 @@ func (r *Client) Do(method, path string, queryParams interface{}, jsonParams int
 		req.SetQueryParamsFromValues(v)
 	}
 	if jsonParams != nil {
-		v, err := goquery.Values(jsonParams)
-		if err != nil {
-			apiError := APIError{Title: "Form param Error", Detail: err.Error()}
-			return &apiError
-		}
-		req.SetFormDataFromValues(v)
+		req.SetBody(jsonParams)
+		req.SetHeader("Content-Type", "application/json")
 	}
 
 	resp, err := req.Execute(method, path)
@@ -161,4 +157,12 @@ func (r *Client) Do(method, path string, queryParams interface{}, jsonParams int
 
 func (r *Client) DoGet(path string, queryParams interface{}, d interface{}) *APIError {
 	return r.Do(HttpGet, path, queryParams, nil, d)
+}
+
+func (r *Client) DoPost(path string, jsonParams interface{}, d interface{}) *APIError {
+	return r.Do(HttpPost, path, nil, jsonParams, d)
+}
+
+func (r *Client) DoDelete(path string, d interface{}) *APIError {
+	return r.Do(HttpDelete, path, nil, nil, d)
 }
