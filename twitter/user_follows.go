@@ -35,7 +35,7 @@ func (r *UserResource) GetFollowers(id string, args FollowsOpts) (*UsersResp, *A
 	return resp, nil
 }
 
-// followingOpts specifies the parameters for follows create or destroy
+// followingOpts specifies the parameters for follows create
 type followingOpts struct {
 	TargetUserID string `json:"target_user_id"`
 }
@@ -50,7 +50,7 @@ func (f FollowingStatus) String() string {
 	return Stringify(f)
 }
 
-// FollowingResp data struct represents list users response
+// FollowingResp data struct represents response for following
 type FollowingResp struct {
 	Data *FollowingStatus `json:"data,omitempty"`
 }
