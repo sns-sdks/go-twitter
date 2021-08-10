@@ -85,7 +85,7 @@ func TestString(t *testing.T) {
 		{FollowingResp{Data: &FollowingStatus{Following: Bool(true)}}, `twitter.FollowingResp{Data:twitter.FollowingStatus{Following:true}}`},
 		{BlockingResp{Data: &BlockingStatus{Blocking: Bool(false)}}, `twitter.BlockingResp{Data:twitter.BlockingStatus{Blocking:false}}`},
 		{MutingResp{Data: &MutingStatus{Muting: Bool(false)}}, `twitter.MutingResp{Data:twitter.MutingStatus{Muting:false}}`},
-		{LikedResp{Data: &LikedStatus{Liked: Bool(false)}}, `twitter.LikedResp{Data:twitter.LikedStatus{Liked:true}}`},
+		{LikedResp{Data: &LikedStatus{Liked: Bool(false)}}, `twitter.LikedResp{Data:twitter.LikedStatus{Liked:false}}`},
 	}
 
 	for i, tt := range tests {

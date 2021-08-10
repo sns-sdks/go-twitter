@@ -69,7 +69,7 @@ func (uc *UCSuite) TestCreateLike() {
 		HttpPost, Baseurl+"/users/"+uid+"/likes",
 		httpmock.NewStringResponder(
 			200,
-			`{"data":{"muting":true}}`,
+			`{"data":{"liked":true}}`,
 		),
 	)
 
@@ -95,7 +95,7 @@ func (uc *UCSuite) TestDestroyLike() {
 		HttpDelete, Baseurl+"/users/"+uid+"/likes/"+tweetID,
 		httpmock.NewStringResponder(
 			200,
-			`{"data":{"muting":false}}`,
+			`{"data":{"liked":false}}`,
 		),
 	)
 
