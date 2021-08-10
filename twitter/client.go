@@ -6,9 +6,10 @@ import (
 )
 
 const (
-	Baseurl  = "https://api.twitter.com/2"
-	HttpGet  = resty.MethodGet
-	HttpPost = resty.MethodPost
+	Baseurl    = "https://api.twitter.com/2"
+	HttpGet    = resty.MethodGet
+	HttpPost   = resty.MethodPost
+	HttpDelete = resty.MethodDelete
 )
 
 type Client struct {
