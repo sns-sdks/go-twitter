@@ -9,6 +9,7 @@ const (
 	Baseurl    = "https://api.twitter.com/2"
 	HttpGet    = resty.MethodGet
 	HttpPost   = resty.MethodPost
+	HttpPut    = resty.MethodPut
 	HttpDelete = resty.MethodDelete
 )
 
