@@ -5,6 +5,7 @@ A simple Go wrapper for Twitter API v2 ✨ 🍰 ✨
 [![Test Status](https://github.com/sns-sdks/go-twitter/workflows/tests/badge.svg)](https://github.com/sns-sdks/go-twitter/actions?query=workflow%3Atests)
 [![Test Coverage](https://codecov.io/gh/sns-sdks/go-twitter/branch/main/graph/badge.svg)](https://codecov.io/gh/sns-sdks/go-twitter)
 [![Go Report Card](https://goreportcard.com/badge/github.com/sns-sdks/go-twitter)](https://goreportcard.com/report/github.com/sns-sdks/go-twitter)
+[![Go Reference](https://pkg.go.dev/badge/github.com/sns-sdks/go-twitter.svg)](https://pkg.go.dev/github.com/sns-sdks/go-twitter)
 
 ## Installation
 
