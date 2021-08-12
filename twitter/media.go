@@ -14,6 +14,7 @@ type Media struct {
 	PreviewImageURL  *string                `json:"preview_image_url,omitempty"`
 	PromotedMetrics  *MediaPromotedMetrics  `json:"promoted_metrics,omitempty"`
 	PublicMetrics    *MediaNonPublicMetrics `json:"public_metrics,omitempty"`
+	AltText          *string                `json:"alt_text,omitempty"`
 }
 
 type MediaNonPublicMetrics struct {
