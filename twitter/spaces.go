@@ -30,6 +30,10 @@ type Space struct {
 	UpdatedAt        *string   `json:"updated_at,omitempty"`
 }
 
+func (s Space) String() string {
+	return Stringify(s)
+}
+
 // SpaceOpts specifies the parameters for get space
 type SpaceOpts struct {
 	SpaceFields string `url:"space.fields,omitempty"`
