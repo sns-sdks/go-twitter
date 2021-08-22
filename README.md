@@ -60,3 +60,7 @@ Users:
 - Follows
 - Blocks
 - Mutes
+
+Spaces:
+- Lookup
+- Search
