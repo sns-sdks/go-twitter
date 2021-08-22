@@ -18,6 +18,7 @@ type Client struct {
 	// API Resource
 	Users  *UserResource
 	Tweets *TweetResource
+	Spaces *SpaceResource
 }
 
 type Resource struct {
@@ -28,6 +29,7 @@ func NewClient(client *resty.Client) *Client {
 	c := &Client{Cli: client}
 	c.Users = newUserResource(c)
 	c.Tweets = newTweetResource(c)
+	c.Spaces = newSpaceResource(c)
 	return c
 }
 
