@@ -45,6 +45,7 @@ func TestStringify(t *testing.T) {
 		{nilPointer, `<nil>`},
 		{User{ID: String("123456"), Verified: Bool(true)}, `twitter.User{ID:"123456", Verified:true}`},
 		{Tweet{ID: String("123456789"), PublicMetrics: &TweetPublicMetrics{LikeCount: Int(10213)}}, `twitter.Tweet{ID:"123456789", PublicMetrics:twitter.TweetPublicMetrics{LikeCount:10213}}`},
+		{Space{ID: String("1DXxyRYNejbKM")}, `twitter.Space{ID:"1DXxyRYNejbKM"}`},
 	}
 
 	for i, tt := range tests {
@@ -70,6 +71,7 @@ func TestString(t *testing.T) {
 		{Media{Type: String("video")}, `twitter.Media{Type:"video"}`},
 		{Place{ID: String("123")}, `twitter.Place{ID:"123"}`},
 		{Poll{ID: String("123")}, `twitter.Poll{ID:"123"}`},
+		{Space{ID: String("1DXxyRYNejbKM")}, `twitter.Space{ID:"1DXxyRYNejbKM"}`},
 		{TweetsCounts{TweetCount: Int(1)}, `twitter.TweetsCounts{TweetCount:1}`},
 		{BlockingStatus{Blocking: Bool(true)}, `twitter.BlockingStatus{Blocking:true}`},
 		{FollowingStatus{Following: Bool(true)}, `twitter.FollowingStatus{Following:true}`},
@@ -90,6 +92,8 @@ func TestString(t *testing.T) {
 		{LikedResp{Data: &LikedStatus{Liked: Bool(false)}}, `twitter.LikedResp{Data:twitter.LikedStatus{Liked:false}}`},
 		{RetweetedResp{Data: &RetweetedStatus{Retweeted: Bool(false)}}, `twitter.RetweetedResp{Data:twitter.RetweetedStatus{Retweeted:false}}`},
 		{HiddenResp{Data: &HiddenStatus{Hidden: Bool(false)}}, `twitter.HiddenResp{Data:twitter.HiddenStatus{Hidden:false}}`},
+		{SpaceResp{Data: &Space{ID: String("1eaKbnakjkkKX")}}, `twitter.SpaceResp{Data:twitter.Space{ID:"1eaKbnakjkkKX"}}`},
+		{SpacesResp{Data: []*Space{{ID: String("1eaKbnakjkkKX"), State: String("scheduled")}}}, `twitter.SpacesResp{Data:[twitter.Space{ID:"1eaKbnakjkkKX", State:"scheduled"}]}`},
 	}
 
 	for i, tt := range tests {

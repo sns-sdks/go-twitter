@@ -105,6 +105,26 @@ func (t TweetsCountsResp) String() string {
 	return Stringify(t)
 }
 
+// SpaceResp data struct represents the single space response
+type SpaceResp struct {
+	Data *Space `json:"data,omitempty"`
+	*BaseData
+}
+
+func (s SpaceResp) String() string {
+	return Stringify(s)
+}
+
+// SpacesResp data struct represents the list spaces response
+type SpacesResp struct {
+	Data []*Space `json:"data,omitempty"`
+	*BaseData
+}
+
+func (s SpacesResp) String() string {
+	return Stringify(s)
+}
+
 /*
 	functions for http requests
 */
