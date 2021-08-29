@@ -16,9 +16,10 @@ const (
 type Client struct {
 	Cli *resty.Client
 	// API Resource
-	Users  *UserResource
-	Tweets *TweetResource
-	Spaces *SpaceResource
+	Users      *UserResource
+	Tweets     *TweetResource
+	Spaces     *SpaceResource
+	Compliance *ComplianceResource
 }
 
 type Resource struct {
@@ -30,6 +31,7 @@ func NewClient(client *resty.Client) *Client {
 	c.Users = newUserResource(c)
 	c.Tweets = newTweetResource(c)
 	c.Spaces = newSpaceResource(c)
+	c.Compliance = newComplianceResource(c)
 	return c
 }
 

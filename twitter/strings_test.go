@@ -46,6 +46,7 @@ func TestStringify(t *testing.T) {
 		{User{ID: String("123456"), Verified: Bool(true)}, `twitter.User{ID:"123456", Verified:true}`},
 		{Tweet{ID: String("123456789"), PublicMetrics: &TweetPublicMetrics{LikeCount: Int(10213)}}, `twitter.Tweet{ID:"123456789", PublicMetrics:twitter.TweetPublicMetrics{LikeCount:10213}}`},
 		{Space{ID: String("1DXxyRYNejbKM")}, `twitter.Space{ID:"1DXxyRYNejbKM"}`},
+		{ComplianceJob{ID: String("1423095206576984067")}, `twitter.ComplianceJob{ID:"1423095206576984067"}`},
 	}
 
 	for i, tt := range tests {
@@ -94,6 +95,8 @@ func TestString(t *testing.T) {
 		{HiddenResp{Data: &HiddenStatus{Hidden: Bool(false)}}, `twitter.HiddenResp{Data:twitter.HiddenStatus{Hidden:false}}`},
 		{SpaceResp{Data: &Space{ID: String("1eaKbnakjkkKX")}}, `twitter.SpaceResp{Data:twitter.Space{ID:"1eaKbnakjkkKX"}}`},
 		{SpacesResp{Data: []*Space{{ID: String("1eaKbnakjkkKX"), State: String("scheduled")}}}, `twitter.SpacesResp{Data:[twitter.Space{ID:"1eaKbnakjkkKX", State:"scheduled"}]}`},
+		{ComplianceJobResp{Data: &ComplianceJob{ID: String("1423095206576984067")}}, `twitter.ComplianceJobResp{Data:twitter.ComplianceJob{ID:"1423095206576984067"}}`},
+		{ComplianceJobsResp{Data: []*ComplianceJob{{ID: String("1421185651106480129")}}}, `twitter.ComplianceJobsResp{Data:[twitter.ComplianceJob{ID:"1421185651106480129"}]}`},
 	}
 
 	for i, tt := range tests {
