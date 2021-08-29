@@ -20,14 +20,9 @@ jobs:
         with:
           go-version: 1.16
       -
-        name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v2
+        name: Publish
+        uses: softprops/action-gh-release@v1
         with:
-          # either 'goreleaser' (default) or 'goreleaser-pro'
-          distribution: goreleaser
-          version: latest
-          args: release --rm-dist
+          body: '[More see Changelog](https://github.com/sns-sdks/go-twitter/blob/master/CHANGELOG.md)'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # Your GoReleaser Pro key, if you are using the 'goreleaser-pro' distribution
-          # GORELEASER_KEY: ${{ secrets.GORELEASER_KEY }}
