@@ -64,3 +64,6 @@ Users:
 Spaces:
 - Lookup
 - Search
+
+Compliance:
+- Batch compliance
