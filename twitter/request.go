@@ -125,6 +125,27 @@ func (s SpacesResp) String() string {
 	return Stringify(s)
 }
 
+// ComplianceJobResp data struct represents the single compliance job response
+type ComplianceJobResp struct {
+	Data *ComplianceJob `json:"data,omitempty"`
+	*BaseData
+}
+
+func (j ComplianceJobResp) String() string {
+	return Stringify(j)
+}
+
+// ComplianceJobsResp data struct represents the list of compliance job response
+type ComplianceJobsResp struct {
+	Data []*ComplianceJob `json:"data,omitempty"`
+	*BaseData
+}
+
+func (j ComplianceJobsResp) String() string {
+	return Stringify(j)
+
+}
+
 /*
 	functions for http requests
 */
