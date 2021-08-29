@@ -29,10 +29,10 @@ func (j ComplianceJob) String() string {
 	return Stringify(j)
 }
 
-// LookupByID Get a single compliance job with the specified ID.
+// LookupJobByID Get a single compliance job with the specified ID.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/compliance/batch-compliance/api-reference/get-compliance-jobs-id
-func (r *ComplianceResource) LookupByID(id string) (*ComplianceJobResp, *APIError) {
-	path := Baseurl + "compliance/jobs/" + id
+func (r *ComplianceResource) LookupJobByID(id string) (*ComplianceJobResp, *APIError) {
+	path := Baseurl + "/compliance/jobs/" + id
 
 	resp := new(ComplianceJobResp)
 	err := r.Cli.DoGet(path, nil, resp)
