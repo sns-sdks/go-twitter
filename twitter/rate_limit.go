@@ -40,9 +40,6 @@ func getResource(url string) string {
 
 func checkResource(url string, e Endpoint) bool {
 	reg := regexp.MustCompile(e.Regex)
-	if reg == nil {
-		return false
-	}
 	r := reg.MatchString(url)
 	return r
 }
@@ -66,6 +63,10 @@ func (r *RateLimit) Set(url, method string, header http.Header) {
 	limit, _ := strconv.Atoi(header.Get("x-rate-limit-limit"))
 	remaining, _ := strconv.Atoi(header.Get("x-rate-limit-remaining"))
 	reset, _ := strconv.Atoi(header.Get("x-rate-limit-reset"))
+
+	if r.Mapping == nil {
+		r.Mapping = make(map[string]map[string]RateLimitData)
+	}
 
 	methodLimit := map[string]RateLimitData{method: {
 		Limit: limit, Remaining: remaining, Reset: reset,
