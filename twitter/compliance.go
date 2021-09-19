@@ -32,7 +32,7 @@ func (j ComplianceJob) String() string {
 // LookupJobByID Get a single compliance job with the specified ID.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/compliance/batch-compliance/api-reference/get-compliance-jobs-id
 func (r *ComplianceResource) LookupJobByID(id string) (*ComplianceJobResp, *APIError) {
-	path := Baseurl + "/compliance/jobs/" + id
+	path := "/compliance/jobs/" + id
 
 	resp := new(ComplianceJobResp)
 	err := r.Cli.DoGet(path, nil, resp)
@@ -51,7 +51,7 @@ type LookupJobsOpts struct {
 // LookupJobs Returns a list of recent compliance jobs.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/compliance/batch-compliance/api-reference/get-compliance-jobs
 func (r *ComplianceResource) LookupJobs(args LookupJobsOpts) (*ComplianceJobsResp, *APIError) {
-	path := Baseurl + "/compliance/jobs"
+	path := "/compliance/jobs"
 
 	resp := new(ComplianceJobsResp)
 	err := r.Cli.DoGet(path, args, resp)
@@ -71,7 +71,7 @@ type CreateJobOpts struct {
 // CreateJob Creates a new compliance job for Tweet IDs or user IDs.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/compliance/batch-compliance/api-reference/post-compliance-jobs
 func (r *ComplianceResource) CreateJob(args CreateJobOpts) (*ComplianceJobResp, *APIError) {
-	path := Baseurl + "/compliance/jobs"
+	path := "/compliance/jobs"
 
 	resp := new(ComplianceJobResp)
 	err := r.Cli.DoPost(path, args, resp)

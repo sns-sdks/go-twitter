@@ -44,7 +44,7 @@ type SpaceOpts struct {
 // LookupByID Returns a variety of information about a single Space specified by the requested ID.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/spaces/lookup/api-reference/get-spaces-id
 func (r *SpaceResource) LookupByID(id string, args SpaceOpts) (*SpaceResp, *APIError) {
-	path := Baseurl + "/spaces/" + id
+	path := "/spaces/" + id
 	resp := new(SpaceResp)
 
 	err := r.Cli.DoGet(path, args, resp)
@@ -63,7 +63,7 @@ type spaceOptsByIDs struct {
 // LookupByIDs Returns details about multiple Spaces. Up to 100 comma-separated Spaces IDs can be looked up using this endpoint.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/spaces/lookup/api-reference/get-spaces
 func (r *SpaceResource) LookupByIDs(ids string, args SpaceOpts) (*SpacesResp, *APIError) {
-	path := Baseurl + "/spaces"
+	path := "/spaces"
 	newArgs := spaceOptsByIDs{ids, args}
 	resp := new(SpacesResp)
 
@@ -83,7 +83,7 @@ type spaceOptsByCreators struct {
 // LookupByCreators Returns live or scheduled Spaces created by the specified user IDs.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/spaces/lookup/api-reference/get-spaces-by-creator-ids
 func (r *SpaceResource) LookupByCreators(userIDs string, args SpaceOpts) (*SpacesResp, *APIError) {
-	path := Baseurl + "/spaces/by/creator_ids"
+	path := "/spaces/by/creator_ids"
 	newArgs := spaceOptsByCreators{userIDs, args}
 	resp := new(SpacesResp)
 

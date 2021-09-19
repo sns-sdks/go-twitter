@@ -26,7 +26,7 @@ func (m MutingResp) String() string {
 // MutingCreate Allows an authenticated user ID to mute the target user.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/users/mutes/api-reference/post-users-user_id-muting
 func (r *UserResource) MutingCreate(id, targetUserID string) (*MutingResp, *APIError) {
-	path := Baseurl + "/users/" + id + "/muting"
+	path := "/users/" + id + "/muting"
 	postArgs := mutingOpts{TargetUserID: targetUserID}
 
 	resp := new(MutingResp)
@@ -40,7 +40,7 @@ func (r *UserResource) MutingCreate(id, targetUserID string) (*MutingResp, *APIE
 // MutingDestroy Allows an authenticated user ID to unmute the target user.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/users/mutes/api-reference/delete-users-user_id-muting
 func (r *UserResource) MutingDestroy(id, targetUserID string) (*MutingResp, *APIError) {
-	path := Baseurl + "/users/" + id + "/muting/" + targetUserID
+	path := "/users/" + id + "/muting/" + targetUserID
 
 	resp := new(MutingResp)
 	err := r.Cli.DoDelete(path, resp)

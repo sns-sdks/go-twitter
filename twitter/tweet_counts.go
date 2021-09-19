@@ -25,7 +25,7 @@ type TweetCountsOpts struct {
 // CountsRecent Returns count of Tweets from the last seven days that match a search query.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/tweets/counts/api-reference/get-tweets-counts-recent
 func (r *TweetResource) CountsRecent(args TweetCountsOpts) (*TweetsCountsResp, *APIError) {
-	path := Baseurl + "/tweets/counts/recent"
+	path := "/tweets/counts/recent"
 
 	resp := new(TweetsCountsResp)
 	err := r.Cli.DoGet(path, args, resp)
@@ -38,7 +38,7 @@ func (r *TweetResource) CountsRecent(args TweetCountsOpts) (*TweetsCountsResp, *
 // CountsALL Returns the complete history of public Tweets matching a search query
 // Refer: https://developer.twitter.com/en/docs/twitter-api/tweets/counts/api-reference/get-tweets-counts-all
 func (r *TweetResource) CountsALL(args TweetCountsOpts) (*TweetsCountsResp, *APIError) {
-	path := Baseurl + "/tweets/counts/all"
+	path := "/tweets/counts/all"
 
 	resp := new(TweetsCountsResp)
 	err := r.Cli.DoGet(path, args, resp)

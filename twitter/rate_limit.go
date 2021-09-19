@@ -78,6 +78,10 @@ type RateLimit struct {
 	Mapping map[string]map[string]RateLimitData `json:"mapping"`
 }
 
+func newRateLimit() *RateLimit {
+	return &RateLimit{}
+}
+
 func (r *RateLimit) String() string {
 	return Stringify(r)
 }

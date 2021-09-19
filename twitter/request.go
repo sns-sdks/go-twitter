@@ -5,6 +5,7 @@ import (
 	"github.com/go-resty/resty/v2"
 	goquery "github.com/google/go-querystring/query"
 	"net/http"
+	"strings"
 )
 
 // Meta represents the Response meta data for request.
@@ -187,11 +188,20 @@ func (r *Client) Do(method, path string, queryParams interface{}, jsonParams int
 		req.SetHeader("Content-Type", "application/json")
 	}
 
-	resp, err := req.Execute(method, path)
+	// If the only path, add the domain.
+	var url string
+	if strings.HasPrefix(path, "http") {
+		url = path
+	} else {
+		url = Baseurl + path
+	}
+
+	resp, err := req.Execute(method, url)
 	if err != nil {
 		apiError := APIError{Title: "HTTP Error", Detail: err.Error()}
 		return &apiError
 	}
+	r.RateLimit.Set(path, method, resp.Header())
 	apiError := ParseDataResponse(resp, d)
 	return apiError
 }

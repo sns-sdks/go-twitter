@@ -20,6 +20,7 @@ type Client struct {
 	Tweets     *TweetResource
 	Spaces     *SpaceResource
 	Compliance *ComplianceResource
+	RateLimit  *RateLimit
 }
 
 type Resource struct {
@@ -28,6 +29,7 @@ type Resource struct {
 
 func NewClient(client *resty.Client) *Client {
 	c := &Client{Cli: client}
+	c.RateLimit = newRateLimit()
 	c.Users = newUserResource(c)
 	c.Tweets = newTweetResource(c)
 	c.Spaces = newSpaceResource(c)

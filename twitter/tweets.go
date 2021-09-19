@@ -121,7 +121,7 @@ type TweetOpts struct {
 // LookupByID Returns a variety of information about a single Tweet specified by the requested ID.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/tweets/lookup/api-reference/get-tweets-id
 func (r *TweetResource) LookupByID(id string, args TweetOpts) (*TweetResp, *APIError) {
-	path := Baseurl + "/tweets/" + id
+	path := "/tweets/" + id
 
 	resp := new(TweetResp)
 	err := r.Cli.DoGet(path, args, resp)
@@ -140,7 +140,7 @@ type tweetOptsByIDs struct {
 // LookupByIDs Returns a variety of information about the Tweet specified by the requested ID or list of IDs.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/tweets/lookup/api-reference/get-tweets
 func (r *TweetResource) LookupByIDs(ids string, args TweetOpts) (*TweetsResp, *APIError) {
-	path := Baseurl + "/tweets"
+	path := "/tweets"
 
 	newArgs := tweetOptsByIDs{ids, args}
 	resp := new(TweetsResp)

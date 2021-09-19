@@ -12,7 +12,7 @@ type FollowsOpts struct {
 // GetFollowing Returns a list of users the specified user ID is following.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/users/follows/api-reference/get-users-id-following
 func (r *UserResource) GetFollowing(id string, args FollowsOpts) (*UsersResp, *APIError) {
-	path := Baseurl + "/users/" + id + "/following"
+	path := "/users/" + id + "/following"
 
 	resp := new(UsersResp)
 	err := r.Cli.DoGet(path, args, resp)
@@ -25,7 +25,7 @@ func (r *UserResource) GetFollowing(id string, args FollowsOpts) (*UsersResp, *A
 // GetFollowers Returns a list of users who are followers of the specified user ID.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/users/follows/api-reference/get-users-id-followers
 func (r *UserResource) GetFollowers(id string, args FollowsOpts) (*UsersResp, *APIError) {
-	path := Baseurl + "/users/" + id + "/followers"
+	path := "/users/" + id + "/followers"
 
 	resp := new(UsersResp)
 	err := r.Cli.DoGet(path, args, resp)
@@ -62,7 +62,7 @@ func (f FollowingResp) String() string {
 // FollowingCreate Allows a user ID to follow another user.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/users/follows/api-reference/post-users-source_user_id-following
 func (r *UserResource) FollowingCreate(id, targetUserID string) (*FollowingResp, *APIError) {
-	path := Baseurl + "/users/" + id + "/following"
+	path := "/users/" + id + "/following"
 	postArgs := followingOpts{TargetUserID: targetUserID}
 
 	resp := new(FollowingResp)
@@ -76,7 +76,7 @@ func (r *UserResource) FollowingCreate(id, targetUserID string) (*FollowingResp,
 // FollowingDestroy Allows a user ID to unfollow another user.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/users/follows/api-reference/delete-users-source_id-following
 func (r *UserResource) FollowingDestroy(id, targetUserID string) (*FollowingResp, *APIError) {
-	path := Baseurl + "/users/" + id + "/following/" + targetUserID
+	path := "/users/" + id + "/following/" + targetUserID
 
 	resp := new(FollowingResp)
 	err := r.Cli.DoDelete(path, resp)

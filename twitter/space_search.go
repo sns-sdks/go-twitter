@@ -11,7 +11,7 @@ type SpaceSearchOpts struct {
 // Search
 // Refer: https://developer.twitter.com/en/docs/twitter-api/spaces/search/api-reference/get-spaces-search
 func (r *SpaceResource) Search(args SpaceSearchOpts) (*SpacesResp, *APIError) {
-	path := Baseurl + "/spaces/search"
+	path := "/spaces/search"
 	resp := new(SpacesResp)
 
 	err := r.Cli.DoGet(path, args, resp)

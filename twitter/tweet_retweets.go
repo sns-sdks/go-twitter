@@ -3,7 +3,7 @@ package twitter
 // GetRetweetedBy Return information about who has Retweeted a Tweet.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/tweets/retweets/api-reference/get-tweets-id-retweeted_by
 func (r *TweetResource) GetRetweetedBy(id string, args UserOpts) (*UsersResp, *APIError) {
-	path := Baseurl + "/tweets/" + id + "/retweeted_by"
+	path := "/tweets/" + id + "/retweeted_by"
 
 	resp := new(UsersResp)
 	err := r.Cli.DoGet(path, args, resp)
@@ -39,7 +39,7 @@ func (r RetweetedResp) String() string {
 // RetweetCreate Allows an authenticated user ID to Retweet the target Tweet.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/tweets/retweets/api-reference/post-users-id-retweets
 func (r *TweetResource) RetweetCreate(id, tweetID string) (*RetweetedResp, *APIError) {
-	path := Baseurl + "/users/" + id + "/retweets"
+	path := "/users/" + id + "/retweets"
 	postArgs := retweetTweetOpts{TweetID: tweetID}
 
 	resp := new(RetweetedResp)
@@ -53,7 +53,7 @@ func (r *TweetResource) RetweetCreate(id, tweetID string) (*RetweetedResp, *APIE
 // RetweetDestroy Allows an authenticated user ID to remove the Retweet of a Tweet.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/tweets/retweets/api-reference/delete-users-id-retweets-tweet_id
 func (r *TweetResource) RetweetDestroy(id, tweetID string) (*RetweetedResp, *APIError) {
-	path := Baseurl + "/users/" + id + "/retweets/" + tweetID
+	path := "/users/" + id + "/retweets/" + tweetID
 
 	resp := new(RetweetedResp)
 	err := r.Cli.DoDelete(path, resp)
