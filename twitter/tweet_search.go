@@ -15,7 +15,7 @@ type TweetSearchOpts struct {
 // SearchRecent Returns Tweets from the last seven days that match a search query.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/tweets/search/api-reference/get-tweets-search-recent
 func (r *TweetResource) SearchRecent(args TweetSearchOpts) (*TweetsResp, *APIError) {
-	path := Baseurl + "/tweets/search/recent"
+	path := "/tweets/search/recent"
 
 	resp := new(TweetsResp)
 	err := r.Cli.DoGet(path, args, resp)
@@ -28,7 +28,7 @@ func (r *TweetResource) SearchRecent(args TweetSearchOpts) (*TweetsResp, *APIErr
 // SearchAll Returns the complete history of public Tweets matching a search query.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/tweets/search/api-reference/get-tweets-search-all
 func (r *TweetResource) SearchAll(args TweetSearchOpts) (*TweetsResp, *APIError) {
-	path := Baseurl + "/tweets/search/all"
+	path := "/tweets/search/all"
 
 	resp := new(TweetsResp)
 	err := r.Cli.DoGet(path, args, resp)

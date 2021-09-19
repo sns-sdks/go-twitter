@@ -25,7 +25,7 @@ func (h HiddenResp) String() string {
 // HideReply Hide a reply to a Tweet.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/tweets/hide-replies/api-reference/put-tweets-id-hidden
 func (r *TweetResource) HideReply(id string) (*HiddenResp, *APIError) {
-	path := Baseurl + "/tweets/" + id + "/hidden"
+	path := "/tweets/" + id + "/hidden"
 	postArgs := hideReplyOpts{Hidden: true}
 
 	resp := new(HiddenResp)
@@ -39,7 +39,7 @@ func (r *TweetResource) HideReply(id string) (*HiddenResp, *APIError) {
 // HideReplyDestroy Remove hide a reply to a Tweet.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/tweets/hide-replies/api-reference/put-tweets-id-hidden
 func (r *TweetResource) HideReplyDestroy(id string) (*HiddenResp, *APIError) {
-	path := Baseurl + "/tweets/" + id + "/hidden"
+	path := "/tweets/" + id + "/hidden"
 	postArgs := hideReplyOpts{Hidden: false}
 
 	resp := new(HiddenResp)

@@ -15,7 +15,7 @@ type TimelinesOpts struct {
 // GetTimelines Returns Tweets composed by a single user, specified by the requested user ID.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/tweets/timelines/api-reference/get-users-id-tweets
 func (r *TweetResource) GetTimelines(id string, args TimelinesOpts) (*TweetsResp, *APIError) {
-	path := Baseurl + "/users/" + id + "/tweets"
+	path := "/users/" + id + "/tweets"
 
 	resp := new(TweetsResp)
 	err := r.Cli.DoGet(path, args, resp)
@@ -39,7 +39,7 @@ type MentionsOpts struct {
 // GetMentions Returns Tweets mentioning a single user specified by the requested user ID
 // Refer: https://developer.twitter.com/en/docs/twitter-api/tweets/timelines/api-reference/get-users-id-mentions
 func (r *TweetResource) GetMentions(id string, args MentionsOpts) (*TweetsResp, *APIError) {
-	path := Baseurl + "/users/" + id + "/mentions"
+	path := "/users/" + id + "/mentions"
 
 	resp := new(TweetsResp)
 	err := r.Cli.DoGet(path, args, resp)

@@ -10,7 +10,7 @@ type UserBlockingOpts struct {
 // GetBlocking Returns a list of users who are blocked by the specified user ID.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/users/blocks/api-reference/get-users-blocking
 func (r *UserResource) GetBlocking(id string, args UserBlockingOpts) (*UsersResp, *APIError) {
-	path := Baseurl + "/users/" + id + "/blocking"
+	path := "/users/" + id + "/blocking"
 
 	resp := new(UsersResp)
 	err := r.Cli.DoGet(path, args, resp)
@@ -46,7 +46,7 @@ func (b BlockingResp) String() string {
 // BlockingCreate Causes the user (in the path) to block the target user.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/users/blocks/api-reference/post-users-user_id-blocking
 func (r *UserResource) BlockingCreate(id, targetUserID string) (*BlockingResp, *APIError) {
-	path := Baseurl + "/users/" + id + "/blocking"
+	path := "/users/" + id + "/blocking"
 	postArgs := blockingOpts{TargetUserID: targetUserID}
 
 	resp := new(BlockingResp)
@@ -60,7 +60,7 @@ func (r *UserResource) BlockingCreate(id, targetUserID string) (*BlockingResp, *
 // BlockingDestroy Allows authenticated user ID to unblock another user.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/users/blocks/api-reference/delete-users-user_id-blocking
 func (r *UserResource) BlockingDestroy(id, targetUserID string) (*BlockingResp, *APIError) {
-	path := Baseurl + "/users/" + id + "/blocking/" + targetUserID
+	path := "/users/" + id + "/blocking/" + targetUserID
 
 	resp := new(BlockingResp)
 	err := r.Cli.DoDelete(path, resp)

@@ -3,7 +3,7 @@ package twitter
 // GetLikingUsers  Return information about a Tweet’s liking users.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/tweets/likes/api-reference/get-tweets-id-liking_users
 func (r *TweetResource) GetLikingUsers(id string, args UserOpts) (*UsersResp, *APIError) {
-	path := Baseurl + "/tweets/" + id + "/liking_users"
+	path := "/tweets/" + id + "/liking_users"
 
 	resp := new(UsersResp)
 	err := r.Cli.DoGet(path, args, resp)
@@ -23,7 +23,7 @@ type LikedTweetsOpts struct {
 // GetLikedTweets Return information about a user’s liked Tweets.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/tweets/likes/api-reference/get-users-id-liked_tweets
 func (r *TweetResource) GetLikedTweets(id string, args LikedTweetsOpts) (*TweetsResp, *APIError) {
-	path := Baseurl + "/users/" + id + "/liked_tweets"
+	path := "/users/" + id + "/liked_tweets"
 
 	resp := new(TweetsResp)
 	err := r.Cli.DoGet(path, args, resp)
@@ -59,7 +59,7 @@ func (r LikedResp) String() string {
 // LikeCreate Allows an authenticated user ID to Like the target Tweet.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/tweets/likes/api-reference/post-users-id-likes
 func (r *TweetResource) LikeCreate(id, tweetID string) (*LikedResp, *APIError) {
-	path := Baseurl + "/users/" + id + "/likes"
+	path := "/users/" + id + "/likes"
 	postArgs := likeTweetOpts{TweetID: tweetID}
 
 	resp := new(LikedResp)
@@ -73,7 +73,7 @@ func (r *TweetResource) LikeCreate(id, tweetID string) (*LikedResp, *APIError) {
 // LikeDestroy Allows a user or authenticated user ID to unlike a Tweet.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/tweets/likes/api-reference/delete-users-id-likes-tweet_id
 func (r *TweetResource) LikeDestroy(id, tweetID string) (*LikedResp, *APIError) {
-	path := Baseurl + "/users/" + id + "/likes/" + tweetID
+	path := "/users/" + id + "/likes/" + tweetID
 
 	resp := new(LikedResp)
 	err := r.Cli.DoDelete(path, resp)

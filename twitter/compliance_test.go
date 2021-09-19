@@ -1,7 +1,6 @@
 package twitter
 
 import (
-	"fmt"
 	"github.com/jarcoal/httpmock"
 )
 
@@ -27,8 +26,6 @@ func (bc *BCSuite) TestComplianceJobByID() {
 	)
 
 	resp, _ := bc.Tw.Compliance.LookupJobByID(jid)
-	fmt.Println(resp)
-	fmt.Println(resp.Data)
 	bc.Equal(*resp.Data.ID, jid)
 	bc.Equal(*resp.Data.Type, "tweets")
 }
@@ -53,7 +50,6 @@ func (bc *BCSuite) TestComplianceJobs() {
 	)
 
 	resp, _ := bc.Tw.Compliance.LookupJobs(LookupJobsOpts{Type: "tweets"})
-	fmt.Println(resp)
 	bc.Equal(*resp.Data[0].ID, "1421185651106480129")
 	bc.Equal(*resp.Data[0].Status, "complete")
 }
