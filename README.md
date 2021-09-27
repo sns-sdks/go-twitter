@@ -26,6 +26,11 @@ u, err := cli.Tweets.LookupByID("tweet id", twitter.TweetOpts{})
 fmt.Println(u, err)
 ```
 
+[OAuth 2.0](https://developer.twitter.com/en/docs/twitter-api/oauth2) has released with beta.
+
+So you can do `OAuth2.0` with twitter. More see the [`ddemo for OAuth2.0`](https://github.com/sns-sdks/go-twitter/tree/master/example/oauth2/authorization_oauth2.go)
+
+
 ### Authentication
 
 Some apis need `OAuth 1.0a User context`, You can use initial a client with user access token.
@@ -43,7 +48,7 @@ bu, err := cli.Users.GetBlocking(uid, twitter.UserBlockingOpts{})
 fmt.Println(bu, err)
 ```
 
-Or you can handle authentication contact with twitter. See the [`demo for authorize`](https://github.com/sns-sdks/go-twitter/tree/master/example/authorization.go)
+Or you can handle authentication contact with twitter. See the [`demo for authorize`](https://github.com/sns-sdks/go-twitter/tree/master/example/oauth1/authorization.go)
 
 ## Features
 
