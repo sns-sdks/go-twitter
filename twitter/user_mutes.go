@@ -23,6 +23,28 @@ func (m MutingResp) String() string {
 	return Stringify(m)
 }
 
+// MutingOpts specifies the parameters for get muting
+type MutingOpts struct {
+	MaxResults      string `url:"max_results,omitempty"`
+	PaginationToken string `url:"pagination_token,omitempty"`
+	UserFields      string `url:"user.fields,omitempty"`
+	Expansions      string `url:"expansions,omitempty"`
+	TweetFields     string `url:"tweet.fields,omitempty"`
+}
+
+// GetMuting Returns a list of users who are muted by the specified user ID.
+// Refer: https://developer.twitter.com/en/docs/twitter-api/users/mutes/api-reference/get-users-muting
+func (r *UserResource) GetMuting(id string, args MutingOpts) (*UsersResp, *APIError) {
+	path := "/users/" + id + "/muting"
+
+	resp := new(UsersResp)
+	err := r.Cli.DoGet(path, args, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
 // MutingCreate Allows an authenticated user ID to mute the target user.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/users/mutes/api-reference/post-users-user_id-muting
 func (r *UserResource) MutingCreate(id, targetUserID string) (*MutingResp, *APIError) {
