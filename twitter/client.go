@@ -19,8 +19,10 @@ type Client struct {
 	Users      *UserResource
 	Tweets     *TweetResource
 	Spaces     *SpaceResource
+	Lists      *ListsResource
 	Compliance *ComplianceResource
-	RateLimit  *RateLimit
+
+	RateLimit *RateLimit
 }
 
 type Resource struct {
@@ -33,6 +35,7 @@ func NewClient(client *resty.Client) *Client {
 	c.Users = newUserResource(c)
 	c.Tweets = newTweetResource(c)
 	c.Spaces = newSpaceResource(c)
+	c.Lists = newListsResource(c)
 	c.Compliance = newComplianceResource(c)
 	return c
 }
