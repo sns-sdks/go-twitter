@@ -84,6 +84,7 @@ func TestString(t *testing.T) {
 		{HiddenStatus{Hidden: Bool(true)}, `twitter.HiddenStatus{Hidden:true}`},
 		{ListDeletedStatus{Deleted: Bool(true)}, `twitter.ListDeletedStatus{Deleted:true}`},
 		{ListUpdatedStatus{Updated: Bool(true)}, `twitter.ListUpdatedStatus{Updated:true}`},
+		{ListMemberStatus{IsMember: Bool(true)}, `twitter.ListMemberStatus{IsMember:true}`},
 		{APIError{Title: "error"}, `twitter.APIError{ClientID:"", RequiredEnrollment:"", RegistrationUrl:"", Title:"error", Detail:"", Reason:"", Type:"", Status:0, Errors:<nil>}`},
 		{AuthorizationAPP{ConsumerKey: "123", ConsumerSecret: ""}, `twitter.AuthorizationAPP{ConsumerKey:"123", ConsumerSecret:"", CallbackURL:"", AccessTokenKey:"", AccessTokenSecret:"", RequestSecret:""}`},
 		{OAuth2AuthorizationAPP{ClientID: "asfasfa123124"}, `twitter.OAuth2AuthorizationAPP{ClientID:"asfasfa123124", CallbackURL:""}`},
@@ -105,6 +106,7 @@ func TestString(t *testing.T) {
 		{ListResp{Data: &List{ID: String("1441162269824405510")}}, `twitter.ListResp{Data:twitter.List{ID:"1441162269824405510"}}`},
 		{ListDeletedResp{Data: &ListDeletedStatus{Deleted: Bool(true)}}, `twitter.ListDeletedResp{Data:twitter.ListDeletedStatus{Deleted:true}}`},
 		{ListUpdatedResp{Data: &ListUpdatedStatus{Updated: Bool(true)}}, `twitter.ListUpdatedResp{Data:twitter.ListUpdatedStatus{Updated:true}}`},
+		{ListMemberResp{Data: &ListMemberStatus{IsMember: Bool(true)}}, `twitter.ListMemberResp{Data:twitter.ListMemberStatus{IsMember:true}}`},
 	}
 
 	for i, tt := range tests {
