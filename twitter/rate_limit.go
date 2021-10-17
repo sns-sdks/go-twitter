@@ -6,6 +6,11 @@ import (
 	"strconv"
 )
 
+/*
+	Rate limits for every API.
+	Refer: https://developer.twitter.com/en/docs/twitter-api/rate-limits
+*/
+
 type RateLimitData struct {
 	Limit     int `json:"x-rate-limit-limit,omitempty"`
 	Remaining int `json:"x-rate-limit-remaining,omitempty"`
@@ -46,11 +51,17 @@ var RateLimitResource = [...]Endpoint{
 	{Resource: "/users/:id/likes/:tweet_id", Regex: `/users/\d+/likes/\d+$`},
 	{Resource: "/users/:id/retweets", Regex: `/users/\d+/retweets$`},
 	{Resource: "/users/:id/retweets/:tweet_id", Regex: `/users/\d+/retweets/\d+$`},
+	{Resource: "/users/:id/followed_lists", Regex: `/users/\d+/followed_lists`},
+	{Resource: "/users/:id/followed_lists/:list_id", Regex: `/users/\d+/followed_lists/\d+$`},
+	{Resource: "/users/:id/pinned_lists", Regex: `/users/\d+/retweets$`},
+	{Resource: "/users/:id/pinned_lists/:list_id", Regex: `/users/\d+/pinned_lists/\d+$`},
 	{Resource: "/tweets/:id/hidden", Regex: `/tweets/\d+/hidden$`},
 	{Resource: "/tweets/counts", Regex: `tweets/counts/\w+$`},
 	{Resource: "/spaces/:id", Regex: `/spaces/\w+$`},
 	{Resource: "/spaces", Regex: `/spaces$`},
 	{Resource: "/spaces/by/creator_ids", Regex: `/spaces/by/creator_ids$`},
+	{Resource: "/lists", Regex: `/lists$`},
+	{Resource: "/lists/:id", Regex: `/lists/\d+$`},
 	{Resource: "/spaces/search", Regex: `/spaces/search$`},
 	{Resource: "/compliance/jobs/:job_id", Regex: `/compliance/jobs/\d+$`},
 	{Resource: "/compliance/jobs", Regex: `/compliance/jobs$`},

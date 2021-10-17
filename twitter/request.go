@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"github.com/go-resty/resty/v2"
 	goquery "github.com/google/go-querystring/query"
-	"net/http"
 	"strings"
 )
 
@@ -152,7 +151,7 @@ func (j ComplianceJobsResp) String() string {
 */
 func ParseDataResponse(response *resty.Response, d interface{}) *APIError {
 	var err error
-	if response.StatusCode() == http.StatusOK {
+	if response.IsSuccess() {
 		switch d := d.(type) {
 		case nil:
 		default:

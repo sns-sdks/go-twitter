@@ -70,5 +70,8 @@ Spaces:
 - Lookup
 - Search
 
+Lists:
+- Manage lists
+
 Compliance:
 - Batch compliance
