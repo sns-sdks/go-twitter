@@ -39,7 +39,7 @@ func (bc *BCSuite) TestRemoveFollowList() {
 			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
 		),
 	)
-	_, err := bc.Tw.Lists.RemoveFollowList(uid, lid)
+	_, err := bc.Tw.Lists.RemoveFollowedList(uid, lid)
 	bc.IsType(&APIError{}, err)
 
 	httpmock.RegisterResponder(
@@ -50,6 +50,6 @@ func (bc *BCSuite) TestRemoveFollowList() {
 		),
 	)
 
-	resp, _ := bc.Tw.Lists.RemoveFollowList(uid, lid)
+	resp, _ := bc.Tw.Lists.RemoveFollowedList(uid, lid)
 	bc.Equal(*resp.Data.Following, false)
 }

@@ -41,9 +41,9 @@ func (r *ListsResource) FollowList(id, ListID string) (*ListFollowingResp, *APIE
 	return resp, nil
 }
 
-// RemoveFollowList Enables the authenticated user to unfollow a List.
+// RemoveFollowedList Enables the authenticated user to unfollow a List.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/lists/manage-lists/api-reference/delete-users-id-followed-lists-list_id
-func (r *ListsResource) RemoveFollowList(id, ListID string) (*ListFollowingResp, *APIError) {
+func (r *ListsResource) RemoveFollowedList(id, ListID string) (*ListFollowingResp, *APIError) {
 	path := "/users/" + id + "/followed_lists/" + ListID
 
 	resp := new(ListFollowingResp)
