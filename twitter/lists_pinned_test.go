@@ -2,54 +2,54 @@ package twitter
 
 import "github.com/jarcoal/httpmock"
 
-func (bc *BCSuite) TestFollowList() {
+func (bc *BCSuite) TestPinList() {
 	lid := "1441162269824405510"
 	uid := "2244994945"
 
 	httpmock.RegisterResponder(
-		HttpPost, Baseurl+"/users/"+uid+"/followed_lists",
+		HttpPost, Baseurl+"/users/"+uid+"/pinned_lists",
 		httpmock.NewStringResponder(
 			401,
 			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
 		),
 	)
-	_, err := bc.Tw.Lists.FollowList(uid, lid)
+	_, err := bc.Tw.Lists.PinList(uid, lid)
 	bc.IsType(&APIError{}, err)
 
 	httpmock.RegisterResponder(
-		HttpPost, Baseurl+"/users/"+uid+"/followed_lists",
+		HttpPost, Baseurl+"/users/"+uid+"/pinned_lists",
 		httpmock.NewStringResponder(
 			200,
-			`{"data":{"following":true}}`,
+			`{"data":{"pinned":true}}`,
 		),
 	)
 
-	resp, _ := bc.Tw.Lists.FollowList(uid, lid)
-	bc.Equal(*resp.Data.Following, true)
+	resp, _ := bc.Tw.Lists.PinList(uid, lid)
+	bc.Equal(*resp.Data.Pinned, true)
 }
 
-func (bc *BCSuite) TestRemoveFollowedList() {
+func (bc *BCSuite) TestRemovePinnedList() {
 	lid := "1441162269824405510"
 	uid := "2244994945"
 
 	httpmock.RegisterResponder(
-		HttpDelete, Baseurl+"/users/"+uid+"/followed_lists/"+lid,
+		HttpDelete, Baseurl+"/users/"+uid+"/pinned_lists/"+lid,
 		httpmock.NewStringResponder(
 			401,
 			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
 		),
 	)
-	_, err := bc.Tw.Lists.RemoveFollowedList(uid, lid)
+	_, err := bc.Tw.Lists.RemovePinnedList(uid, lid)
 	bc.IsType(&APIError{}, err)
 
 	httpmock.RegisterResponder(
-		HttpDelete, Baseurl+"/users/"+uid+"/followed_lists/"+lid,
+		HttpDelete, Baseurl+"/users/"+uid+"/pinned_lists/"+lid,
 		httpmock.NewStringResponder(
 			200,
-			`{"data":{"following":false}}`,
+			`{"data":{"pinned":false}}`,
 		),
 	)
 
-	resp, _ := bc.Tw.Lists.RemoveFollowedList(uid, lid)
-	bc.Equal(*resp.Data.Following, false)
+	resp, _ := bc.Tw.Lists.RemovePinnedList(uid, lid)
+	bc.Equal(*resp.Data.Pinned, false)
 }
