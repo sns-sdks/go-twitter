@@ -16,8 +16,8 @@ func (uc *UCSuite) TestTweetCreate() {
 	httpmock.RegisterResponder(
 		HttpPost, Baseurl+"/tweets",
 		httpmock.NewStringResponder(
-			200,
-			`twitter.TweetResp{Data:twitter.Tweet{ID:"1457675300473552900", Text:"test tweet"}}`,
+			201,
+			`{"data":{"id":"1457675300473552900","text":"test tweet"}}`,
 		),
 	)
 
