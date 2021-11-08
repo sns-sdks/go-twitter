@@ -55,6 +55,10 @@ type TweetDeletedStatus struct {
 	Deleted *bool `json:"deleted,omitempty"`
 }
 
+func (t TweetDeletedStatus) String() string {
+	return Stringify(t)
+}
+
 // TweetDeletedResp represents the response for delete tweet
 type TweetDeletedResp struct {
 	Data *TweetDeletedStatus `json:"data,omitempty"`

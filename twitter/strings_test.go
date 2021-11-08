@@ -87,6 +87,7 @@ func TestString(t *testing.T) {
 		{ListMemberStatus{IsMember: Bool(true)}, `twitter.ListMemberStatus{IsMember:true}`},
 		{ListFollowingStatus{Following: Bool(true)}, `twitter.ListFollowingStatus{Following:true}`},
 		{ListPinnedStatus{Pinned: Bool(true)}, `twitter.ListPinnedStatus{Pinned:true}`},
+		{TweetDeletedStatus{Deleted: Bool(true)}, `twitter.TweetDeletedStatus{Deleted:true}`},
 		{APIError{Title: "error"}, `twitter.APIError{ClientID:"", RequiredEnrollment:"", RegistrationUrl:"", Title:"error", Detail:"", Reason:"", Type:"", Status:0, Errors:<nil>}`},
 		{AuthorizationAPP{ConsumerKey: "123", ConsumerSecret: ""}, `twitter.AuthorizationAPP{ConsumerKey:"123", ConsumerSecret:"", CallbackURL:"", AccessTokenKey:"", AccessTokenSecret:"", RequestSecret:""}`},
 		{OAuth2AuthorizationAPP{ClientID: "asfasfa123124"}, `twitter.OAuth2AuthorizationAPP{ClientID:"asfasfa123124", CallbackURL:""}`},
@@ -111,6 +112,7 @@ func TestString(t *testing.T) {
 		{ListMemberResp{Data: &ListMemberStatus{IsMember: Bool(true)}}, `twitter.ListMemberResp{Data:twitter.ListMemberStatus{IsMember:true}}`},
 		{ListFollowingResp{Data: &ListFollowingStatus{Following: Bool(true)}}, `twitter.ListFollowingResp{Data:twitter.ListFollowingStatus{Following:true}}`},
 		{ListPinnedResp{Data: &ListPinnedStatus{Pinned: Bool(true)}}, `twitter.ListPinnedResp{Data:twitter.ListPinnedStatus{Pinned:true}}`},
+		{TweetDeletedResp{Data: &TweetDeletedStatus{Deleted: Bool(true)}}, `twitter.TweetDeletedResp{Data:twitter.TweetDeletedStatus{Deleted:true}}`},
 	}
 
 	for i, tt := range tests {
