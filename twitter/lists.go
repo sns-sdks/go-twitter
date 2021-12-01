@@ -30,6 +30,7 @@ func (l List) String() string {
 // ListResp represents the response for a list
 type ListResp struct {
 	Data *List `json:"data,omitempty"`
+	*BaseData
 }
 
 func (l ListResp) String() string {
@@ -38,7 +39,7 @@ func (l ListResp) String() string {
 
 // ListsResp represents the response for multi lists
 type ListsResp struct {
-	Data *[]List `json:"data,omitempty"`
+	Data []*List `json:"data,omitempty"`
 	*BaseData
 }
 
