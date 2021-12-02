@@ -80,28 +80,28 @@ func (bc *BCSuite) TestGetListMembers() {
 	bc.Equal(*resp.Includes.Tweets[0].ID, "1353789891348475905")
 }
 
-func (bc *BCSuite) TestGetListUserJoinedLists() {
-	lid := "84839422"
+func (bc *BCSuite) TestGetUserJoinedLists() {
+	uid := "2244994945"
 
 	httpmock.RegisterResponder(
-		HttpGet, Baseurl+"/users/"+lid+"/list_memberships",
+		HttpGet, Baseurl+"/users/"+uid+"/list_memberships",
 		httpmock.NewStringResponder(
 			401,
 			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
 		),
 	)
-	_, err := bc.Tw.Lists.GetUserJoinedLists(lid, JoinedListsOpts{})
+	_, err := bc.Tw.Lists.GetUserJoinedLists(uid, JoinedListsOpts{})
 	bc.IsType(&APIError{}, err)
 
 	httpmock.RegisterResponder(
-		HttpGet, Baseurl+"/users/"+lid+"/list_memberships",
+		HttpGet, Baseurl+"/users/"+uid+"/list_memberships",
 		httpmock.NewStringResponder(
 			200,
 			`{"data":[{"follower_count":5,"id":"1451951974291689472","name":"Twitter","owner_id":"1227213680120479745"}],"includes":{"users":[{"name":"구돆","created_at":"2020-02-11T12:52:11.000Z","id":"1227213680120479745","username":"Follow__Y0U"}]},"meta":{"result_count":1}}`,
 		),
 	)
 
-	resp, _ := bc.Tw.Lists.GetUserJoinedLists(lid, JoinedListsOpts{ListOpts: ListOpts{Expansions: "owner_id", ListFields: "follower_count", UserFields: "created_at"}})
+	resp, _ := bc.Tw.Lists.GetUserJoinedLists(uid, JoinedListsOpts{ListOpts: ListOpts{Expansions: "owner_id", ListFields: "follower_count", UserFields: "created_at"}})
 	bc.Equal(*resp.Data[0].ID, "1451951974291689472")
 	bc.Equal(*resp.Includes.Users[0].ID, "1227213680120479745")
 }
