@@ -53,3 +53,16 @@ func (r *ListsResource) RemovePinnedList(id, ListID string) (*ListPinnedResp, *A
 	}
 	return resp, nil
 }
+
+// GetUserPinnedLists Returns the Lists pinned by a specified user.
+// Refer: https://developer.twitter.com/en/docs/twitter-api/lists/pinned-lists/api-reference/get-users-id-pinned_lists
+func (r *ListsResource) GetUserPinnedLists(id string, args ListOpts) (*ListsResp, *APIError) {
+	path := "/users/" + id + "/pinned_lists"
+
+	resp := new(ListsResp)
+	err := r.Cli.DoGet(path, args, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
