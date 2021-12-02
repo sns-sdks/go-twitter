@@ -49,9 +49,9 @@ func (l ListsResp) String() string {
 
 // ListOpts specifies the parameter for get list
 type ListOpts struct {
-	List       string `url:"list.fields,omitempty"`
+	ListFields string `url:"list.fields,omitempty"`
 	Expansions string `url:"expansions,omitempty"`
-	User       string `url:"user.fields,omitempty"`
+	UserFields string `url:"user.fields,omitempty"`
 }
 
 // LookupByID Returns the details of a specified List.

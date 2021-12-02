@@ -25,7 +25,7 @@ func (bc *BCSuite) TestGetListTweets() {
 		),
 	)
 
-	resp, _ := bc.Tw.Lists.GetListTweets(lid, ListTweetsOpts{TweetOpts: TweetOpts{Expansions: "author_id", User: "verified"}})
+	resp, _ := bc.Tw.Lists.GetListTweets(lid, ListTweetsOpts{TweetOpts: TweetOpts{Expansions: "author_id", UserFields: "verified"}})
 	bc.Equal(*resp.Data[0].ID, "1067094924124872705")
 	bc.Equal(*resp.Includes.Users[0].ID, "2244994945")
 }

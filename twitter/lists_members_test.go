@@ -101,7 +101,7 @@ func (bc *BCSuite) TestGetListUserJoinedLists() {
 		),
 	)
 
-	resp, _ := bc.Tw.Lists.GetUserJoinedLists(lid, JoinedListsOpts{ListOpts: ListOpts{Expansions: "owner_id", List: "follower_count", User: "created_at"}})
+	resp, _ := bc.Tw.Lists.GetUserJoinedLists(lid, JoinedListsOpts{ListOpts: ListOpts{Expansions: "owner_id", ListFields: "follower_count", UserFields: "created_at"}})
 	bc.Equal(*resp.Data[0].ID, "1451951974291689472")
 	bc.Equal(*resp.Includes.Users[0].ID, "1227213680120479745")
 }
