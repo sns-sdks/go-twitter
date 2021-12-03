@@ -53,3 +53,43 @@ func (r *ListsResource) RemoveFollowedList(id, ListID string) (*ListFollowingRes
 	}
 	return resp, nil
 }
+
+// ListFollowersOpts Specifies the parameters for get list followers
+type ListFollowersOpts struct {
+	MaxResults      int    `url:"max_results,omitempty"`
+	PaginationToken string `url:"pagination_token,omitempty"`
+	UserOpts
+}
+
+// GetListFollowers Returns a list of users who are followers of the specified List.
+// Refer: https://developer.twitter.com/en/docs/twitter-api/lists/list-follows/api-reference/get-lists-id-followers
+func (r *ListsResource) GetListFollowers(id string, args ListFollowersOpts) (*UsersResp, *APIError) {
+	path := "/lists/" + id + "/followers"
+
+	resp := new(UsersResp)
+	err := r.Cli.DoGet(path, args, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+// FollowedListsOpts Specifies the parameters for get user followed lists.
+type FollowedListsOpts struct {
+	MaxResults      int    `url:"max_results,omitempty"`
+	PaginationToken string `url:"pagination_token,omitempty"`
+	ListOpts
+}
+
+// GetUserFollowedLists Returns all Lists a specified user follows.
+// Refer: https://developer.twitter.com/en/docs/twitter-api/lists/list-follows/api-reference/get-users-id-followed_lists
+func (r *ListsResource) GetUserFollowedLists(id string, args FollowedListsOpts) (*ListsResp, *APIError) {
+	path := "/users/" + id + "/followed_lists"
+
+	resp := new(ListsResp)
+	err := r.Cli.DoGet(path, args, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}

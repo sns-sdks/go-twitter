@@ -53,3 +53,43 @@ func (r *ListsResource) RemoveListMember(id, userID string) (*ListMemberResp, *A
 	}
 	return resp, nil
 }
+
+// ListMembersOpts specifies the parameters for get list members.
+type ListMembersOpts struct {
+	MaxResults      int    `url:"max_results,omitempty"`
+	PaginationToken string `url:"pagination_token,omitempty"`
+	UserOpts
+}
+
+// GetListMembers Returns a list of users who are members of the specified List.
+// Refer: https://developer.twitter.com/en/docs/twitter-api/lists/list-members/api-reference/get-lists-id-members
+func (r *ListsResource) GetListMembers(id string, args ListMembersOpts) (*UsersResp, *APIError) {
+	path := "/lists/" + id + "/members"
+
+	resp := new(UsersResp)
+	err := r.Cli.DoGet(path, args, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+// JoinedListsOpts Specifies the parameters for get joined lists.
+type JoinedListsOpts struct {
+	MaxResults      int    `url:"max_results,omitempty"`
+	PaginationToken string `url:"pagination_token,omitempty"`
+	ListOpts
+}
+
+// GetUserJoinedLists Returns all Lists a specified user is a member of.
+// Refer: https://developer.twitter.com/en/docs/twitter-api/lists/list-members/api-reference/get-users-id-list_memberships
+func (r *ListsResource) GetUserJoinedLists(id string, args JoinedListsOpts) (*ListsResp, *APIError) {
+	path := "/users/" + id + "/list_memberships"
+
+	resp := new(ListsResp)
+	err := r.Cli.DoGet(path, args, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}

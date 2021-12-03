@@ -11,101 +11,76 @@ func newListsResource(cli *Client) *ListsResource {
 }
 
 // List represents a list for twitter.
-// Refer: https://developer.twitter.com/en/docs/twitter-api/lists/manage-lists/introduction
+// Refer: https://developer.twitter.com/en/docs/twitter-api/data-dictionary/object-model/lists
 type List struct {
-	ID   *string `json:"id,omitempty"`
-	Name *string `json:"name,omitempty"`
+	ID            *string `json:"id,omitempty"`
+	Name          *string `json:"name,omitempty"`
+	CreatedAt     *string `json:"created_at,omitempty"`
+	Description   *string `json:"description,omitempty"`
+	FollowerCount *int    `json:"follower_count,omitempty"`
+	MemberCount   *int    `json:"member_count,omitempty"`
+	Private       *bool   `json:"private,omitempty"`
+	OwnerID       *string `json:"owner_id,omitempty"`
 }
 
 func (l List) String() string {
 	return Stringify(l)
 }
 
-// ListResp represents the response for create list
+// ListResp represents the response for a list
 type ListResp struct {
 	Data *List `json:"data,omitempty"`
+	*BaseData
 }
 
 func (l ListResp) String() string {
 	return Stringify(l)
 }
 
-// ManageListOpts represents the parameters for manage list create and update
-type ManageListOpts struct {
-	Name        string `json:"name"`
-	Description string `json:"description,omitempty"`
-	Private     bool   `json:"private,omitempty"`
+// ListsResp represents the response for multi lists
+type ListsResp struct {
+	Data []*List `json:"data,omitempty"`
+	*BaseData
 }
 
-// ListCreate Enables the authenticated user to create a List.
-// Refer: https://developer.twitter.com/en/docs/twitter-api/lists/manage-lists/api-reference/post-lists
-func (r *ListsResource) ListCreate(args ManageListOpts) (*ListResp, *APIError) {
-	path := "/lists"
+func (l ListsResp) String() string {
+	return Stringify(l)
+}
+
+// ListOpts specifies the parameter for get list
+type ListOpts struct {
+	ListFields string `url:"list.fields,omitempty"`
+	Expansions string `url:"expansions,omitempty"`
+	UserFields string `url:"user.fields,omitempty"`
+}
+
+// LookupByID Returns the details of a specified List.
+// Refer: https://developer.twitter.com/en/docs/twitter-api/lists/list-lookup/api-reference/get-lists-id
+func (r *ListsResource) LookupByID(id string, args ListOpts) (*ListResp, *APIError) {
+	path := "/lists/" + id
 
 	resp := new(ListResp)
-	err := r.Cli.DoPost(path, args, resp)
+	err := r.Cli.DoGet(path, args, resp)
 	if err != nil {
 		return nil, err
 	}
 	return resp, nil
 }
 
-// ListDeletedStatus represents the status for update list
-type ListDeletedStatus struct {
-	Deleted *bool `json:"deleted,omitempty"`
+// OwnedListsOpts Specifies the parameter for get owned lists.
+type OwnedListsOpts struct {
+	MaxResults      string `url:"max_results,omitempty"`
+	PaginationToken string `url:"pagination_token,omitempty"`
+	ListOpts
 }
 
-func (l ListDeletedStatus) String() string {
-	return Stringify(l)
-}
+// GetOwnedLists Returns all Lists owned by the specified user.
+// Refer: https://developer.twitter.com/en/docs/twitter-api/lists/list-lookup/api-reference/get-users-id-owned_lists
+func (r *ListsResource) GetOwnedLists(id string, args OwnedListsOpts) (*ListsResp, *APIError) {
+	path := "/users/" + id + "/owned_lists"
 
-// ListDeletedResp represents the response for delete list
-type ListDeletedResp struct {
-	Data *ListDeletedStatus `json:"data,omitempty"`
-}
-
-func (l ListDeletedResp) String() string {
-	return Stringify(l)
-}
-
-// ListDelete Enables the authenticated user to delete a List that they own.
-// Refer: https://developer.twitter.com/en/docs/twitter-api/lists/manage-lists/api-reference/delete-lists-id
-func (r *ListsResource) ListDelete(id string) (*ListDeletedResp, *APIError) {
-	path := "/lists/" + id
-
-	resp := new(ListDeletedResp)
-	err := r.Cli.DoDelete(path, resp)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-// ListUpdatedStatus represents the status for update list
-type ListUpdatedStatus struct {
-	Updated *bool `json:"updated,omitempty"`
-}
-
-func (l ListUpdatedStatus) String() string {
-	return Stringify(l)
-}
-
-// ListUpdatedResp represents the response for update list
-type ListUpdatedResp struct {
-	Data *ListUpdatedStatus `json:"data,omitempty"`
-}
-
-func (l ListUpdatedResp) String() string {
-	return Stringify(l)
-}
-
-// ListUpdate Enables the authenticated user to update the metadata of a specified List that they own.
-// Refer: https://developer.twitter.com/en/docs/twitter-api/lists/manage-lists/api-reference/put-lists-id
-func (r *ListsResource) ListUpdate(id string, args ManageListOpts) (*ListUpdatedResp, *APIError) {
-	path := "/lists/" + id
-
-	resp := new(ListUpdatedResp)
-	err := r.Cli.DoPut(path, args, resp)
+	resp := new(ListsResp)
+	err := r.Cli.DoGet(path, args, resp)
 	if err != nil {
 		return nil, err
 	}

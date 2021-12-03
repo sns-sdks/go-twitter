@@ -107,6 +107,7 @@ func TestString(t *testing.T) {
 		{ComplianceJobResp{Data: &ComplianceJob{ID: String("1423095206576984067")}}, `twitter.ComplianceJobResp{Data:twitter.ComplianceJob{ID:"1423095206576984067"}}`},
 		{ComplianceJobsResp{Data: []*ComplianceJob{{ID: String("1421185651106480129")}}}, `twitter.ComplianceJobsResp{Data:[twitter.ComplianceJob{ID:"1421185651106480129"}]}`},
 		{ListResp{Data: &List{ID: String("1441162269824405510")}}, `twitter.ListResp{Data:twitter.List{ID:"1441162269824405510"}}`},
+		{ListsResp{Data: []*List{{ID: String("1403322685870940160")}}}, `twitter.ListsResp{Data:[twitter.List{ID:"1403322685870940160"}]}`},
 		{ListDeletedResp{Data: &ListDeletedStatus{Deleted: Bool(true)}}, `twitter.ListDeletedResp{Data:twitter.ListDeletedStatus{Deleted:true}}`},
 		{ListUpdatedResp{Data: &ListUpdatedStatus{Updated: Bool(true)}}, `twitter.ListUpdatedResp{Data:twitter.ListUpdatedStatus{Updated:true}}`},
 		{ListMemberResp{Data: &ListMemberStatus{IsMember: Bool(true)}}, `twitter.ListMemberResp{Data:twitter.ListMemberStatus{IsMember:true}}`},

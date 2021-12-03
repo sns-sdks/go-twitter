@@ -2,75 +2,54 @@ package twitter
 
 import "github.com/jarcoal/httpmock"
 
-func (bc *BCSuite) TestListCreate() {
+func (bc *BCSuite) TestLookupList() {
+	lid := "84839422"
+
 	httpmock.RegisterResponder(
-		HttpPost, Baseurl+"/lists",
+		HttpGet, Baseurl+"/lists/"+lid,
 		httpmock.NewStringResponder(
 			401,
 			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
 		),
 	)
-	_, err := bc.Tw.Lists.ListCreate(ManageListOpts{Name: "test v2 create list"})
+	_, err := bc.Tw.Lists.LookupByID(lid, ListOpts{})
 	bc.IsType(&APIError{}, err)
 
 	httpmock.RegisterResponder(
-		HttpPost, Baseurl+"/lists",
+		HttpGet, Baseurl+"/lists/"+lid,
 		httpmock.NewStringResponder(
 			200,
-			`{"data":{"id":"1441162269824405510","name":"test v2 create list"}}`,
+			`{"data":{"follower_count":906,"id":"84839422","name":"Official Twitter Accounts","owner_id":"783214"},"includes":{"users":[{"id":"783214","name":"Twitter","username":"Twitter"}]}}`,
 		),
 	)
 
-	resp, _ := bc.Tw.Lists.ListCreate(ManageListOpts{Name: "test v2 create list"})
-	bc.Equal(*resp.Data.ID, "1441162269824405510")
+	resp, _ := bc.Tw.Lists.LookupByID(lid, ListOpts{})
+	bc.Equal(*resp.Data.FollowerCount, 906)
+	bc.Equal(*resp.Includes.Users[0].ID, "783214")
 }
 
-func (bc *BCSuite) TestListDelete() {
-	listID := "1441162269824405510"
+func (bc *BCSuite) TestGetOwnedLists() {
+	uid := "2244994945"
 
 	httpmock.RegisterResponder(
-		HttpDelete, Baseurl+"/lists/"+listID,
+		HttpGet, Baseurl+"/users/"+uid+"/owned_lists",
 		httpmock.NewStringResponder(
 			401,
 			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
 		),
 	)
-	_, err := bc.Tw.Lists.ListDelete(listID)
+	_, err := bc.Tw.Lists.GetOwnedLists(uid, OwnedListsOpts{})
 	bc.IsType(&APIError{}, err)
 
 	httpmock.RegisterResponder(
-		HttpDelete, Baseurl+"/lists/"+listID,
+		HttpGet, Baseurl+"/users/"+uid+"/owned_lists",
 		httpmock.NewStringResponder(
 			200,
-			`{"data":{"deleted":true}}`,
+			`{"data":[{"follower_count":0,"id":"1451305624956858369","name":"Test List","owner_id":"2244994945"}],"includes":{"users":[{"username":"TwitterDev","id":"2244994945","created_at":"2013-12-14T04:35:55.000Z","name":"Twitter Dev"}]},"meta":{"result_count":1}}`,
 		),
 	)
 
-	resp, _ := bc.Tw.Lists.ListDelete(listID)
-	bc.Equal(*resp.Data.Deleted, true)
-}
-
-func (bc *BCSuite) TestListUpdate() {
-	listID := "1441162269824405510"
-
-	httpmock.RegisterResponder(
-		HttpPut, Baseurl+"/lists/"+listID,
-		httpmock.NewStringResponder(
-			401,
-			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
-		),
-	)
-	_, err := bc.Tw.Lists.ListUpdate(listID, ManageListOpts{Name: "test v2 update list"})
-	bc.IsType(&APIError{}, err)
-
-	httpmock.RegisterResponder(
-		HttpPut, Baseurl+"/lists/"+listID,
-		httpmock.NewStringResponder(
-			200,
-			`{"data":{"updated":true}}`,
-		),
-	)
-
-	resp, _ := bc.Tw.Lists.ListUpdate(listID, ManageListOpts{Name: "test v2 update list"})
-	bc.Equal(*resp.Data.Updated, true)
+	resp, _ := bc.Tw.Lists.GetOwnedLists(uid, OwnedListsOpts{})
+	bc.Equal(*resp.Data[0].ID, "1451305624956858369")
+	bc.Equal(*resp.Includes.Users[0].ID, "2244994945")
 }

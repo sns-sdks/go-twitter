@@ -110,12 +110,12 @@ func (t Tweet) String() string {
 
 // TweetOpts specifies the parameters for get tweet
 type TweetOpts struct {
-	Tweet      string `url:"tweet.fields,omitempty"`
-	Expansions string `url:"expansions,omitempty"`
-	Media      string `url:"media.fields,omitempty"`
-	Place      string `url:"place.fields,omitempty"`
-	Poll       string `url:"poll.fields,omitempty"`
-	User       string `url:"user.fields,omitempty"`
+	TweetFields string `url:"tweet.fields,omitempty"`
+	Expansions  string `url:"expansions,omitempty"`
+	MediaFields string `url:"media.fields,omitempty"`
+	PlaceFields string `url:"place.fields,omitempty"`
+	PollFields  string `url:"poll.fields,omitempty"`
+	UserFields  string `url:"user.fields,omitempty"`
 }
 
 // LookupByID Returns a variety of information about a single Tweet specified by the requested ID.
