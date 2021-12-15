@@ -118,3 +118,16 @@ func (r *UserResource) LookupByUsernames(usernames string, args UserOpts) (*User
 	}
 	return resp, nil
 }
+
+// LookupMe Returns information about an authorized user.
+// Refer: https://developer.twitter.com/en/docs/twitter-api/users/lookup/api-reference/get-users-me
+func (r *UserResource) LookupMe(args UserOpts) (*UserResp, *APIError) {
+	path := "/users/me"
+
+	resp := new(UserResp)
+	err := r.Cli.DoGet(path, nil, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
