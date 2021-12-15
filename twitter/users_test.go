@@ -108,6 +108,28 @@ func (bc *BCSuite) TestUsersByUsernames() {
 	bc.Equal(*resp.Data[0].Username, "TwitterDev")
 }
 
+func (bc *BCSuite) TestUserByMe() {
+	httpmock.RegisterResponder(
+		HttpGet, Baseurl+"/users/me",
+		httpmock.NewStringResponder(
+			401,
+			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
+		),
+	)
+	_, err := bc.Tw.Users.LookupMe(UserOpts{})
+	bc.IsType(&APIError{}, err)
+
+	httpmock.RegisterResponder(
+		HttpGet, Baseurl+"/users/me",
+		httpmock.NewStringResponder(
+			200,
+			`{"data":{"id":"2244994945","name":"Twitter Dev","username":"TwitterDev"}}`,
+		),
+	)
+	resp, _ := bc.Tw.Users.LookupMe(UserOpts{})
+	bc.Equal(*resp.Data.Username, "TwitterDev")
+}
+
 func TestBCSuite(t *testing.T) {
 	suite.Run(t, new(BCSuite))
 }
