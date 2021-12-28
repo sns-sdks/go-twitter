@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.4.0](https://github.com/sns-sdks/go-twitter/v0.3.0) (2021-12-28)
+
+- New APIs set for Lists
+- New API for get token's user.
+
 ## [0.3.0](https://github.com/sns-sdks/go-twitter/v0.3.0) (2021-09-29)
 
 - New API for muting

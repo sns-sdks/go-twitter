@@ -28,7 +28,7 @@ fmt.Println(u, err)
 
 [OAuth 2.0](https://developer.twitter.com/en/docs/twitter-api/oauth2) has released with beta.
 
-So you can do `OAuth2.0` with twitter. More see the [`ddemo for OAuth2.0`](https://github.com/sns-sdks/go-twitter/tree/master/example/oauth2/authorization_oauth2.go)
+So you can do `OAuth2.0` with twitter. More see the [`Examples for OAuth2.0`](https://github.com/sns-sdks/go-twitter/tree/master/example/oauth2/authorization_oauth2.go)
 
 
 ### Authentication
@@ -48,20 +48,22 @@ bu, err := cli.Users.GetBlocking(uid, twitter.UserBlockingOpts{})
 fmt.Println(bu, err)
 ```
 
-Or you can handle authentication contact with twitter. See the [`demo for authorize`](https://github.com/sns-sdks/go-twitter/tree/master/example/oauth1/authorization.go)
+Or you can handle authentication contact with twitter. See the [`Examples for authorize`](https://github.com/sns-sdks/go-twitter/tree/master/example/oauth1/authorization.go)
 
 ## Features
 
 Tweets:
-- Lookup
+- Tweets lookup
+- Manage Tweets
 - Timelines
 - search Tweets
+- Tweet counts
 - Retweets
 - Likes
 - Hide replies
 
 Users:
-- Lookup
+- Users lookup
 - Follows
 - Blocks
 - Mutes
@@ -71,7 +73,12 @@ Spaces:
 - Search
 
 Lists:
+- List lookup
 - Manage lists
+- List Tweets lookup
+- List members
+- List follows
+- Pinned Lists
 
 Compliance:
 - Batch compliance
