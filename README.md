@@ -28,7 +28,7 @@ fmt.Println(u, err)
 
 [OAuth 2.0](https://developer.twitter.com/en/docs/twitter-api/oauth2) has released with beta.
 
-So you can do `OAuth2.0` with twitter. More see the [`Example for OAuth2.0`](https://github.com/sns-sdks/go-twitter/tree/master/example/authorization_oauth2.go)
+So you can do `OAuth2.0` with twitter. More see the [`Example for OAuth2.0`](https://github.com/sns-sdks/go-twitter/blob/main/example/authorization_oauth2.go)
 
 
 ### Authentication
@@ -48,7 +48,7 @@ bu, err := cli.Users.GetBlocking(uid, twitter.UserBlockingOpts{})
 fmt.Println(bu, err)
 ```
 
-Or you can handle authentication contact with twitter. See the [`Example for OAuth 1.0a`](https://github.com/sns-sdks/go-twitter/tree/master/example/authorization_oauth1.go)
+Or you can handle authentication contact with twitter. See the [`Example for OAuth 1.0a`](https://github.com/sns-sdks/go-twitter/blob/main/example/authorization_oauth1.go)
 
 ## Features
 
