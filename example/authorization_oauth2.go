@@ -5,10 +5,15 @@ import (
 	"github.com/sns-sdks/go-twitter/twitter"
 )
 
+var (
+	ClientID          = "Your app client ID"
+	OAuth2CallbackURL = "https://localhost/" // Your redirect uri
+)
+
 func main() {
 	app := twitter.OAuth2AuthorizationAPP{
-		ClientID:    "client id",
-		CallbackURL: "https://localhost/",
+		ClientID:    ClientID,
+		CallbackURL: OAuth2CallbackURL,
 	}
 	authUrl, verifier := app.GetOAuth2AuthorizationURL()
 
@@ -16,7 +21,7 @@ func main() {
 	fmt.Println("Enter redirect response: ")
 
 	var code string
-	//resp := "https://localhost/?code=code" -> Code
+	// resp := "https://localhost/?code=code" -> Code
 	fmt.Scanln(&code)
 	token, err := app.GenerateAccessToken(code, verifier)
 	if err != nil {

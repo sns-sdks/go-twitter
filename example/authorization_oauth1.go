@@ -5,11 +5,17 @@ import (
 	"github.com/sns-sdks/go-twitter/twitter"
 )
 
+const (
+	ConsumerKey       = "Your app consumer key"
+	ConsumerSecret    = "Your app consumer secret"
+	OAuth1CallbackURL = "https://localhost/" // Your redirect uri
+)
+
 func main() {
 	app := twitter.AuthorizationAPP{
-		ConsumerKey:    "app consumer key",
-		ConsumerSecret: "app consumer secery",
-		CallbackURL:    "https://localhost/",
+		ConsumerKey:    ConsumerKey,
+		ConsumerSecret: ConsumerSecret,
+		CallbackURL:    OAuth1CallbackURL,
 	}
 	authUrl, _, err := app.GetAuthorizationURL()
 	if err != nil {

@@ -48,7 +48,7 @@ bu, err := cli.Users.GetBlocking(uid, twitter.UserBlockingOpts{})
 fmt.Println(bu, err)
 ```
 
-Or you can handle authentication contact with twitter. See the [`Examples for authorize`](https://github.com/sns-sdks/go-twitter/tree/master/example/oauth1/authorization.go)
+Or you can handle authentication contact with twitter. See the [`Examples for OAuth 1.0a`](https://github.com/sns-sdks/go-twitter/tree/master/example/oauth1/authorization.go)
 
 ## Features
 
