@@ -3,26 +3,23 @@ name: goreleaser
 on:
   push:
     tags:
-      - '*'
+      - 'v*'
 
 jobs:
   goreleaser:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      -
-        name: Set up Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: 1.16
-      -
-        name: Publish
+
+      - name: Generate Changelog
+        run: |
+          VERSION=$(hack/version.sh)
+          hack/changelog.sh $VERSION > build/$-CHANGELOG.md
+
+      - name: Publish
         uses: softprops/action-gh-release@v1
         with:
-          body: '[More see Changelog](https://github.com/sns-sdks/go-twitter/blob/master/CHANGELOG.md)'
+          body_path: build/$-CHANGELOG.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
