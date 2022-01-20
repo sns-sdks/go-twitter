@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.1](https://github.com/sns-sdks/go-twitter/v0.4.0) (2022-01-20)
+
+- Fix README invalid links.
+- Update examples for library
+- Update action scripts
+
 ## [0.4.0](https://github.com/sns-sdks/go-twitter/v0.4.0) (2021-12-28)
 
 - New APIs set for Lists
