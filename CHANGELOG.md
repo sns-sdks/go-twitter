@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.4.1](https://github.com/sns-sdks/go-twitter/v0.4.0) (2022-01-20)
+## [0.4.2](https://github.com/sns-sdks/go-twitter/v0.4.2) (2022-01-20)
 
 - Fix README invalid links.
 - Update examples for library
