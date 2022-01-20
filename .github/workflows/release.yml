@@ -15,11 +15,11 @@ jobs:
       - name: Generate Changelog
         run: |
           VERSION=$(hack/version.sh)
-          hack/changelog.sh $VERSION > $VERSION-CHANGELOG.md
+          hack/changelog.sh $VERSION > NEW-VERSION-CHANGELOG.md
 
       - name: Publish
         uses: softprops/action-gh-release@v1
         with:
-          body_path: $VERSION-CHANGELOG.md
+          body_path: NEW-VERSION-CHANGELOG.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
