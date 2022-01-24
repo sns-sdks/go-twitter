@@ -1,5 +1,11 @@
 # Changelog
 
+All notable changes to this project will be documented in this file.
+
+## [0.4.4](https://github.com/sns-sdks/go-twitter/v0.4.4) (2022-01-24)
+
+- Add parameters for pagination for tweet's liking users and retweets
+
 ## [0.4.3](https://github.com/sns-sdks/go-twitter/v0.4.3) (2022-01-20)
 
 - Fix README invalid links.
