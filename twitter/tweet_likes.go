@@ -1,8 +1,15 @@
 package twitter
 
+// LikingUsersOpts specifies the parameters for tweet to get linking users
+type LikingUsersOpts struct {
+	MaxResults      int    `url:"max_results,omitempty"`
+	PaginationToken string `url:"pagination_token,omitempty"`
+	UserOpts
+}
+
 // GetLikingUsers  Return information about a Tweet’s liking users.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/tweets/likes/api-reference/get-tweets-id-liking_users
-func (r *TweetResource) GetLikingUsers(id string, args UserOpts) (*UsersResp, *APIError) {
+func (r *TweetResource) GetLikingUsers(id string, args LikingUsersOpts) (*UsersResp, *APIError) {
 	path := "/tweets/" + id + "/liking_users"
 
 	resp := new(UsersResp)
@@ -13,7 +20,7 @@ func (r *TweetResource) GetLikingUsers(id string, args UserOpts) (*UsersResp, *A
 	return resp, nil
 }
 
-// LikedTweetsOpts specifies the parameters for get liked tweets
+// LikedTweetsOpts specifies the parameters for tweet to get liked tweets
 type LikedTweetsOpts struct {
 	MaxResults      int    `url:"max_results,omitempty"`
 	PaginationToken string `url:"pagination_token,omitempty"`

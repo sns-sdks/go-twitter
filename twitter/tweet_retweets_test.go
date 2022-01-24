@@ -12,7 +12,7 @@ func (bc *BCSuite) TestRetweetedBy() {
 			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
 		),
 	)
-	_, err := bc.Tw.Tweets.GetRetweetedBy(tid, UserOpts{})
+	_, err := bc.Tw.Tweets.GetRetweetedBy(tid, RetweetedByOpts{})
 	bc.IsType(&APIError{}, err)
 
 	httpmock.RegisterResponder(
@@ -23,7 +23,7 @@ func (bc *BCSuite) TestRetweetedBy() {
 		),
 	)
 
-	resp, _ := bc.Tw.Tweets.GetRetweetedBy(tid, UserOpts{})
+	resp, _ := bc.Tw.Tweets.GetRetweetedBy(tid, RetweetedByOpts{})
 	bc.Equal(len(resp.Data), 5)
 }
 

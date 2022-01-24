@@ -1,8 +1,15 @@
 package twitter
 
+// RetweetedByOpts specifies the parameters for tweet to get retweeted users
+type RetweetedByOpts struct {
+	MaxResults      int    `url:"max_results,omitempty"`
+	PaginationToken string `url:"pagination_token,omitempty"`
+	UserOpts
+}
+
 // GetRetweetedBy Return information about who has Retweeted a Tweet.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/tweets/retweets/api-reference/get-tweets-id-retweeted_by
-func (r *TweetResource) GetRetweetedBy(id string, args UserOpts) (*UsersResp, *APIError) {
+func (r *TweetResource) GetRetweetedBy(id string, args RetweetedByOpts) (*UsersResp, *APIError) {
 	path := "/tweets/" + id + "/retweeted_by"
 
 	resp := new(UsersResp)

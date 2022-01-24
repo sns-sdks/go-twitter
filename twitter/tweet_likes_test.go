@@ -12,7 +12,7 @@ func (bc *BCSuite) TestLikingUsers() {
 			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
 		),
 	)
-	_, err := bc.Tw.Tweets.GetLikingUsers(tid, UserOpts{})
+	_, err := bc.Tw.Tweets.GetLikingUsers(tid, LikingUsersOpts{})
 	bc.IsType(&APIError{}, err)
 
 	httpmock.RegisterResponder(
@@ -23,7 +23,7 @@ func (bc *BCSuite) TestLikingUsers() {
 		),
 	)
 
-	resp, _ := bc.Tw.Tweets.GetLikingUsers(tid, UserOpts{})
+	resp, _ := bc.Tw.Tweets.GetLikingUsers(tid, LikingUsersOpts{})
 	bc.Equal(len(resp.Data), 5)
 }
 
