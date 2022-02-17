@@ -7,6 +7,7 @@ type TweetSearchOpts struct {
 	EndTime    string `url:"end_time,omitempty"`
 	SinceID    string `url:"since_id,omitempty"`
 	UntilID    string `url:"until_id,omitempty"`
+	SortOrder  string `url:"sort_order,omitempty"`
 	MaxResults int    `url:"max_results,omitempty"`
 	NextToken  string `url:"next_token,omitempty"`
 	TweetOpts
