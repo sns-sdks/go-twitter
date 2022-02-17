@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.5](https://github.com/sns-sdks/go-twitter/v0.4.5) (2022-02-17)
+
+- Add sort parameter for search tweets, [Refer docs](https://twittercommunity.com/t/introducing-the-sort-order-parameter-for-search-endpoints-in-the-twitter-api-v2/166377)
+
 ## [0.4.4](https://github.com/sns-sdks/go-twitter/v0.4.4) (2022-01-24)
 
 - Add parameters for pagination for tweet's liking users and retweets
