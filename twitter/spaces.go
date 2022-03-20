@@ -18,6 +18,7 @@ type Space struct {
 	ID               *string   `json:"id"`
 	State            *string   `json:"state"`
 	CreatedAt        *string   `json:"created_at,omitempty"`
+	EndedAt          *string   `json:"ended_at,omitempty"`
 	HostIDs          []*string `json:"host_ids,omitempty"`
 	Lang             *string   `json:"lang,omitempty"`
 	IsTicketed       *bool     `json:"is_ticketed,omitempty"`
@@ -27,11 +28,22 @@ type Space struct {
 	SpeakerIDs       []*string `json:"speaker_ids,omitempty"`
 	StartedAt        *string   `json:"started_at,omitempty"`
 	Title            *string   `json:"title,omitempty"`
+	TopicIDs         []*string `json:"topic_ids,omitempty"`
 	UpdatedAt        *string   `json:"updated_at,omitempty"`
 }
 
 func (s Space) String() string {
 	return Stringify(s)
+}
+
+// Topic represents space topic info.
+type Topic struct {
+	ID   *string `json:"id"`
+	Name *string `json:"name"`
+}
+
+func (t Topic) String() string {
+	return Stringify(t)
 }
 
 // SpaceOpts specifies the parameters for get space
@@ -88,6 +100,32 @@ func (r *SpaceResource) LookupByCreators(userIDs string, args SpaceOpts) (*Space
 	resp := new(SpacesResp)
 
 	err := r.Cli.DoGet(path, newArgs, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+// GetBuyers Returns a list of user who purchased a ticket to the requested Space. You must authenticate the request using the Access Token of the creator of the requested Space.
+// Refer: https://developer.twitter.com/en/docs/twitter-api/spaces/lookup/api-reference/get-spaces-id-buyers
+func (r *SpaceResource) GetBuyers(id string, args UserOpts) (*UsersResp, *APIError) {
+	path := "/spaces/" + id + "/buyers"
+	resp := new(UsersResp)
+
+	err := r.Cli.DoGet(path, args, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+// GetTweets Returns Tweets shared in the requested Spaces.
+// Refer: https://developer.twitter.com/en/docs/twitter-api/spaces/lookup/api-reference/get-spaces-id-tweets
+func (r *SpaceResource) GetTweets(id string, args TweetOpts) (*TweetsResp, *APIError) {
+	path := "/spaces/" + id + "/tweets"
+	resp := new(TweetsResp)
+
+	err := r.Cli.DoGet(path, args, resp)
 	if err != nil {
 		return nil, err
 	}

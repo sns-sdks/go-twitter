@@ -36,6 +36,7 @@ type Includes struct {
 	Media  []*Media `json:"media,omitempty"`
 	Places []*Place `json:"places,omitempty"`
 	Polls  []*Poll  `json:"polls,omitempty"`
+	Topics []*Topic `json:"topics,omitempty"`
 }
 
 // Error represents the common error response
