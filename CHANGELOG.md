@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.6](https://github.com/sns-sdks/go-twitter/v0.4.6) (2022-03-20)
+
+- Updates api for spaces, [Refer docs](https://twittercommunity.com/t/bringing-tweets-shared-in-a-space-and-rsvp-count-to-the-spaces-endpoints/166746)
+- New API for get tweet quote tweets, [Refer docs](https://twittercommunity.com/t/introducing-the-quote-tweets-lookup-endpoint-to-the-twitter-api-v2/168370)
+
 ## [0.4.5](https://github.com/sns-sdks/go-twitter/v0.4.5) (2022-02-17)
 
 - Add sort parameter for search tweets, [Refer docs](https://twittercommunity.com/t/introducing-the-sort-order-parameter-for-search-endpoints-in-the-twitter-api-v2/166377)
