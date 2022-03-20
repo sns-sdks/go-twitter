@@ -73,6 +73,7 @@ func TestString(t *testing.T) {
 		{Place{ID: String("123")}, `twitter.Place{ID:"123"}`},
 		{Poll{ID: String("123")}, `twitter.Poll{ID:"123"}`},
 		{Space{ID: String("1DXxyRYNejbKM")}, `twitter.Space{ID:"1DXxyRYNejbKM"}`},
+		{Topic{ID: String("123456"), Name: String("test")}, `twitter.Topic{ID:"123456", Name:"test"}`},
 		{List{ID: String("1441162269824405510")}, `twitter.List{ID:"1441162269824405510"}`},
 		{ComplianceJob{ID: String("1423095206576984067")}, `twitter.ComplianceJob{ID:"1423095206576984067"}`},
 		{TweetsCounts{TweetCount: Int(1)}, `twitter.TweetsCounts{TweetCount:1}`},

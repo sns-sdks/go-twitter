@@ -2,9 +2,10 @@ package twitter
 
 // SpaceSearchOpts specifies the parameters for search spaces
 type SpaceSearchOpts struct {
-	Query      string `url:"query"`
-	State      string `url:"state"`
-	MaxResults int    `url:"max_results,omitempty"`
+	Query       string `url:"query"`
+	State       string `url:"state"`
+	MaxResults  int    `url:"max_results,omitempty"`
+	TopicFields string `url:"topic.fields,omitempty"`
 	SpaceOpts
 }
 
