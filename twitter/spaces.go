@@ -51,6 +51,7 @@ type SpaceOpts struct {
 	SpaceFields string `url:"space.fields,omitempty"`
 	Expansions  string `url:"expansions,omitempty"`
 	UserFields  string `url:"user.fields,omitempty"`
+	TopicFields string `url:"topic.fields,omitempty"`
 }
 
 // LookupByID Returns a variety of information about a single Space specified by the requested ID.
