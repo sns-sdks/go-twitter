@@ -18,11 +18,12 @@ var OAuth2Endpoint = oauth2.Endpoint{
 
 // OAuth2AuthorizationAPP Twitter OAuth2 app config
 type OAuth2AuthorizationAPP struct {
-	ClientID    string         `json:"client_id"`
-	CallbackURL string         `json:"callback_url,omitempty"`
-	Scopes      []string       `json:"scopes,omitempty"`
-	Token       *oauth2.Token  `json:"access_token,omitempty"`
-	Config      *oauth2.Config `json:"config,omitempty"`
+	ClientID     string         `json:"client_id"`
+	ClientSecret string         `json:"client_secret,omitempty"`
+	CallbackURL  string         `json:"callback_url,omitempty"`
+	Scopes       []string       `json:"scopes,omitempty"`
+	Token        *oauth2.Token  `json:"access_token,omitempty"`
+	Config       *oauth2.Config `json:"config,omitempty"`
 }
 
 func (app OAuth2AuthorizationAPP) String() string {
@@ -32,23 +33,28 @@ func (app OAuth2AuthorizationAPP) String() string {
 // NewOAuth2AuthorizationAPP Return app for oauth2 authorization
 func NewOAuth2AuthorizationAPP(app OAuth2AuthorizationAPP) *OAuth2AuthorizationAPP {
 	app.Config = &oauth2.Config{
-		ClientID:    app.ClientID,
-		RedirectURL: app.CallbackURL,
-		Scopes:      app.Scopes,
-		Endpoint:    OAuth2Endpoint,
+		ClientID:     app.ClientID,
+		ClientSecret: app.ClientSecret,
+		RedirectURL:  app.CallbackURL,
+		Scopes:       app.Scopes,
+		Endpoint:     OAuth2Endpoint,
+	}
+	// If provide client secret, will use confidential clients.
+	if app.Config.ClientSecret != "" {
+		app.Config.Endpoint.AuthStyle = oauth2.AuthStyleInHeader
 	}
 	return &app
 }
 
 // GetOAuth2AuthorizationURL Return authorization url and code verifier for user
-func (app *OAuth2AuthorizationAPP) GetOAuth2AuthorizationURL() (string, string) {
+func (app *OAuth2AuthorizationAPP) GetOAuth2AuthorizationURL() (string, string, string) {
 	state := GenerateNonce()
 	verifier := GenerateCodeVerifier(128)
 
 	challengeOpt := oauth2.SetAuthURLParam("code_challenge", PkCEChallengeWithSHA256(verifier))
 	challengeMethodOpt := oauth2.SetAuthURLParam("code_challenge_method", "s256")
 
-	return app.Config.AuthCodeURL(state, challengeOpt, challengeMethodOpt), verifier
+	return app.Config.AuthCodeURL(state, challengeOpt, challengeMethodOpt), verifier, state
 }
 
 // GenerateAccessToken Generate user access token for the app
