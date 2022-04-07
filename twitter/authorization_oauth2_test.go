@@ -34,7 +34,7 @@ func TestAuth2Suite(t *testing.T) {
 }
 
 func (auth *Auth2Suite) TestGetAuthorizationURL() {
-	authUrl, verifier := auth.app.GetOAuth2AuthorizationURL()
+	authUrl, verifier, _ := auth.app.GetOAuth2AuthorizationURL()
 	auth.NotNil(authUrl)
 	auth.NotNil(verifier)
 }
