@@ -56,6 +56,8 @@ var RateLimitResource = [...]Endpoint{
 	{Resource: "/users/:id/followed_lists/:list_id", Regex: `^/users/\d+/followed_lists/\d+$`},
 	{Resource: "/users/:id/pinned_lists", Regex: `^/users/\d+/retweets$`},
 	{Resource: "/users/:id/pinned_lists/:list_id", Regex: `^/users/\d+/pinned_lists/\d+$`},
+	{Resource: "/users/:id/bookmarks", Regex: `^/users/\d+/bookmarks$`},
+	{Resource: "users/:id/bookmarks/:tweet_id", Regex: `^/users/\d+/bookmarks$/\d+$`},
 	{Resource: "/tweets/:id/hidden", Regex: `^/tweets/\d+/hidden$`},
 	{Resource: "/tweets/counts", Regex: `^tweets/counts/\w+$`},
 	{Resource: "/spaces/:id", Regex: `^/spaces/\w+$`},
