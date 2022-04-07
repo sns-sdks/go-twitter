@@ -15,9 +15,10 @@ type Auth2Suite struct {
 
 func (auth *Auth2Suite) SetupSuite() {
 	auth.app = NewOAuth2AuthorizationAPP(OAuth2AuthorizationAPP{
-		ClientID:    "client id",
-		CallbackURL: "https://localhost/",
-		Scopes:      []string{"users.read", "tweet.read"},
+		ClientID:     "client id",
+		ClientSecret: "client secret",
+		CallbackURL:  "https://localhost/",
+		Scopes:       []string{"users.read", "tweet.read"},
 	})
 }
 
