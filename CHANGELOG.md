@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.7](https://github.com/sns-sdks/go-twitter/v0.4.7) (2022-04-07)
+
+- New apis for bookmarks.
+- New initial parameter client secret for Confidential Clients.
+
 ## [0.4.6](https://github.com/sns-sdks/go-twitter/v0.4.6) (2022-03-20)
 
 - Updates api for spaces, [Refer docs](https://twittercommunity.com/t/bringing-tweets-shared-in-a-space-and-rsvp-count-to-the-spaces-endpoints/166746)
