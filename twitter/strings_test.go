@@ -92,7 +92,7 @@ func TestString(t *testing.T) {
 		{TweetDeletedStatus{Deleted: Bool(true)}, `twitter.TweetDeletedStatus{Deleted:true}`},
 		{APIError{Title: "error"}, `twitter.APIError{ClientID:"", RequiredEnrollment:"", RegistrationUrl:"", Title:"error", Detail:"", Reason:"", Type:"", Status:0, Errors:<nil>}`},
 		{AuthorizationAPP{ConsumerKey: "123", ConsumerSecret: ""}, `twitter.AuthorizationAPP{ConsumerKey:"123", ConsumerSecret:"", CallbackURL:"", AccessTokenKey:"", AccessTokenSecret:"", RequestSecret:""}`},
-		{OAuth2AuthorizationAPP{ClientID: "asfasfa123124"}, `twitter.OAuth2AuthorizationAPP{ClientID:"asfasfa123124", CallbackURL:""}`},
+		{OAuth2AuthorizationAPP{ClientID: "asfasfa123124"}, `twitter.OAuth2AuthorizationAPP{ClientID:"asfasfa123124", ClientSecret:"", CallbackURL:""}`},
 		{UserResp{Data: &User{ID: String("123456")}}, `twitter.UserResp{Data:twitter.User{ID:"123456"}}`},
 		{UsersResp{Data: []*User{{ID: String("123456")}}}, `twitter.UsersResp{Data:[twitter.User{ID:"123456"}]}`},
 		{TweetResp{Data: &Tweet{ID: String("123")}}, `twitter.TweetResp{Data:twitter.Tweet{ID:"123"}}`},
