@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.8](https://github.com/sns-sdks/go-twitter/v0.4.8) (2022-05-23)
+
+- New api for get user timeline by reverse chronological.
+
 ## [0.4.7](https://github.com/sns-sdks/go-twitter/v0.4.7) (2022-04-07)
 
 - New apis for bookmarks.
