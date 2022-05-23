@@ -26,6 +26,9 @@ func TestParseDataResponse(t *testing.T) {
 func TestDo(t *testing.T) {
 	cli := NewBearerClient("")
 
+	// make tests run more quickly
+	cli.Cli.SetTimeout(1)
+
 	err := cli.Do("DELETE", "", "", "", "")
 	assert.IsType(t, &APIError{}, err)
 
