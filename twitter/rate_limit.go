@@ -43,6 +43,7 @@ var RateLimitResource = [...]Endpoint{
 	{Resource: "/tweets/search/recent", Regex: `^/tweets/search/recent$`},
 	{Resource: "/tweets/search/all", Regex: `^/tweets/search/all$`},
 	{Resource: "/users/:id/tweets", Regex: `^/users/\d+/tweets$`},
+	{Resource: "/users/:id/timelines/reverse_chronological", Regex: `^/users/\d+/timelines/reverse_chronological$`},
 	{Resource: "/users/:id/mentions", Regex: `^/users/\d+/mentions$`},
 	{Resource: "/tweets/:id/liking_users", Regex: `^/tweets/\d+/liking_users$`},
 	{Resource: "/tweets/:id/retweeted_by", Regex: `^/tweets/\d+/retweeted_by$`},

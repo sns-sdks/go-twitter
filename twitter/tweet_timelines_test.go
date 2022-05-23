@@ -29,6 +29,33 @@ func (bc BCSuite) TestGetTimelines() {
 	bc.Equal(*resp.Data[0].PublicMetrics.LikeCount, 37)
 }
 
+func (uc UCSuite) TestGetTimelinesReverseChronological() {
+	uid := "2244994945"
+
+	httpmock.RegisterResponder(
+		HttpGet, Baseurl+"/users/"+uid+"/timelines/reverse_chronological",
+		httpmock.NewStringResponder(
+			401,
+			`{"title":"Unauthorized","type":"about:blank","status":401,"detail":"Unauthorized"}`,
+		),
+	)
+	_, err := uc.Tw.Tweets.GetTimelinesReverseChronological(uid, TimelinesOpts{})
+	uc.IsType(&APIError{}, err)
+
+	httpmock.RegisterResponder(
+		HttpGet, Baseurl+"/users/"+uid+"/timelines/reverse_chronological",
+		httpmock.NewStringResponder(
+			200,
+			`{"data":[{"created_at":"2022-05-12T17:00:00.000Z","text":"Today marks the launch of Devs in the Details, a technical video series made for developers by developers building with the Twitter API.  🚀nnIn this premiere episode, @jessicagarson walks us through how she built @FactualCat #WelcomeToOurTechTalkn⬇️nnhttps://t.co/nGa8JTQVBJ","author_id":"2244994945","id":"1524796546306478083"},{"created_at":"2022-05-11T19:16:40.000Z","text":"📢 Join @jessicagarson @alanbenlee and @i_am_daniele tomorrow, May 12  | 5:30 ET / 2:30pm PT as they discuss the future of bots https://t.co/sQ2bIO1fz6","author_id":"2244994945","id":"1524468552404668416"},{"created_at":"2022-05-09T20:12:01.000Z","text":"Do you make bots with the Twitter API? 🤖nnJoin @jessicagarson @alanbenlee and @iamdaniele on Thursday, May 12  | 5:30 ET / 2:30pm PT as they discuss the future of bots and answer any questions you might have. 🎙📆⬇️nnhttps://t.co/2uVt7hCcdG","author_id":"2244994945","id":"1523757705436958720"},{"created_at":"2022-05-06T18:19:54.000Z","text":"If you’d like to apply, or would like to nominate someone else for the program, please feel free to fill out the following form:nnhttps://t.co/LUuWj24HLu","author_id":"2244994945","id":"1522642324781633536"},{"created_at":"2022-05-06T18:19:53.000Z","text":"We’ve gone into more detail on each Insider in our forum post. nnJoin us in congratulating the new additions! 🥳nnhttps://t.co/0r5maYEjPJ","author_id":"2244994945","id":"1522642323535847424"}],"includes":{"users":[{"created_at":"2013-12-14T04:35:55.000Z","name":"Twitter Dev","username":"TwitterDev","id":"2244994945"}]},"meta":{"result_count":5,"newest_id":"1524796546306478083","oldest_id":"1522642323535847424","next_token":"7140dibdnow9c7btw421dyz6jism75z99gyxd8egarsc4"}}`,
+		),
+	)
+
+	resp, _ := uc.Tw.Tweets.GetTimelinesReverseChronological(uid, TimelinesOpts{})
+	uc.Equal(len(resp.Data), 5)
+	uc.Equal(*resp.Data[0].ID, "1524796546306478083")
+	uc.Equal(*resp.Meta.NewestID, "1524796546306478083")
+}
+
 func (bc BCSuite) TestGetMentions() {
 	uid := "2244994945"
 

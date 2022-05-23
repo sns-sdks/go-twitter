@@ -25,6 +25,19 @@ func (r *TweetResource) GetTimelines(id string, args TimelinesOpts) (*TweetsResp
 	return resp, nil
 }
 
+// GetTimelinesReverseChronological Allows you to retrieve a collection of the most recent Tweets and Retweets posted by you and users you follow
+// Refer: https://developer.twitter.com/en/docs/twitter-api/tweets/timelines/api-reference/get-users-id-reverse-chronological
+func (r *TweetResource) GetTimelinesReverseChronological(id string, args TimelinesOpts) (*TweetsResp, *APIError) {
+	path := "/users/" + id + "/timelines/reverse_chronological"
+
+	resp := new(TweetsResp)
+	err := r.Cli.DoGet(path, args, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
 // MentionsOpts specifies the parameters for get mentions
 type MentionsOpts struct {
 	MaxResults      int    `url:"max_results,omitempty"`
