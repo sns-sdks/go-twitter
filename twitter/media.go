@@ -15,6 +15,8 @@ type Media struct {
 	PromotedMetrics  *MediaPromotedMetrics  `json:"promoted_metrics,omitempty"`
 	PublicMetrics    *MediaNonPublicMetrics `json:"public_metrics,omitempty"`
 	AltText          *string                `json:"alt_text,omitempty"`
+	Variants         *MediaVariants         `json:"variants,omitempty"`
+	ContainedWithin  []*string              `json:"contained_within,omitempty"`
 }
 
 type MediaNonPublicMetrics struct {
@@ -44,6 +46,9 @@ type MediaPromotedMetrics struct {
 
 type MediaPublicMetrics struct {
 	ViewCount *int `json:"view_count,omitempty"`
+}
+
+type MediaVariants struct {
 }
 
 func (m Media) String() string {

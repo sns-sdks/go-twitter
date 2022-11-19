@@ -148,7 +148,7 @@ func (j ComplianceJobsResp) String() string {
 }
 
 /*
-	functions for http requests
+functions for http requests
 */
 func ParseDataResponse(response *resty.Response, d interface{}) *APIError {
 	var err error
