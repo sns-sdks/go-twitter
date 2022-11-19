@@ -147,6 +147,17 @@ func (j ComplianceJobsResp) String() string {
 
 }
 
+// DMEventsResp data struct represents the list of
+type DMEventsResp struct {
+	Data []*DMEvent `json:"data,omitempty"`
+	*BaseData
+}
+
+func (d DMEventsResp) String() string {
+	return Stringify(d)
+
+}
+
 /*
 functions for http requests
 */
