@@ -13,15 +13,15 @@ func newDirectMessageResource(cli *Client) *DirectMessageResource {
 // DMEvent represents a dm event for Twitter.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/data-dictionary/object-model/dm-events
 type DMEvent struct {
-	ID               *string             `json:"id,omitempty"`
-	EventType        *string             `json:"event_type,omitempty"`
-	Text             *string             `json:"text,omitempty"`
-	SenderID         *string             `json:"sender_id,omitempty"`
-	ParticipantIDs   []*string           `json:"participant_ids,omitempty"`
-	DMConversationID *string             `json:"dm_conversation_id,omitempty"`
-	CreatedAt        *string             `json:"created_at,omitempty"`
-	ReferencedTweets *DMEReferencedTweet `json:"referenced_tweets,omitempty"`
-	Attachments      *DMEAttachments     `json:"attachments,omitempty"`
+	ID               *string               `json:"id,omitempty"`
+	EventType        *string               `json:"event_type,omitempty"`
+	Text             *string               `json:"text,omitempty"`
+	SenderID         *string               `json:"sender_id,omitempty"`
+	ParticipantIDs   []*string             `json:"participant_ids,omitempty"`
+	DMConversationID *string               `json:"dm_conversation_id,omitempty"`
+	CreatedAt        *string               `json:"created_at,omitempty"`
+	ReferencedTweets []*DMEReferencedTweet `json:"referenced_tweets,omitempty"`
+	Attachments      *DMEAttachments       `json:"attachments,omitempty"`
 }
 
 func (d DMEvent) String() string {
@@ -58,7 +58,7 @@ type DMEventOpts struct {
 
 // LookUp Returns a list of Direct Messages for the authenticated user, both sent and received.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/direct-messages/lookup/api-reference/get-dm_events
-func (r *DirectMessageResource) LookUp(args DMEventOpts) (*DMEventsResp, *APIError) {
+func (r *DirectMessageResource) Lookup(args DMEventOpts) (*DMEventsResp, *APIError) {
 	path := "/dm_events"
 
 	resp := new(DMEventsResp)
@@ -71,7 +71,7 @@ func (r *DirectMessageResource) LookUp(args DMEventOpts) (*DMEventsResp, *APIErr
 
 // LookUpByParticipant Returns a list of Direct Messages (DM) events within a 1-1 conversation with the user specified in the participant_id path parameter.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/direct-messages/lookup/api-reference/get-dm_conversations-with-participant_id-dm_events
-func (r *DirectMessageResource) LookUpByParticipant(id string, args DMEventOpts) (*DMEventsResp, *APIError) {
+func (r *DirectMessageResource) LookupByParticipant(id string, args DMEventOpts) (*DMEventsResp, *APIError) {
 	path := "/dm_conversations/with/" + id + "/dm_events"
 
 	resp := new(DMEventsResp)
@@ -84,7 +84,7 @@ func (r *DirectMessageResource) LookUpByParticipant(id string, args DMEventOpts)
 
 // LookUpByConversation Returns a list of Direct Messages within a conversation specified in the dm_conversation_id path parameter.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/direct-messages/lookup/api-reference/get-dm_conversations-dm_conversation_id-dm_events
-func (r *DirectMessageResource) LookUpByConversation(id string, args DMEventOpts) (*DMEventsResp, *APIError) {
+func (r *DirectMessageResource) LookupByConversation(id string, args DMEventOpts) (*DMEventsResp, *APIError) {
 	path := "/dm_conversations/" + id + "/dm_events"
 
 	resp := new(DMEventsResp)
