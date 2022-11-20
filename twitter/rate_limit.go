@@ -79,6 +79,12 @@ var RateLimitResource = [...]Endpoint{
 	{Resource: "/users/:id/pinned_lists/:list_id", Regex: `^/users/\d+/pinned_lists/\d+$`},
 	{Resource: "/compliance/jobs/:job_id", Regex: `^/compliance/jobs/\d+$`},
 	{Resource: "/compliance/jobs", Regex: `^/compliance/jobs$`},
+	{Resource: "/dm_conversations/with/:participant_id/dm_events", Regex: `^/dm_conversations/with/\d+/dm_events`},
+	{Resource: "/dm_conversations/:dm_conversation_id/dm_events", Regex: `^/dm_conversations/\d+/dm_events`},
+	{Resource: "/dm_events", Regex: "^/dm_events"},
+	{Resource: "/dm_conversations/with/:participant_id/messages", Regex: `^/dm_conversations/with/\d+/messages`},
+	{Resource: "/dm_conversations/:dm_conversation_id/messages", Regex: `^/dm_conversations/\d+/messages`},
+	{Resource: "/dm_conversations", Regex: `^/dm_conversations`},
 }
 
 func getResource(url string) string {
