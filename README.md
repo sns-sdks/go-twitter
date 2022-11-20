@@ -82,3 +82,7 @@ Lists:
 
 Compliance:
 - Batch compliance
+
+Direct Message:
+- Direct Messages lookup
+- Manage Direct Messages
