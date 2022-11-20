@@ -10,7 +10,7 @@ func newDirectMessageResource(cli *Client) *DirectMessageResource {
 	return &DirectMessageResource{Cli: cli}
 }
 
-// DMEvent represents a dm event for twitter.
+// DMEvent represents a dm event for Twitter.
 // Refer: https://developer.twitter.com/en/docs/twitter-api/data-dictionary/object-model/dm-events
 type DMEvent struct {
 	ID               *string             `json:"id,omitempty"`
@@ -89,6 +89,73 @@ func (r *DirectMessageResource) LookUpByConversation(id string, args DMEventOpts
 
 	resp := new(DMEventsResp)
 	err := r.Cli.DoGet(path, args, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+// DMConversation represents a dm conversation for Twitter.
+type DMConversation struct {
+	DMConversationID *string `json:"dm_conversation_id,omitempty"`
+	DMEventID        *string `json:"dm_event_id,omitempty"`
+}
+
+func (d DMConversation) String() string {
+	return Stringify(d)
+}
+
+// CreateGroupMessageAttachmentOpts specifies the parameters for message attachment
+type CreateGroupMessageAttachmentOpts struct {
+	MediaID string `url:"media_id,omitempty"`
+}
+
+// CreateGroupMessageOpts specifies the parameters for message attachment
+type CreateGroupMessageOpts struct {
+	Attachments []CreateGroupMessageAttachmentOpts `url:"attachments,omitempty"`
+	Text        string                             `url:"text,omitempty"`
+}
+
+// CreateGroupConversationOpts specifies the parameters for create conversation.
+type CreateGroupConversationOpts struct {
+	ConversationType string                 `url:"conversation_type"`
+	ParticipantIDs   []string               `url:"participant_ids"`
+	Message          CreateGroupMessageOpts `url:"message"`
+}
+
+// CreateGroupConversation Creates a new group conversation and adds a Direct Message to it on behalf of an authenticated user.
+// Refer: https://developer.twitter.com/en/docs/twitter-api/direct-messages/manage/api-reference/post-dm_conversations
+func (r *DirectMessageResource) CreateGroupConversation(args CreateGroupConversationOpts) (*DMConversationResp, *APIError) {
+	path := "/dm_conversations"
+
+	resp := new(DMConversationResp)
+	err := r.Cli.DoPost(path, args, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+// CreateMessageToParticipant Creates a one-to-one Direct Message and adds it to the one-to-one conversation.
+// Refer: https://developer.twitter.com/en/docs/twitter-api/direct-messages/manage/api-reference/post-dm_conversations-with-participant_id-messages
+func (r *DirectMessageResource) CreateMessageToParticipant(participantID string, args CreateGroupMessageOpts) (*DMConversationResp, *APIError) {
+	path := "/dm_conversations/with/" + participantID + "/messages"
+
+	resp := new(DMConversationResp)
+	err := r.Cli.DoPost(path, args, resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+// CreateMessageToConversation Creates a Direct Message on behalf of an authenticated user, and adds it to the specified conversation.
+// Refer: https://developer.twitter.com/en/docs/twitter-api/direct-messages/manage/api-reference/post-dm_conversations-dm_conversation_id-messages
+func (r *DirectMessageResource) CreateMessageToConversation(dmConversationID string, args CreateGroupMessageOpts) (*DMConversationResp, *APIError) {
+	path := "/dm_conversations/" + dmConversationID + "/messages"
+
+	resp := new(DMConversationResp)
+	err := r.Cli.DoPost(path, args, resp)
 	if err != nil {
 		return nil, err
 	}
