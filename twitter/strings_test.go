@@ -47,6 +47,8 @@ func TestStringify(t *testing.T) {
 		{Tweet{ID: String("123456789"), PublicMetrics: &TweetPublicMetrics{LikeCount: Int(10213)}}, `twitter.Tweet{ID:"123456789", PublicMetrics:twitter.TweetPublicMetrics{LikeCount:10213}}`},
 		{Space{ID: String("1DXxyRYNejbKM")}, `twitter.Space{ID:"1DXxyRYNejbKM"}`},
 		{ComplianceJob{ID: String("1423095206576984067")}, `twitter.ComplianceJob{ID:"1423095206576984067"}`},
+		{DMEvent{ID: String("1585321444547837956")}, `twitter.DMEvent{ID:"1585321444547837956"}`},
+		{DMConversation{DMConversationID: String("1346889436626259968")}, `twitter.DMConversation{DMConversationID:"1346889436626259968"}`},
 	}
 
 	for i, tt := range tests {
@@ -76,6 +78,10 @@ func TestString(t *testing.T) {
 		{Topic{ID: String("123456"), Name: String("test")}, `twitter.Topic{ID:"123456", Name:"test"}`},
 		{List{ID: String("1441162269824405510")}, `twitter.List{ID:"1441162269824405510"}`},
 		{ComplianceJob{ID: String("1423095206576984067")}, `twitter.ComplianceJob{ID:"1423095206576984067"}`},
+		{DMEvent{ID: String("123"), ReferencedTweets: []*DMEReferencedTweet{{ID: String("1234")}}}, `twitter.DMEvent{ID:"123", ReferencedTweets:[twitter.DMEReferencedTweet{ID:"1234"}]}`},
+		{DMEReferencedTweet{ID: String("1234")}, `twitter.DMEReferencedTweet{ID:"1234"}`},
+		{DMEAttachments{MediaKeys: []*string{String("123")}}, `twitter.DMEAttachments{MediaKeys:["123"]}`},
+		{DMConversation{DMConversationID: String("1346889436626259968")}, `twitter.DMConversation{DMConversationID:"1346889436626259968"}`},
 		{TweetsCounts{TweetCount: Int(1)}, `twitter.TweetsCounts{TweetCount:1}`},
 		{BlockingStatus{Blocking: Bool(true)}, `twitter.BlockingStatus{Blocking:true}`},
 		{FollowingStatus{Following: Bool(true)}, `twitter.FollowingStatus{Following:true}`},
@@ -117,6 +123,8 @@ func TestString(t *testing.T) {
 		{ListFollowingResp{Data: &ListFollowingStatus{Following: Bool(true)}}, `twitter.ListFollowingResp{Data:twitter.ListFollowingStatus{Following:true}}`},
 		{ListPinnedResp{Data: &ListPinnedStatus{Pinned: Bool(true)}}, `twitter.ListPinnedResp{Data:twitter.ListPinnedStatus{Pinned:true}}`},
 		{TweetDeletedResp{Data: &TweetDeletedStatus{Deleted: Bool(true)}}, `twitter.TweetDeletedResp{Data:twitter.TweetDeletedStatus{Deleted:true}}`},
+		{DMEventsResp{Data: []*DMEvent{{ID: String("1585321444547837956")}}}, `twitter.DMEventsResp{Data:[twitter.DMEvent{ID:"1585321444547837956"}]}`},
+		{DMConversationResp{Data: &DMConversation{DMConversationID: String("1346889436626259968")}}, `twitter.DMConversationResp{Data:twitter.DMConversation{DMConversationID:"1346889436626259968"}}`},
 	}
 
 	for i, tt := range tests {

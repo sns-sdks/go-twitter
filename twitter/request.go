@@ -147,9 +147,29 @@ func (j ComplianceJobsResp) String() string {
 
 }
 
+// DMEventsResp data struct represents the list of
+type DMEventsResp struct {
+	Data []*DMEvent `json:"data,omitempty"`
+	*BaseData
+}
+
+func (d DMEventsResp) String() string {
+	return Stringify(d)
+}
+
+// DMConversationResp data struct represents the
+type DMConversationResp struct {
+	Data *DMConversation `json:"data,omitempty"`
+}
+
+func (d DMConversationResp) String() string {
+	return Stringify(d)
+}
+
 /*
-	functions for http requests
+	Functions for http requests
 */
+
 func ParseDataResponse(response *resty.Response, d interface{}) *APIError {
 	var err error
 	if response.IsSuccess() {

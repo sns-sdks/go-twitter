@@ -23,7 +23,8 @@ type Space struct {
 	Lang             *string   `json:"lang,omitempty"`
 	IsTicketed       *bool     `json:"is_ticketed,omitempty"`
 	InvitedUserIDs   []*string `json:"invited_user_ids,omitempty"`
-	ParticipantCount *int      `json:"participant_count"`
+	ParticipantCount *int      `json:"participant_count,omitempty"`
+	SubscriberCount  *int      `json:"subscriber_count,omitempty"`
 	ScheduledStart   *string   `json:"scheduled_start,omitempty"`
 	SpeakerIDs       []*string `json:"speaker_ids,omitempty"`
 	StartedAt        *string   `json:"started_at,omitempty"`

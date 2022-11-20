@@ -13,26 +13,28 @@ func newTweetResource(cli *Client) *TweetResource {
 // Tweet are the basic building block of all things Twitter
 // Refer: https://developer.twitter.com/en/docs/twitter-api/data-dictionary/object-model/tweet
 type Tweet struct {
-	ID                 *string             `json:"id,omitempty"`
-	Text               *string             `json:"text,omitempty"`
-	Attachments        *Attachments        `json:"attachments,omitempty"`
-	AuthorID           *string             `json:"author_id,omitempty"`
-	ContextAnnotations *ContextAnnotation  `json:"context_annotations,omitempty"`
-	ConversationID     *string             `json:"conversation_id,omitempty"`
-	CreatedAt          *string             `json:"created_at,omitempty"`
-	Entities           *TweetEntities      `json:"entities,omitempty"`
-	Geo                *TweetGeo           `json:"geo,omitempty"`
-	InReplyToUserID    *string             `json:"in_reply_to_user_id,omitempty"`
-	Lang               *string             `json:"lang,omitempty"`
-	NonPublicMetrics   *NonPublicMetrics   `json:"non_public_metrics,omitempty"`
-	OrganicMetrics     *OrganicMetrics     `json:"organic_metrics,omitempty"`
-	PossiblySensitive  *bool               `json:"possibly_sensitive,omitempty"`
-	PromotedMetrics    *PromotedMetrics    `json:"promoted_metrics,omitempty"`
-	PublicMetrics      *TweetPublicMetrics `json:"public_metrics,omitempty"`
-	ReferencedTweets   []*ReferencedTweet  `json:"referenced_tweets,omitempty"`
-	ReplySettings      *string             `json:"reply_settings,omitempty"`
-	Source             *string             `json:"source,omitempty"`
-	Withheld           *TweetWithheld      `json:"withheld,omitempty"`
+	ID                  *string             `json:"id,omitempty"`
+	Text                *string             `json:"text,omitempty"`
+	EditHistoryTweetIDs []*string           `json:"edit_history_tweet_ids"`
+	Attachments         *Attachments        `json:"attachments,omitempty"`
+	AuthorID            *string             `json:"author_id,omitempty"`
+	ContextAnnotations  *ContextAnnotation  `json:"context_annotations,omitempty"`
+	ConversationID      *string             `json:"conversation_id,omitempty"`
+	CreatedAt           *string             `json:"created_at,omitempty"`
+	EditControls        *TweetEditControls  `json:"edit_controls,omitempty"`
+	Entities            *TweetEntities      `json:"entities,omitempty"`
+	Geo                 *TweetGeo           `json:"geo,omitempty"`
+	InReplyToUserID     *string             `json:"in_reply_to_user_id,omitempty"`
+	Lang                *string             `json:"lang,omitempty"`
+	NonPublicMetrics    *NonPublicMetrics   `json:"non_public_metrics,omitempty"`
+	OrganicMetrics      *OrganicMetrics     `json:"organic_metrics,omitempty"`
+	PossiblySensitive   *bool               `json:"possibly_sensitive,omitempty"`
+	PromotedMetrics     *PromotedMetrics    `json:"promoted_metrics,omitempty"`
+	PublicMetrics       *TweetPublicMetrics `json:"public_metrics,omitempty"`
+	ReferencedTweets    []*ReferencedTweet  `json:"referenced_tweets,omitempty"`
+	ReplySettings       *string             `json:"reply_settings,omitempty"`
+	Source              *string             `json:"source,omitempty"`
+	Withheld            *TweetWithheld      `json:"withheld,omitempty"`
 }
 
 type Attachments struct {
@@ -54,6 +56,12 @@ type ContextAnnotationEntity struct {
 type ContextAnnotation struct {
 	Domain *ContextAnnotationDomain `json:"domain,omitempty"`
 	Entity *ContextAnnotationEntity `json:"entity,omitempty"`
+}
+
+type TweetEditControls struct {
+	EditsRemaining *int    `json:"edits_remaining,omitempty"`
+	IsEditEligible *bool   `json:"is_edit_eligible,omitempty"`
+	EditableUntil  *string `json:"editable_until,omitempty"`
 }
 
 type Coordinates struct {
