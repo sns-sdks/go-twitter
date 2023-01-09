@@ -2,11 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.1](https://github.com/sns-sdks/go-twitter/v0.5.1) (2023-01-09)
+
+- New fields for object recent update.
+
+
 ## [0.5.0](https://github.com/sns-sdks/go-twitter/v0.5.0) (2022-11-20)
 
 - New fields for object recent update.
 - New api for manage dm events.
-
 
 ## [0.4.8](https://github.com/sns-sdks/go-twitter/v0.4.8) (2022-05-23)
 
