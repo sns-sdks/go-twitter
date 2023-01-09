@@ -26,6 +26,7 @@ type User struct {
 	Protected       *string            `json:"protected,omitempty"`
 	URL             *string            `json:"url,omitempty,omitempty"`
 	Verified        *bool              `json:"verified,omitempty"`
+	VerifiedType    *string            `json:"verified_type,omitempty"`
 	Entities        *UserEntities      `json:"entities,omitempty"`
 	PublicMetrics   *UserPublicMetrics `json:"public_metrics,omitempty"`
 	Withheld        *UserWithheld      `json:"withheld,omitempty"`
